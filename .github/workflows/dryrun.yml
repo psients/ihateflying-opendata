@@ -28,16 +28,10 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
           failed=0
           python3 scripts/dryrun.py || failed=1
-          git add dryrun
-          if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "dry-run: $(date -u +%F)"; then
-            for attempt in 1 2 3; do
-              git push && break || {
-                git -c user.name=opendata-bot -c user.email=actions@github.com pull --rebase
-                [ "$attempt" = 3 ] && exit 1
-              }
-            done
-          fi
+          mkdir -p "$RUNNER_TEMP/produced"
+          if [ -d dryrun ]; then cp -R dryrun "$RUNNER_TEMP/produced/"; fi
+          bash scripts/commit_state.sh "dry-run: $(date -u +%F)" "$RUNNER_TEMP/produced"
           exit "$failed"

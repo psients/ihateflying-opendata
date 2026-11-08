@@ -31,11 +31,13 @@ import sys
 import tarfile
 
 
-def gz_writer(path):
-    """Deterministic gzip writer: mtime pinned to 0, so identical content is
-    identical bytes and a reprocessed day compares by hash alone."""
+def gz_writer(raw):
+    """Deterministic gzip text writer over an already-open binary file: mtime
+    pinned to 0, so identical content is identical bytes and a reprocessed day
+    compares by hash alone. The caller owns (and closes) the raw file."""
     return io.TextIOWrapper(gzip.GzipFile(filename='', mode='wb', compresslevel=9,
-                                          fileobj=open(path, 'wb'), mtime=0), encoding='utf-8')
+                                          fileobj=raw, mtime=0), encoding='utf-8')
+
 
 EXTRACTOR_VERSION = 5
 
@@ -419,8 +421,12 @@ def main():
     excluded_counts = {}
     fpath = os.path.join(out_dir, f'flights-{day}.jsonl.gz')
     ppath = os.path.join(out_dir, f'paths-{day}.jsonl.gz')
-    with mp.Pool(max(1, os.cpu_count() or 1)) as pool, \
-            gz_writer(fpath) as ff, gz_writer(ppath) as pf:
+    # The raw files are opened by this with-statement and closed by it, after
+    # the gzip streams (inner context exits first): their bytes are on disk
+    # before the hashes below are computed - no reliance on garbage collection.
+    with open(fpath, 'wb') as fraw, open(ppath, 'wb') as praw, \
+            mp.Pool(max(1, os.cpu_count() or 1)) as pool, \
+            gz_writer(fraw) as ff, gz_writer(praw) as pf:
         # imap (ordered), not imap_unordered: the tar's member order is
         # deterministic, so the published files become byte-reproducible
         # and a reprocessed day can be compared by hash alone.

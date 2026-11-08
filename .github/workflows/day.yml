@@ -79,9 +79,11 @@ jobs:
           urls: ${{ matrix.urls }}
 
   # Quarantine verifier: sweeps the last 17 days, verifies every published
-  # day that lacks a record, and writes one record file per day (so no two
-  # writers ever touch the same path). A red = failed job = email. The site
-  # touches none of this data until QUARANTINE.md's streak rules are met.
+  # day that lacks a record, and writes one record file per day. Only the
+  # records it WROTE travel to the commit job (never its whole checkout, so a
+  # concurrent writer's newer record can't be overwritten by a stale copy).
+  # A red = failed job = email. The site touches none of this data until
+  # QUARANTINE.md's exit rules are met.
   verify:
     needs: [plan, days]
     if: always() && needs.plan.result == 'success'
@@ -93,40 +95,37 @@ jobs:
           persist-credentials: false
       - env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/verify.py daily
+        run: |
+          set -uo pipefail
+          failed=0
+          python3 scripts/verify.py daily || failed=1
+          mkdir -p "$RUNNER_TEMP/produced"
+          git status --porcelain --untracked-files=all -- quarantine | awk '{print $NF}' |
+            while read -r f; do
+              mkdir -p "$RUNNER_TEMP/produced/$(dirname "$f")"
+              cp "$f" "$RUNNER_TEMP/produced/$f"
+            done
+          exit "$failed"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
-          name: quarantine-days
-          path: quarantine/days/
+          name: quarantine-produced
+          path: ${{ runner.temp }}/produced/
           if-no-files-found: ignore
 
   manifest:
     needs: [plan, days, verify]
     if: always() && needs.plan.result == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          name: quarantine-days
-          path: quarantine/days/
+          name: quarantine-produced
+          path: ${{ runner.temp }}/produced/
         continue-on-error: true
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
-          python3 scripts/manifest.py reindex
-          python3 scripts/verify.py render
-          git add MANIFEST.json QUARANTINE.md quarantine/days
-          if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "manifest: $(date -u +%F)"; then
-            for attempt in 1 2 3; do
-              git push && break || {
-                git -c user.name=opendata-bot -c user.email=actions@github.com pull --rebase
-                [ "$attempt" = 3 ] && exit 1
-              }
-            done
-          else
-            echo "manifest unchanged"
-          fi
+          bash scripts/commit_state.sh "daily: $(date -u +%F)" "$RUNNER_TEMP/produced" manifest render

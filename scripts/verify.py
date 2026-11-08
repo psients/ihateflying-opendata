@@ -23,13 +23,19 @@ different paths, and the table is regenerated, never merged.
 
 THE STREAK (frozen definition; changing it, or any counting constant in this
 file or aggregate.py, is an owner-visible commit that RESTARTS the streak):
-consecutive UTC calendar days, ending at the newest recorded day, where each
-day has a CLEAN daily-mode record under the current extractor version, or a
-SKIPPED record whose reason is that adsb.lol has no archive for that day.
-A RED breaks it. A day with no record breaks it once it is 4+ days old
-(younger gaps are healing in progress). Range-mode records never count
-toward the streak, but every red among them must carry an explanation
-before exit.
+scanning back from yesterday (UTC) to the QUARANTINE CLOCK START, count the
+days whose record is CLEAN under the current extractor version. The clock
+start (quarantine/clock.json) is the data-day of the first daily
+verification run, so the streak can grow by at most one per day of
+operation: the catch-up days published on the first run, and every
+backfilled day, are verified but sit before the clock and never shorten the
+month. A SKIPPED record (adsb.lol has no archive for that day) neither
+counts nor breaks. A RED breaks it. A day with no record breaks it once it
+is 4+ days old (younger gaps are healing in progress). Drills are recorded
+apart (quarantine/drills/) and never touch a data-day. Every red, inside
+the clock window or before it, must carry an explanation before exit; a
+re-verified record keeps the records it replaced under "previous", so an
+explanation is never lost.
 
 Invariants (I*) red the day; warnings (W*) are visible but not red.
 Baselines measured on 2026-11-07 (allowlisted, extractor v5): legs/scanned
@@ -81,6 +87,9 @@ from extract_day import EXTRACTOR_VERSION  # noqa: E402
 
 ROOT = os.path.normpath(os.path.join(HERE, '..'))
 DAYS_DIR = os.path.join(ROOT, 'quarantine', 'days')
+DRILLS_DIR = os.path.join(ROOT, 'quarantine', 'drills')
+CLOCK = os.path.join(ROOT, 'quarantine', 'clock.json')
+MANIFEST = os.path.join(ROOT, 'MANIFEST.json')
 LOG = os.path.join(ROOT, 'QUARANTINE.md')
 REPO = os.environ.get('GITHUB_REPOSITORY', 'psients/ihateflying-opendata')
 ANCHORS = ('KAL', 'AAR', 'SWA', 'RYR', 'DAL', 'UAL', 'AAL')
@@ -110,12 +119,36 @@ def load_rec(day):
         return None
 
 
-def write_rec(rec):
+def write_rec(rec, annotate=False):
+    """Write a day's record. A replaced record that was RED, or carried an
+    explanation, is kept under "previous" (newest first): a red's written
+    cause must survive its own re-verification. annotate=True updates the
+    same verification in place (attaching an explanation adds no history)."""
     os.makedirs(DAYS_DIR, exist_ok=True)
+    old = load_rec(rec['day'])
+    if not annotate and old and (old.get('verdict') == 'RED' or old.get('explanation')):
+        kept = {k: v for k, v in old.items() if k != 'previous'}
+        rec['previous'] = [kept] + list(old.get('previous') or [])
+    elif old and old.get('previous') and 'previous' not in rec:
+        rec['previous'] = old['previous']
     rec['verified_at'] = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')
     with open(rec_path(rec['day']), 'w') as f:
         json.dump(rec, f, indent=1, sort_keys=True)
         f.write('\n')
+
+
+def clock_start():
+    try:
+        return json.load(open(CLOCK))['start']
+    except Exception:
+        return None
+
+
+def manifest_versions():
+    try:
+        return {d: e.get('v') for d, e in json.load(open(MANIFEST)).get('days', {}).items()}
+    except Exception:
+        return {}
 
 
 def fetch(day, dest):
@@ -332,14 +365,28 @@ def mode_daily():
     dest = os.environ.get('RUNNER_TEMP', '/tmp')
     history = load_history()
     published = published_days()
+    versions = manifest_versions()
     today = today_utc()
+    if clock_start() is None:
+        os.makedirs(os.path.dirname(CLOCK), exist_ok=True)
+        with open(CLOCK, 'w') as f:
+            json.dump({'start': (today - dt.timedelta(days=1)).isoformat(),
+                       'set_at': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'),
+                       'note': 'Quarantine clock: the data-day of the first daily verification '
+                               'run. The streak counts from here; set once, never moved.'},
+                      f, indent=1, sort_keys=True)
+            f.write('\n')
+        print(f'quarantine clock started at {(today - dt.timedelta(days=1)).isoformat()}')
     new_red = []
     for back in range(17, 0, -1):
         day = (today - dt.timedelta(days=back)).isoformat()
         have = history.get(day)
-        if have and not (have['verdict'] == 'clean' and have.get('extractor_v')
-                         and have['extractor_v'] < EXTRACTOR_VERSION and day in published):
-            continue  # recorded, and not awaiting re-verification of a reprocess
+        # Re-verify a recorded day only when its published files were rebuilt
+        # by a newer extractor (MANIFEST says so); otherwise its record stands.
+        rebuilt = (have and have.get('extractor_v') and versions.get(day)
+                   and versions[day] > have['extractor_v'])
+        if have and not rebuilt:
+            continue
         if day in published:
             rec = verify_one(day, dest, history)
             if rec:
@@ -390,6 +437,11 @@ def mode_range(start, end):
                     print(f"::error::{d}: {rec['problems']}")
                 else:
                     print(f'{d} clean')
+        elif d not in history and not upstream_has(d):
+            write_rec({'day': d, 'mode': 'range', 'verdict': 'SKIPPED', 'extractor_v': None,
+                       'problems': [], 'warnings': [], 'stats': {},
+                       'explanation': 'adsb.lol has no archive for this day'})
+            print(f'{d}: SKIPPED (no upstream archive)')
         day += dt.timedelta(days=1)
     # Records are on disk; the WORKFLOW commits them before honouring this.
     if reds:
@@ -397,34 +449,45 @@ def mode_range(start, end):
         sys.exit(1)
 
 
+def streak_of(history, start, today):
+    """The frozen streak rule (module docstring), as code."""
+    if not start:
+        return 0
+    first = dt.date.fromisoformat(start)
+    cursor = today - dt.timedelta(days=1)
+    streak = 0
+    while cursor >= first:
+        r = history.get(cursor.isoformat())
+        if r is None:
+            if (today - cursor).days > 3:
+                break          # an old hole: the pipeline failed that day
+        elif r['verdict'] == 'SKIPPED':
+            pass               # no upstream archive: neither counts nor breaks
+        elif r['verdict'] == 'clean' and r.get('extractor_v') == EXTRACTOR_VERSION:
+            streak += 1
+        else:
+            break              # a RED, or a day not yet re-verified after a version change
+        cursor -= dt.timedelta(days=1)
+    return streak
+
+
+def load_drills():
+    out = []
+    for p in sorted(glob.glob(os.path.join(DRILLS_DIR, '*.json'))):
+        try:
+            out.append(json.load(open(p)))
+        except Exception:
+            continue
+    return out
+
+
 def render():
     history = load_history()
     days = sorted(history)
-    streak = 0
-    if days:
-        cursor = dt.date.fromisoformat(days[-1])
-        today = today_utc()
-        while True:
-            d = cursor.isoformat()
-            r = history.get(d)
-            if r is None:
-                # a young gap may still heal; an old one breaks the streak
-                if (today - cursor).days <= 3:
-                    cursor -= dt.timedelta(days=1)
-                    continue
-                break
-            if r['verdict'] == 'RED' or r['mode'] == 'range':
-                if r['verdict'] == 'SKIPPED' or (r['mode'] == 'range' and r['verdict'] == 'clean'):
-                    pass
-                else:
-                    break
-            if r['verdict'] == 'clean' and r['mode'] == 'daily' and r.get('extractor_v') == EXTRACTOR_VERSION:
-                streak += 1
-            elif r['verdict'] == 'SKIPPED':
-                pass  # does not count, does not break
-            else:
-                break
-            cursor -= dt.timedelta(days=1)
+    start = clock_start()
+    today = today_utc()
+    streak = streak_of(history, start, today)
+    unexplained = [d for d in days if history[d]['verdict'] == 'RED' and not history[d].get('explanation')]
     lines = [
         '# Quarantine log',
         '',
@@ -432,14 +495,18 @@ def render():
         'quarantine/days/, never this table. The site reads nothing from this',
         "pipeline until the exit criteria hold (owner's rule, 2026-11-09).",
         '',
-        'THE STREAK, frozen definition: consecutive UTC calendar days, ending at',
-        'the newest recorded day, each with a CLEAN daily-mode record under the',
-        'current extractor version; SKIPPED-no-upstream days neither count nor',
-        'break; a RED breaks it; a recordless day breaks it once 4+ days old.',
-        'Any change to the counting constants in verify.py or aggregate.py is an',
-        'owner-visible commit and RESTARTS the streak. Exit needs 30.',
+        'THE STREAK, frozen definition: scanning back from yesterday (UTC) to the',
+        'quarantine clock start, the count of days with a CLEAN record under the',
+        'current extractor version. The clock starts at the data-day of the first',
+        'daily verification run, so the streak grows by at most one per day of',
+        'operation; catch-up and backfilled days are verified but never count.',
+        'SKIPPED-no-upstream days neither count nor break; a RED breaks it; a',
+        'recordless day breaks it once 4+ days old. Changing any counting constant',
+        'in verify.py or aggregate.py is an owner-visible commit and RESTARTS the',
+        'streak. Exit needs 30, with every RED explained.',
         '',
-        f'**Current streak: {streak} clean day(s).** Extractor v{EXTRACTOR_VERSION}.',
+        f'**Current streak: {streak} of 30 clean day(s).** Clock started: {start or "not yet"}. '
+        f'Extractor v{EXTRACTOR_VERSION}. Unexplained reds: {len(unexplained)}.',
         '',
         '| day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |',
         '|---|---|---|---|---|---|---|---|---|---|',
@@ -453,9 +520,15 @@ def render():
             '; '.join(r.get('problems', [])) or '-',
             '; '.join(r.get('warnings', [])) or '-',
             (r.get('explanation') or '-').replace('|', '/')))
+    drills = load_drills()
+    if drills:
+        lines += ['', '## Drills (deliberate test reds; never a data-day)', '',
+                  '| fired at | purpose |', '|---|---|']
+        for dr in drills:
+            lines.append(f"| {dr.get('fired_at', '?')} | {dr.get('purpose', '-')} |")
     with open(LOG, 'w') as f:
         f.write('\n'.join(lines) + '\n')
-    print(f'rendered {len(days)} day(s); streak {streak}')
+    print(f'rendered {len(days)} day(s); streak {streak}; clock {start}')
 
 
 def main():
@@ -471,14 +544,18 @@ def main():
         if not rec:
             sys.exit(f'no record for {sys.argv[2]}')
         rec['explanation'] = sys.argv[3]
-        write_rec(rec)
+        write_rec(rec, annotate=True)
         print(f'explanation recorded for {sys.argv[2]}')
     elif mode == 'drill':
-        d = today_utc().isoformat()
-        write_rec({'day': d, 'mode': 'daily', 'verdict': 'RED', 'extractor_v': EXTRACTOR_VERSION,
-                   'problems': ['DRILL: deliberate test of the failure-email channel'],
-                   'warnings': [], 'stats': {}, 'explanation': 'drill, not a data problem'})
-        print('::error::DRILL red (deliberate)')
+        # A drill is recorded apart from the data-days, so proving the alarm
+        # channel can never break the streak it exists to protect.
+        os.makedirs(DRILLS_DIR, exist_ok=True)
+        stamp = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')
+        with open(os.path.join(DRILLS_DIR, stamp.replace(':', '') + '.json'), 'w') as f:
+            json.dump({'fired_at': stamp, 'purpose': 'deliberate test of the failure-email channel'},
+                      f, indent=1, sort_keys=True)
+            f.write('\n')
+        print('::error::DRILL red (deliberate test of the failure email; not a data problem)')
         sys.exit(1)
     else:
         sys.exit('usage: verify.py daily | range START END | render | explain DAY TEXT | drill')

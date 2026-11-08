@@ -41,20 +41,20 @@ jobs:
           END: ${{ inputs.end }}
           DRILL: ${{ inputs.drill }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
           failed=0
           if [ "$DRILL" = "drill" ]; then
             python3 scripts/verify.py drill || failed=1
           else
             python3 scripts/verify.py range "$START" "$END" || failed=1
           fi
-          git add quarantine/days
-          if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "quarantine: verify ${DRILL:-$START..$END}"; then
-            for attempt in 1 2 3; do
-              git push && break || {
-                git -c user.name=opendata-bot -c user.email=actions@github.com pull --rebase
-                [ "$attempt" = 3 ] && exit 1
-              }
+          mkdir -p "$RUNNER_TEMP/produced"
+          git status --porcelain --untracked-files=all -- quarantine | awk '{print $NF}' |
+            while read -r f; do
+              mkdir -p "$RUNNER_TEMP/produced/$(dirname "$f")"
+              cp "$f" "$RUNNER_TEMP/produced/$f"
             done
-          fi
+          # Records are committed BEFORE the red is honoured: a failing day
+          # must reach the log, never vanish with the runner.
+          bash scripts/commit_state.sh "verify: ${DRILL:-$START..$END}" "$RUNNER_TEMP/produced" render
           exit "$failed"
