@@ -60,8 +60,10 @@ the short form: a flight is a leg whose departure was actually observed (`tk`), 
 minutes of ground time since the airframe's previous leg, no same-airport circuits, at
 most 14 a day per airframe, and the broadcast registration must not contradict the
 expected one. Flight numbers come only from suffix-less callsigns of carriers whose
-callsign number is the booked number. Route exemplars are single real tracks (medoid of
-recent well-observed days), never averages. Every count is a floor.
+callsign number is the booked number. Route exemplars are single real tracks: this script
+lists the recent well-observed candidates, and the consumer picks the medoid
+(the one track closest to the others) where the path files are at hand. Never
+averages. Every count is a floor.
 
 ## Integrity notes
 

@@ -103,11 +103,20 @@ def find_day(day, instances=PREFERENCE):
     return None
 
 
+def release_assets(rel):
+    """A release's assets, paginated: the releases LIST embeds at most ~100
+    assets per release and a month already holds 93 (3 x 31)."""
+    assets = rel.get('assets', [])
+    if len(assets) < 100:
+        return assets
+    return paged(f"repos/{OWN}/releases/{rel['id']}/assets")
+
+
 def published_here():
     """Days whose flights+paths assets are fully uploaded in our releases."""
     done = set()
     for rel in paged(f'repos/{OWN}/releases'):
-        ok = {a['name'] for a in rel.get('assets', [])
+        ok = {a['name'] for a in release_assets(rel)
               if a.get('state') == 'uploaded' and a.get('size', 0) > 0}
         for n in ok:
             m = re.match(r'^flights-(\d{4}-\d{2}-\d{2})\.jsonl\.gz$', n)
@@ -147,15 +156,18 @@ def main():
         d = today - dt.timedelta(days=1)
         done = published_here()
         todo = []
-        # D-2: self-heal from any instance; its absence everywhere was already
-        # D-1's red yesterday, so never an alarm here.
-        day2 = d - dt.timedelta(days=2)
-        if day2.isoformat() not in done:
-            urls = find_day(day2)
-            if urls:
-                todo.append({'day': day2.isoformat(), 'urls': urls})
+        # Self-heal window: any unpublished day in the last 14 that the
+        # archive has (a 3+-day outage must not leave permanent holes; the
+        # done-set is already fetched, so this costs find_day calls only for
+        # actual holes). Beyond 14 days: a manual backfill dispatch.
+        for back in range(14, 1, -1):
+            day_b = d - dt.timedelta(days=back)
+            if day_b.isoformat() not in done:
+                urls = find_day(day_b)
+                if urls:
+                    todo.append({'day': day_b.isoformat(), 'urls': urls})
         # D-1: any instance; missing everywhere AND unpublished = the one alarm.
-        day1 = d - dt.timedelta(days=1)
+        day1 = d - dt.timedelta(days=1)  # noqa: E501 (the day before yesterday)
         if day1.isoformat() not in done:
             urls = find_day(day1)
             if urls:

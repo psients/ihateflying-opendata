@@ -10,11 +10,13 @@ inputs:
 runs:
   using: composite
   steps:
+    # Step 1: download and extract. NO TOKEN in this step's environment:
+    # it parses untrusted archive bytes, and a compromise there must find
+    # nothing to steal.
     - shell: bash
       env:
         DAY: ${{ inputs.day }}
         URLS: ${{ inputs.urls }}
-        GH_TOKEN: ${{ github.token }}
       run: |
         set -euo pipefail
         [[ "$DAY" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || { echo "bad day: $DAY"; exit 1; }
@@ -28,6 +30,18 @@ runs:
         done
         cat "$parts"/* | python3 scripts/extract_day.py "$DAY" out
         rm -rf "$parts"
+        # Sanity gate: a day that extracts implausibly (an old format
+        # quirk, a half archive) must FAIL LOUDLY, never publish - a
+        # published day is marked done forever.
+        python3 scripts/sanity_gate.py "$DAY" out
+
+    # Step 2: publish. The token exists only here.
+    - shell: bash
+      env:
+        DAY: ${{ inputs.day }}
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
         month="${DAY:0:7}"
         # Create-or-reuse the month's release; concurrent losers fall through
         # to the view, and a real failure still stops the job there.

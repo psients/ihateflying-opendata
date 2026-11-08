@@ -45,12 +45,26 @@ def merge(man, meta):
     return True
 
 
+def fetch_json(url):
+    import time
+    for attempt in range(4):
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'ihateflying-opendata',
+                                                       'Accept': 'application/octet-stream'})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return json.load(r)
+        except Exception:
+            if attempt == 3:
+                raise
+            time.sleep(10 * (attempt + 1))
+
+
 def reindex(man):
     sys.path.insert(0, HERE)
-    from plan import paged, OWN  # noqa: E402
+    from plan import paged, release_assets, OWN  # noqa: E402
     changed = 0
     for rel in paged(f'repos/{OWN}/releases'):
-        for a in rel.get('assets', []):
+        for a in release_assets(rel):
             m = re.match(r'^meta-(\d{4}-\d{2}-\d{2})\.json$', a['name'])
             if not m or a.get('state') != 'uploaded':
                 continue
@@ -58,13 +72,10 @@ def reindex(man):
             have = man['days'].get(day, {})
             if have.get('v') and have.get('sha256'):
                 continue
-            req = urllib.request.Request(a['browser_download_url'],
-                                         headers={'User-Agent': 'ihateflying-opendata',
-                                                  'Accept': 'application/octet-stream'})
-            with urllib.request.urlopen(req, timeout=60) as r:
-                meta = json.load(r)
-            if merge(man, meta):
+            if merge(man, fetch_json(a['browser_download_url'])):
                 changed += 1
+                if changed % 50 == 0:
+                    save(man)  # a late hiccup must not repeat 1,300 fetches
     return changed
 
 
