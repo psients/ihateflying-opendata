@@ -76,6 +76,9 @@ chain continuity 0.993.
   W14 ratio or tk drifting >15% against the record 7 days earlier
   W15 any of the anchor carriers (KAL AAR SWA RYR DAL UAL AAL) with zero
       countable departures
+  W17 a thin day: fewer than 25,000 aircraft scanned (2023 era: 12,000) -
+      a partial upstream archive, published because what it holds is real,
+      labelled so its low counts are never mistaken for low traffic
   W16 the upstream archive was irregular (meta tar_gaps > 0): the day was
       read past regions that are not valid tar records - end-marker padding
       between joined archive pieces (nothing lost) or damage (aircraft stored
@@ -211,6 +214,10 @@ def check_day(day, files, prev_legs, prev_meta, history):
         warnings.append(f'I1 extractor v{meta["v"]} (current v{EXTRACTOR_VERSION}); reprocess pending')
     if not meta.get('allowlist'):
         problems.append('I1 allowlist off')
+    thin = 12000 if era(day) == '2023' else 25000
+    if meta.get('scanned', 0) < thin:
+        warnings.append(f"W17 thin day: {meta.get('scanned')} aircraft scanned (normal: ~42k in 2023, "
+                        f"~60-76k in 2026); counts for this day are far below its real traffic")
     if meta.get('tar_gaps'):
         warnings.append(f"W16 upstream archive irregular: {meta['tar_gaps']} region(s) unreadable as tar "
                         f"records, {meta.get('tar_gap_bytes', 0) / 1024:.0f} KB skipped (padding between joined "

@@ -63,6 +63,24 @@ def load_holes():
 HOLES = load_holes()
 
 
+def load_overrides():
+    """scripts/source_overrides.txt: days whose preferred archive instance is
+    unusable, with the instance to use instead and why. Owner-visible."""
+    over = {}
+    try:
+        for line in open(os.path.join(HERE, 'source_overrides.txt')):
+            line = line.strip()
+            if line and not line.startswith('#'):
+                parts = line.split(None, 2)
+                over[parts[0]] = parts[1]
+    except FileNotFoundError:
+        pass
+    return over
+
+
+OVERRIDES = load_overrides()
+
+
 def api(path):
     """GET api.github.com/<path>. 404 -> None; other errors retried 3x."""
     headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'ihateflying-opendata'}
@@ -113,6 +131,8 @@ def find_day(day, instances=PREFERENCE):
     """The day's best available release URLs, or None (listed holes too)."""
     if day.isoformat() in HOLES:
         return None
+    if day.isoformat() in OVERRIDES:
+        instances = [OVERRIDES[day.isoformat()]]
     y = str(day.year)
     repos = [r for r in SOURCES if r.endswith(y)] + [r for r in SOURCES if not r.endswith(y)]
     tag_day = day.isoformat().replace('-', '.')
@@ -228,6 +248,8 @@ def main():
                     continue
                 day = f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
                 if not (start.isoformat() <= day <= end.isoformat()) or day in HOLES:
+                    continue
+                if day in OVERRIDES and m.group(4) != OVERRIDES[day]:
                     continue
                 urls = urls_of(rel)
                 rank = PREFERENCE.index(m.group(4))

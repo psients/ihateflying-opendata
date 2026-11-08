@@ -1,0 +1,3 @@
+# Days whose preferred adsb.lol instance is unusable: use the named instance.
+# Format: YYYY-MM-DD instance reason. Adding a line is an owner-visible commit.
+2026-05-05 staging-0 prod-0 archive holds heatmap files only, no flight traces (adsb.lol outage window)
