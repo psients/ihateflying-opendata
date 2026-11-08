@@ -6,11 +6,14 @@ Input: flights-*.jsonl.gz files from this repository's releases.
 Output: one JSON document with three sections and a flags list.
 
 Counting rule for departures ("the floor"): a leg counts as one departure iff
-  - its takeoff was observed (tk = true), and
+  - its departure was observed (tk = true), and
   - it is not a same-airport circuit (org = dst with under 60 km flown), and
-  - at least 15 minutes passed since the same airframe's previous leg ended
-    (go-arounds and touch-and-goes re-approach within minutes; real
-    turnarounds do not), and
+  - at least 15 minutes passed since the same airframe's previous leg ended,
+    COUNTED ACROSS DAY-FILE BOUNDARIES (go-arounds and touch-and-goes
+    re-approach within minutes, and a flight that takes off just before
+    midnight UTC continues low into the next day's file: without cross-day
+    memory it would count twice; days must therefore be fed in order, with
+    the previous day present when incrementing), and
   - the airframe has not exceeded 14 counted departures that day (the most a
     real airliner was observed to fly is 12; anything above 14 is flagged and
     not counted - crowd-sourced data can be spoofed).
@@ -56,7 +59,16 @@ CIRCUIT_KM = 60
 DAILY_CAP = 14
 MISMATCH_FLAG_DAYS = 3
 EXEMPLAR_MIN_DAYS = 5
-EXEMPLAR_MIN_COV = 0.8
+# Receiver coverage falls with distance (oceans have no receivers), so the
+# exemplar coverage floor is tiered; gaps still render as gaps, and the map
+# states the observed share.
+def exemplar_min_cov(km_flown):
+    if km_flown < 3000:
+        return 0.8
+    return 0.5 if km_flown < 7000 else 0.25
+
+
+EXEMPLAR_RECENT_DAYS = 14
 NUM_MIN_DAYS = 3
 EXEMPLAR_MAX_AGL = 1500
 EXEMPLAR_MAX_VS_GC = 1.3
@@ -112,18 +124,22 @@ def load_days(patterns):
     return days
 
 
-def countable(legs):
-    """The day's countable departures for one airframe (rule in the header)."""
+def countable(legs, prev_end=None):
+    """The day's countable departures for one airframe (rule in the header).
+    prev_end: when the same airframe's last leg of the PREVIOUS day ended,
+    so a midnight-crossing flight cannot count twice."""
     legs = sorted(legs, key=lambda x: x['t0'])
     out = []
-    for i, r in enumerate(legs):
-        if not r['tk']:
-            continue
-        if r['org'] and r['org'] == r['dst'] and r['km'] < CIRCUIT_KM:
-            continue
-        if i > 0 and r['t0'] - legs[i - 1]['t1'] < TURN_MIN_S:
-            continue
-        out.append(r)
+    last_end = prev_end
+    for r in legs:
+        ok = r['tk']
+        if ok and r['org'] and r['org'] == r['dst'] and r['km'] < CIRCUIT_KM:
+            ok = False
+        if ok and last_end is not None and r['t0'] - last_end < TURN_MIN_S:
+            ok = False
+        if ok:
+            out.append(r)
+        last_end = r['t1'] if last_end is None else max(last_end, r['t1'])
     return out
 
 
@@ -131,9 +147,11 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
     flags = []
     airframes = {}
     numdays = collections.defaultdict(lambda: collections.defaultdict(set))
+    numalldays = collections.defaultdict(set)
     numtypes = {}
     numlast = {}
     routes = collections.defaultdict(dict)
+    carry_end = {}
 
     for day in sorted(days):
         if window and not (window[0] <= day <= window[1]):
@@ -154,7 +172,9 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                 if bad:
                     flags.append({'kind': 'reg-mismatch', 'ref': hx, 'day': day, 'n': bad})
                 legs = ok
-            deps = countable(legs)
+            deps = countable(legs, carry_end.get(hx))
+            if legs:
+                carry_end[hx] = max(r['t1'] for r in legs)
             if len(deps) > DAILY_CAP:
                 flags.append({'kind': 'daily-cap', 'ref': hx, 'day': day, 'n': len(deps)})
                 deps = deps[:DAILY_CAP]
@@ -173,14 +193,16 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                     digits = cs[3:].lstrip('0')
                     if digits.isdigit():
                         num = prefix_map[cs[:3]] + digits
-                if num and r.get('reg'):
-                    numdays[num][r['reg']].add(day)
-                    numtypes[(num, r['reg'])] = r.get('type')
-                    numlast[num] = max(numlast.get(num, day), day)
+                if num and r.get('reg') and r.get('org'):
+                    key = (num, r['org'])
+                    numdays[key][r['reg']].add(day)
+                    numalldays[key].add(day)
+                    numtypes[(key, r['reg'])] = r.get('type')
+                    numlast[key] = max(numlast.get(key, day), day)
                 # Route exemplar candidates: complete, well-observed tracks.
                 oq, dq = r.get('oq'), r.get('dq')
                 if (r['org'] and r['dst'] and r['org'] != r['dst']
-                        and r['tk'] and r['ld'] and r['cov'] >= EXEMPLAR_MIN_COV
+                        and r['tk'] and r['ld'] and r['cov'] >= exemplar_min_cov(r['km'])
                         and oq and dq and oq[0] is not None and dq[0] is not None
                         and oq[0] <= EXEMPLAR_MAX_AGL and dq[0] <= EXEMPLAR_MAX_AGL):
                     route = f"{r['org']}-{r['dst']}"
@@ -191,25 +213,39 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                         if best is None or r['cov'] > best['cov']:
                             cand[day] = {'id': r['id'], 'day': day, 'km': r['km'], 'cov': r['cov']}
 
+
     flightnums = []
-    for num, regs in numdays.items():
-        entries = [{'reg': reg, 'type': numtypes.get((num, reg)), 'days': len(ds)}
+    for key, regs in numdays.items():
+        num, org = key
+        observed = numalldays[key]
+        if len(observed) < 5:
+            continue
+        entries = [{'reg': reg, 'type': numtypes.get((key, reg)), 'days': len(ds)}
                    for reg, ds in regs.items() if len(ds) >= NUM_MIN_DAYS]
-        entries.sort(key=lambda e: -e['days'])
-        if entries:
-            flightnums.append({'num': num, 'window_days': len({d for ds in regs.values() for d in ds}),
-                               'entries': entries[:5], 'last_seen': numlast[num]})
+        entries.sort(key=lambda e: (-e['days'], e['reg']))
+        # A row with no entry is itself the honest answer for a rotating
+        # pool: "N different aircraft, none more than a couple of days".
+        flightnums.append({'num': num, 'org': org, 'observed_days': len(observed),
+                           'n_regs': len(regs), 'max_entry_days': max((len(d) for d in regs.values()), default=0),
+                           'entries': entries[:5], 'last_seen': numlast[key]})
 
     exemplars = []
     for (route, season), by_day in routes.items():
         if len(by_day) < EXEMPLAR_MIN_DAYS:
             continue
-        recent = sorted(by_day.values(), key=lambda c: c['day'])[-MEDOID_LAST_DAYS:]
+        # Fence lengths over the RECENT window, not the whole season: after a
+        # reroute (a war detour adds a few percent), the fence must follow
+        # within days, not after a quarter of the season.
+        recent = sorted(by_day.values(), key=lambda c: c['day'])[-EXEMPLAR_RECENT_DAYS:]
+        kms = sorted(c['km'] for c in recent)
+        q1, q3 = kms[len(kms) // 4], kms[(3 * len(kms)) // 4]
+        fenced = [c for c in recent if q1 <= c['km'] <= q3] or recent
+        fenced = fenced[-MEDOID_LAST_DAYS:]
         exemplars.append({'route': route, 'season': season, 'n_days': len(by_day),
-                          'candidates': [{'day': c['day'], 'id': c['id'], 'km': c['km']} for c in recent]})
+                          'candidates': [{'day': c['day'], 'id': c['id'], 'km': c['km'], 'cov': c['cov']} for c in fenced]})
 
     return {'airframes': sorted(airframes.values(), key=lambda a: a['hex']),
-            'flightnums': sorted(flightnums, key=lambda f: f['num']),
+            'flightnums': sorted(flightnums, key=lambda f: (f['num'], f['org'])),
             'route_exemplars': sorted(exemplars, key=lambda e: (e['route'], e['season'])),
             'flags': flags}
 
