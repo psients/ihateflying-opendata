@@ -76,9 +76,12 @@ chain continuity 0.993.
   W14 ratio or tk drifting >15% against the record 7 days earlier
   W15 any of the anchor carriers (KAL AAR SWA RYR DAL UAL AAL) with zero
       countable departures
-  W16 the upstream archive was damaged (meta tar_gaps > 0): the day was
-      recovered around the unreadable regions; the warning states how much
-      was skipped, so a partial day is never taken for a complete one
+  W16 the upstream archive was irregular (meta tar_gaps > 0): the day was
+      read past regions that are not valid tar records - end-marker padding
+      between joined archive pieces (nothing lost) or damage (aircraft stored
+      there lost). The warning states the bytes skipped; seen so far: ~64 KB
+      on 2026-04-30 and 2026-05-04, next to adsb.lol's 2026-05-06 outage,
+      with full-size days recovered (66,743 and 76,094 aircraft)
 """
 import collections
 import datetime as dt
@@ -209,8 +212,9 @@ def check_day(day, files, prev_legs, prev_meta, history):
     if not meta.get('allowlist'):
         problems.append('I1 allowlist off')
     if meta.get('tar_gaps'):
-        warnings.append(f"W16 upstream archive damaged: {meta['tar_gaps']} unreadable region(s), "
-                        f"{meta.get('tar_gap_bytes', 0) / 1e6:.0f} MB skipped; aircraft in them are missing")
+        warnings.append(f"W16 upstream archive irregular: {meta['tar_gaps']} region(s) unreadable as tar "
+                        f"records, {meta.get('tar_gap_bytes', 0) / 1024:.0f} KB skipped (padding between joined "
+                        f"archive pieces loses nothing; damage would lose any aircraft stored there)")
 
     # I2-I5
     b = BOUNDS[era(day)]
