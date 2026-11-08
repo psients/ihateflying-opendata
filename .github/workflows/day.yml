@@ -1,0 +1,31 @@
+name: Daily flights
+
+# Processes one day of the adsb.lol archive (default: yesterday, UTC) on
+# GitHub's runner and publishes the summaries to this repo's releases.
+# Manual only for now; a daily schedule is added once the owner approves it.
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Day to process, YYYY-MM-DD (empty = yesterday, UTC)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  day:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - id: src
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAY: ${{ inputs.date }}
+        run: python3 scripts/plan.py one "$DAY" >> "$GITHUB_OUTPUT"
+      - uses: ./.github/actions/process
+        with:
+          day: ${{ steps.src.outputs.day }}
+          urls: ${{ steps.src.outputs.urls }}

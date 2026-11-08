@@ -1,0 +1,47 @@
+name: Backfill
+
+# Processes every archived day between two dates that this repo has not
+# published yet (at most 250 per run; run again to continue).
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'First day, YYYY-MM-DD'
+        required: true
+      end:
+        description: 'Last day, YYYY-MM-DD'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      count: ${{ steps.p.outputs.count }}
+      matrix: ${{ steps.p.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: p
+        env:
+          GH_TOKEN: ${{ github.token }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+        run: python3 scripts/plan.py range "$START" "$END" >> "$GITHUB_OUTPUT"
+
+  days:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/process
+        with:
+          day: ${{ matrix.day }}
+          urls: ${{ matrix.urls }}
