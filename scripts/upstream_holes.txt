@@ -2,3 +2,4 @@
 # plan.py never schedules them; verify.py records them SKIPPED with the reason.
 # Adding a line is an owner-visible commit. Format: YYYY-MM-DD reason
 2026-05-06 no archive on any usable instance (only mlatonly-0 exists; adsb.lol outage)
+2026-05-05 prod-0 holds heatmap files only and staging-0 holds 1 aircraft trace (checked 2026-11-08; adsb.lol outage window)
