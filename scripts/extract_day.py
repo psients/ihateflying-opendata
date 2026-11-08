@@ -30,7 +30,14 @@ import re
 import sys
 import tarfile
 
-EXTRACTOR_VERSION = 4
+
+def gz_writer(path):
+    """Deterministic gzip writer: mtime pinned to 0, so identical content is
+    identical bytes and a reprocessed day compares by hash alone."""
+    return io.TextIOWrapper(gzip.GzipFile(filename='', mode='wb', compresslevel=9,
+                                          fileobj=open(path, 'wb'), mtime=0), encoding='utf-8')
+
+EXTRACTOR_VERSION = 5
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 AIRLINE_CS = re.compile(r'^[A-Z]{3}[0-9]{1,4}[A-Z]{0,2}$')
@@ -288,7 +295,7 @@ def leg_record(day, meta, leg):
     if not cs or not AIRLINE_CS.match(cs):
         return None
     if _ALLOW is not None and cs[:3] not in _ALLOW:
-        return None
+        return ('excluded', cs[:3])
     air = [p for p in leg if not p[4] and p[3] is not None]
     if len(air) < 5 or max(p[3] for p in air) < 3000:
         return None
@@ -374,15 +381,18 @@ def process(item):
             flags = p[6] if isinstance(p[6], int) else 0
             points.append((base + p[0], p[1], p[2], alt, ground, flags, cs))
         out, sus_legs = [], 0
+        excluded = {}
         for leg in split_legs(points):
             if len(leg) < 8:
                 continue
             r = leg_record(day, meta, leg)
-            if r:
+            if isinstance(r, tuple) and r[0] == 'excluded':
+                excluded[r[1]] = excluded.get(r[1], 0) + 1
+            elif r:
                 out.append(r)
                 if r[0]['sus']:
                     sus_legs += 1
-        return out, ('sus', sus_legs) if sus_legs else None
+        return out, {'sus': sus_legs, 'excluded': excluded} if (sus_legs or excluded) else None
     except Exception:
         return [], 'error'
 
@@ -406,19 +416,25 @@ def main():
     os.makedirs(out_dir, exist_ok=True)
     load_airports()
     stats = {'scanned': 0, 'legs': 0, 'errors': 0, 'bad_meta': 0, 'oversize': 0, 'sus_legs': 0}
+    excluded_counts = {}
     fpath = os.path.join(out_dir, f'flights-{day}.jsonl.gz')
     ppath = os.path.join(out_dir, f'paths-{day}.jsonl.gz')
     with mp.Pool(max(1, os.cpu_count() or 1)) as pool, \
-            gzip.open(fpath, 'wt', compresslevel=9) as ff, gzip.open(ppath, 'wt', compresslevel=9) as pf:
-        for result, note in pool.imap_unordered(process, members(day, sys.stdin.buffer, stats), chunksize=64):
+            gz_writer(fpath) as ff, gz_writer(ppath) as pf:
+        # imap (ordered), not imap_unordered: the tar's member order is
+        # deterministic, so the published files become byte-reproducible
+        # and a reprocessed day can be compared by hash alone.
+        for result, note in pool.imap(process, members(day, sys.stdin.buffer, stats), chunksize=64):
             if note == 'error':
                 stats['errors'] += 1
             elif note == 'bad_meta':
                 stats['bad_meta'] += 1
             elif note == 'oversize':
                 stats['oversize'] += 1
-            elif isinstance(note, tuple) and note[0] == 'sus':
-                stats['sus_legs'] += note[1]
+            elif isinstance(note, dict):
+                stats['sus_legs'] += note.get('sus', 0)
+                for pre, c in note.get('excluded', {}).items():
+                    excluded_counts[pre] = excluded_counts.get(pre, 0) + c
             for rec, path in result:
                 ff.write(json.dumps(rec, separators=(',', ':')) + '\n')
                 pf.write(json.dumps(path, separators=(',', ':')) + '\n')
@@ -427,6 +443,10 @@ def main():
         'day': day, 'v': EXTRACTOR_VERSION, 'airports_rev': airports_rev(),
         'allowlist': _ALLOW is not None,
         'source': os.environ.get('SOURCE_TAG', ''), **stats,
+        # Allowlist drift watch: the biggest callsign prefixes the allowlist
+        # kept OUT of the files. A new airline, or a wrongly-excluded one,
+        # surfaces here without republishing anything.
+        'excluded_top': dict(sorted(excluded_counts.items(), key=lambda kv: -kv[1])[:10]),
         'sha256': {os.path.basename(p): hashlib.sha256(open(p, 'rb').read()).hexdigest() for p in (fpath, ppath)},
     }
     with open(os.path.join(out_dir, f'meta-{day}.json'), 'w') as mf:

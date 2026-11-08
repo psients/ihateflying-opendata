@@ -1,29 +1,67 @@
 #!/usr/bin/env python3
-"""Quarantine verifier: check published days against the invariants the
-red-team review established, red on any break, and append the result to
-QUARANTINE.md. The site reads NOTHING from this data until the log shows at
-least 30 consecutive clean days (owner's rule, 2026-11-09).
+"""Quarantine verifier. The site reads NOTHING from this pipeline until
+QUARANTINE.md shows the exit criteria met (owner's rule, 2026-11-09).
 
-  verify.py daily              yesterday's published day (plus its D-1 as
-                               cross-midnight context when published)
-  verify.py range START END    a backfill batch, sampled per week
+Modes:
+  verify.py daily              sweep the last 17 days: verify every published
+                               day that has no record yet (or was reprocessed
+                               under a newer extractor), write SKIPPED records
+                               for days adsb.lol never archived, re-red on
+                               verifier exceptions. Exits 1 if any NEW red.
+  verify.py range START END    verify a backfill batch day by day with
+                               cross-midnight context. NEVER exits before all
+                               records are written (a red must reach the log).
+  verify.py render             regenerate QUARANTINE.md from the per-day
+                               records (the ONLY writer of that file).
+  verify.py explain DAY TEXT   attach a written cause to a day's record.
+  verify.py drill              write a clearly-labelled DRILL red and exit 1,
+                               to prove the failure-email channel end to end.
 
-Invariants (2026-11-07 allowlisted baselines: legs/scanned 1.28, tk 0.66,
-ld 0.66, both-ends-null 0.11, sus 1.03%, countable max/airframe 11):
-  I1  meta matches the file: line count = legs, sha256 agrees, v = current,
+Records live one file per day in quarantine/days/DAY.json, so concurrent
+writers (the daily job and a range run) can never conflict: they touch
+different paths, and the table is regenerated, never merged.
+
+THE STREAK (frozen definition; changing it, or any counting constant in this
+file or aggregate.py, is an owner-visible commit that RESTARTS the streak):
+consecutive UTC calendar days, ending at the newest recorded day, where each
+day has a CLEAN daily-mode record under the current extractor version, or a
+SKIPPED record whose reason is that adsb.lol has no archive for that day.
+A RED breaks it. A day with no record breaks it once it is 4+ days old
+(younger gaps are healing in progress). Range-mode records never count
+toward the streak, but every red among them must carry an explanation
+before exit.
+
+Invariants (I*) red the day; warnings (W*) are visible but not red.
+Baselines measured on 2026-11-07 (allowlisted, extractor v5): legs/scanned
+1.28, tk 0.66, ld 0.66, both-ends-null 0.084, sus 1.03%, deps/legs 0.655,
+chain continuity 0.993.
+  I1  meta matches the files: line counts, sha256 of flights AND paths,
+      extractor version current (older = warning while reprocessing),
       allowlist on
-  I2  legs/scanned in [0.4, 3.5]   (2023 era: [0.2, 3.5] - fewer receivers)
-  I3  tk and ld rates >= 0.35      (2023 era: >= 0.20)
-  I4  both-ends-null <= 0.35       (2023 era: <= 0.55)
+  I2  legs/scanned in [0.4, 3.5]   (2023 era: [0.5, 3.5], the protocol's)
+  I3  tk and ld rates >= 0.35
+  I4  both-ends-null <= 0.35
   I5  sus legs <= 2%
-  I6  no duplicate (hex, t0) within the day
-  I7  no impossible back-to-back countable departures (per hex, with the
-      previous day as carry context when available)
-  I8  first-5-minutes countable-departure rate <= 2x the mid-day 5-minute
-      average (the midnight double-count guard, measured structurally fixed)
-  I9  every org/dst carries oq/dq; paths stay <= 150 points per leg
-  I10 prefix drift: any UNLISTED prefix above 300 legs/day is reported (a
-      new airline or a wrongly-excluded one) - warning, not red
+  I6  no duplicate (hex, t0)
+  I7  no impossible back-to-back countable departures (cross-midnight
+      context when the previous day is published)
+  I8  first-5-minutes countable departures <= 2x the mid-day average
+      (W8 when disarmed because the previous day is unpublished)
+  I9  every org/dst carries oq/dq; every paths line has <= 150 points with
+      never-decreasing in-segment timestamps (equal seconds allowed: sub-second fixes round together), and flights/paths ids match
+      1:1 (the no-chord-across-gaps property is an extractor guarantee,
+      proven at extraction; simplification legitimately keeps points more
+      than 300 s apart, so it cannot be re-checked here)
+  I10 countable departures / legs in [0.40, 0.85]
+  I11 flight-chain continuity (prev dst = next org per airframe, where
+      both known) >= 0.97 red, < 0.985 warning (baseline 0.993; a
+      single-airport relabel moves it ~0.007, a systemic one far more)
+  W12 any top-30 prefix collapsing >70% day over day
+  W13 any excluded prefix (meta excluded_top) >= 300 legs that was not in
+      yesterday's excluded_top (allowlist drift: a new or missing airline)
+  W14 ratio or tk drifting >15% against the record 7 days earlier
+  W15 any of the anchor carriers (KAL AAR SWA RYR DAL UAL AAL) with zero
+      countable departures
 """
 import collections
 import datetime as dt
@@ -41,49 +79,92 @@ sys.path.insert(0, HERE)
 from aggregate import countable  # noqa: E402
 from extract_day import EXTRACTOR_VERSION  # noqa: E402
 
-LOG = os.path.join(HERE, '..', 'QUARANTINE.md')
+ROOT = os.path.normpath(os.path.join(HERE, '..'))
+DAYS_DIR = os.path.join(ROOT, 'quarantine', 'days')
+LOG = os.path.join(ROOT, 'QUARANTINE.md')
+REPO = os.environ.get('GITHUB_REPOSITORY', 'psients/ihateflying-opendata')
+ANCHORS = ('KAL', 'AAR', 'SWA', 'RYR', 'DAL', 'UAL', 'AAL')
+
+BOUNDS = {
+    '2023': {'ratio': (0.5, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35},
+    'now': {'ratio': (0.4, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35},
+}
 
 
 def era(day):
     return '2023' if day < '2024-01-01' else 'now'
 
 
-BOUNDS = {
-    '2023': {'ratio': (0.2, 3.5), 'tk': 0.20, 'ld': 0.20, 'null2': 0.55},
-    'now': {'ratio': (0.4, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35},
-}
+def today_utc():
+    return dt.datetime.now(dt.timezone.utc).date()
 
 
-def fetch_day(day, dest):
-    """Download a published day's flights+meta via gh (anonymous rate limits
-    are too tight for a month of dailies). Returns paths or None."""
+def rec_path(day):
+    return os.path.join(DAYS_DIR, f'{day}.json')
+
+
+def load_rec(day):
+    try:
+        return json.load(open(rec_path(day)))
+    except Exception:
+        return None
+
+
+def write_rec(rec):
+    os.makedirs(DAYS_DIR, exist_ok=True)
+    rec['verified_at'] = dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')
+    with open(rec_path(rec['day']), 'w') as f:
+        json.dump(rec, f, indent=1, sort_keys=True)
+        f.write('\n')
+
+
+def fetch(day, dest):
+    """Download a published day's three files. Returns dict or None."""
     month = day[:7]
     out = {}
-    for name in (f'flights-{day}.jsonl.gz', f'meta-{day}.json'):
+    for key, name in (('flights', f'flights-{day}.jsonl.gz'),
+                      ('paths', f'paths-{day}.jsonl.gz'),
+                      ('meta', f'meta-{day}.json')):
         path = os.path.join(dest, name)
         if not os.path.exists(path):
-            r = subprocess.run(['gh', 'release', 'download', f'data-{month}', '--pattern', name,
-                                '--dir', dest, '--clobber'], capture_output=True, text=True)
+            r = subprocess.run(['gh', 'release', 'download', f'data-{month}', '-R', REPO,
+                                '--pattern', name, '--dir', dest, '--clobber'],
+                               capture_output=True, text=True)
             if r.returncode != 0:
-                return None
-        out[name.split('-')[0]] = path
+                return None if key != 'paths' else None
+        out[key] = path
     return out
 
 
-def check_day(day, flights_path, meta_path, prev_legs):
+def upstream_has(day):
+    """Does any adsb.lol instance archive this day? (plan.py's ladder.)"""
+    try:
+        from plan import find_day
+        return find_day(dt.date.fromisoformat(day)) is not None
+    except Exception:
+        return True  # unknowable now = assume yes, let healing retry
+
+
+def check_day(day, files, prev_legs, prev_meta, history):
     problems, warnings = [], []
-    meta = json.load(open(meta_path))
-    legs = [json.loads(l) for l in gzip.open(flights_path, 'rt')]
+    meta = json.load(open(files['meta']))
+    legs = [json.loads(l) for l in gzip.open(files['flights'], 'rt')]
     n = len(legs)
-    sha = hashlib.sha256(open(flights_path, 'rb').read()).hexdigest()
+
+    # I1 integrity
+    for key in ('flights', 'paths'):
+        sha = hashlib.sha256(open(files[key], 'rb').read()).hexdigest()
+        base = os.path.basename(files[key])
+        if meta['sha256'].get(base) != sha:
+            problems.append(f'I1 {key} sha256 mismatch')
     if n != meta['legs']:
         problems.append(f'I1 line count {n} != meta legs {meta["legs"]}')
-    if meta['sha256'].get(os.path.basename(flights_path)) != sha:
-        problems.append('I1 sha256 mismatch')
     if meta['v'] != EXTRACTOR_VERSION:
         warnings.append(f'I1 extractor v{meta["v"]} (current v{EXTRACTOR_VERSION}); reprocess pending')
     if not meta.get('allowlist'):
         problems.append('I1 allowlist off')
+
+    # I2-I5
     b = BOUNDS[era(day)]
     ratio = n / max(1, meta['scanned'])
     if not b['ratio'][0] <= ratio <= b['ratio'][1]:
@@ -98,108 +179,309 @@ def check_day(day, flights_path, meta_path, prev_legs):
     sus = sum(1 for r in legs if r.get('sus')) / max(1, n)
     if sus > 0.02:
         problems.append(f'I5 sus {sus:.3f}')
-    seen = collections.Counter((r['hex'], r['t0']) for r in legs)
-    dups = [k for k, c in seen.items() if c > 1]
-    if dups:
-        problems.append(f'I6 {len(dups)} duplicate (hex, t0)')
+
+    # I6
+    dup = sum(1 for c in collections.Counter((r['hex'], r['t0']) for r in legs).values() if c > 1)
+    if dup:
+        problems.append(f'I6 {dup} duplicate (hex, t0)')
+
+    # I7/I8/I10/W15 on countable departures
     by_hex = collections.defaultdict(list)
     for r in legs:
         by_hex[r['hex']].append(r)
     prev_end = {}
     for r in prev_legs or []:
         prev_end[r['hex']] = max(prev_end.get(r['hex'], 0), r['t1'])
-    bad_pairs = 0
     day0 = dt.datetime.fromisoformat(day + 'T00:00:00+00:00').timestamp()
+    bad_pairs = deps_total = 0
     buckets = collections.Counter()
+    anchor_deps = collections.Counter()
     for hx, ls in by_hex.items():
         deps = countable(ls, prev_end.get(hx))
+        deps_total += len(deps)
         for a, c in zip(deps, deps[1:]):
             if c['t0'] - a['t1'] < 15 * 60:
                 bad_pairs += 1
         for r in deps:
             buckets[int((r['t0'] - day0) // 300)] += 1
+            if r['cs'][:3] in ANCHORS:
+                anchor_deps[r['cs'][:3]] += 1
     if bad_pairs:
         problems.append(f'I7 {bad_pairs} impossible back-to-back departures')
     mid = [buckets[i] for i in range(24, 264)]
     mid_avg = sum(mid) / max(1, len(mid))
-    if prev_legs is not None and buckets[0] > 2 * mid_avg and buckets[0] > 20:
+    if prev_legs is None:
+        warnings.append('W8 midnight guard disarmed (previous day unpublished)')
+    elif buckets[0] > 2 * mid_avg and buckets[0] > 20:
         problems.append(f'I8 first-5-min departures {buckets[0]} vs mid-day avg {mid_avg:.0f}')
+    dl = deps_total / max(1, n)
+    if not 0.40 <= dl <= 0.85:
+        problems.append(f'I10 departures/legs {dl:.2f}')
+    dead = [a for a in ANCHORS if anchor_deps[a] == 0]
+    if dead:
+        warnings.append(f'W15 anchor carriers with zero departures: {dead}')
+
+    # I9 ends quality + paths
     missing_q = sum(1 for r in legs if (r['org'] and not r.get('oq')) or (r['dst'] and not r.get('dq')))
     if missing_q:
         problems.append(f'I9 {missing_q} legs missing end quality')
-    allow = {l.strip() for l in open(os.path.join(HERE, 'airlines.txt'))
-             if l.strip() and not l.startswith('#')}
-    big = collections.Counter(r['cs'][:3] for r in legs if r['cs'][:3] not in allow)
-    # Unlisted prefixes cannot appear in the files (the extractor filters),
-    # so drift is measured from meta: kept ratio collapsing hints at it too;
-    # the real drift check needs the unfiltered count, which only the
-    # extractor sees. Report instead when a LISTED prefix vanishes.
-    gone = [p for p in ('KAL', 'AAR', 'RYR', 'DAL', 'UAL', 'AAL') if not any(r['cs'][:3] == p for r in legs)]
-    if gone:
-        warnings.append(f'I10 expected prefixes absent: {gone}')
-    return problems, warnings, {'legs': n, 'tk': round(tk, 2), 'sus': round(sus, 3),
-                                'floor_pairs': bad_pairs, 'ratio': round(ratio, 2)}
+    pids, pbad_pts, pbad_order = set(), 0, 0
+    for line in gzip.open(files['paths'], 'rt'):
+        p = json.loads(line)
+        pids.add(p['id'])
+        pts = sum(len(s) for s in p['segs'])
+        if pts > 150:
+            pbad_pts += 1
+        for seg in p['segs']:
+            if any(c[2] < a[2] for a, c in zip(seg, seg[1:])):
+                pbad_order += 1
+    fids = {r['id'] for r in legs}
+    if pids != fids:
+        problems.append(f'I9 flights/paths ids differ ({len(fids ^ pids)} unmatched)')
+    if pbad_pts:
+        problems.append(f'I9 {pbad_pts} paths over 150 points')
+    if pbad_order:
+        problems.append(f'I9 {pbad_order} segments with decreasing timestamps')
+
+    # I11 chain continuity
+    ok = tot = 0
+    for hx, ls in by_hex.items():
+        ls.sort(key=lambda x: x['t0'])
+        for a, c in zip(ls, ls[1:]):
+            if a['dst'] and c['org']:
+                tot += 1
+                ok += a['dst'] == c['org']
+    if tot >= 200:
+        cont = ok / tot
+        if cont < 0.97:
+            problems.append(f'I11 chain continuity {cont:.3f}')
+        elif cont < 0.985:
+            warnings.append(f'I11 chain continuity {cont:.3f} (baseline 0.993)')
+
+    # W12 volume collapse vs yesterday
+    if prev_legs is not None:
+        prev_top = collections.Counter(r['cs'][:3] for r in prev_legs).most_common(30)
+        today_by = collections.Counter(r['cs'][:3] for r in legs)
+        collapsed = [p for p, c in prev_top if c >= 100 and today_by[p] < 0.3 * c]
+        if collapsed:
+            warnings.append(f'W12 prefix volume collapse: {collapsed}')
+
+    # W13 excluded-prefix drift vs yesterday's meta
+    if prev_meta is not None:
+        prev_ex = set(prev_meta.get('excluded_top', {}))
+        new_big = [p for p, c in meta.get('excluded_top', {}).items() if c >= 300 and p not in prev_ex]
+        if new_big:
+            warnings.append(f'W13 new large excluded prefixes: {new_big}')
+
+    # W14 week-over-week drift
+    week_ago = (dt.date.fromisoformat(day) - dt.timedelta(days=7)).isoformat()
+    old = history.get(week_ago)
+    if old and old.get('stats'):
+        for k, cur in (('ratio', ratio), ('tk', tk)):
+            was = old['stats'].get(k)
+            if was and abs(cur - was) / was > 0.15:
+                warnings.append(f'W14 {k} {cur:.2f} vs {was:.2f} a week earlier')
+
+    stats = {'legs': n, 'tk': round(tk, 2), 'ld': round(ld, 2), 'sus': round(sus, 3),
+             'ratio': round(ratio, 2), 'deps': deps_total, 'deps_legs': round(dl, 2),
+             'chain': round(ok / max(1, tot), 3) if tot else None}
+    return problems, warnings, stats, meta, legs
 
 
-def append_log(day, problems, warnings, stats):
-    line = (f"| {day} | {'RED' if problems else 'clean'} | {stats['legs']} | {stats['tk']} | "
-            f"{stats['sus']} | {'; '.join(problems) or '-'} | {'; '.join(warnings) or '-'} |\n")
-    if not os.path.exists(LOG):
-        with open(LOG, 'w') as f:
-            f.write("# Quarantine log\n\nThe site reads nothing from this data until this log shows at "
-                    "least 30 consecutive clean days and every RED has a written cause (owner's rule, "
-                    "2026-11-09). One row per verified day.\n\n"
-                    "| day | verdict | legs | tk | sus | problems | warnings |\n"
-                    "|---|---|---|---|---|---|---|\n")
-    with open(LOG, 'a') as f:
-        f.write(line)
+def verify_one(day, dest, history):
+    """Verify one published day; returns the record (already written)."""
+    files = fetch(day, dest)
+    if not files:
+        return None
+    prev_day = (dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat()
+    prev = fetch(prev_day, dest)
+    prev_legs = prev_meta = None
+    if prev:
+        prev_legs = [json.loads(l) for l in gzip.open(prev['flights'], 'rt')]
+        prev_meta = json.load(open(prev['meta']))
+    try:
+        problems, warnings, stats, meta, _ = check_day(day, files, prev_legs, prev_meta, history)
+        rec = {'day': day, 'mode': 'daily', 'verdict': 'RED' if problems else 'clean',
+               'extractor_v': meta['v'], 'problems': problems, 'warnings': warnings,
+               'stats': stats, 'explanation': None}
+    except Exception as e:  # a crashing verifier must still leave a red row
+        rec = {'day': day, 'mode': 'daily', 'verdict': 'RED', 'extractor_v': None,
+               'problems': [f'verifier exception: {type(e).__name__}: {e}'],
+               'warnings': [], 'stats': {}, 'explanation': None}
+    write_rec(rec)
+    return rec
+
+
+def load_history():
+    hist = {}
+    for p in glob.glob(os.path.join(DAYS_DIR, '*.json')):
+        try:
+            r = json.load(open(p))
+            hist[r['day']] = r
+        except Exception:
+            continue
+    return hist
+
+
+def published_days():
+    from plan import published_here
+    return published_here()
+
+
+def mode_daily():
+    dest = os.environ.get('RUNNER_TEMP', '/tmp')
+    history = load_history()
+    published = published_days()
+    today = today_utc()
+    new_red = []
+    for back in range(17, 0, -1):
+        day = (today - dt.timedelta(days=back)).isoformat()
+        have = history.get(day)
+        if have and not (have['verdict'] == 'clean' and have.get('extractor_v')
+                         and have['extractor_v'] < EXTRACTOR_VERSION and day in published):
+            continue  # recorded, and not awaiting re-verification of a reprocess
+        if day in published:
+            rec = verify_one(day, dest, history)
+            if rec:
+                print(f"{day}: {rec['verdict']}" + (f" {rec['problems']}" if rec['problems'] else ''))
+                for w in rec['warnings']:
+                    print(f'::warning::{day}: {w}')
+                if rec['verdict'] == 'RED':
+                    new_red.append(day)
+            else:
+                rec = {'day': day, 'mode': 'daily', 'verdict': 'RED', 'extractor_v': None,
+                       'problems': ['published but not fetchable (ghost or missing asset)'],
+                       'warnings': [], 'stats': {}, 'explanation': None}
+                write_rec(rec)
+                new_red.append(day)
+        elif back >= 2 and not upstream_has(day):
+            write_rec({'day': day, 'mode': 'daily', 'verdict': 'SKIPPED', 'extractor_v': None,
+                       'problems': [], 'warnings': [], 'stats': {},
+                       'explanation': 'adsb.lol has no archive for this day'})
+            print(f'{day}: SKIPPED (no upstream archive)')
+        # else: unpublished but healable - no record yet; the streak tolerates
+        # gaps younger than 4 days, and the publish alarm covers persistence.
+    if new_red:
+        print(f"::error::red day(s): {', '.join(new_red)}")
+        sys.exit(1)
+
+
+def mode_range(start, end):
+    dest = os.environ.get('RUNNER_TEMP', '/tmp')
+    history = load_history()
+    published = published_days()
+    day = dt.date.fromisoformat(start)
+    last = dt.date.fromisoformat(end)
+    reds = 0
+    while day <= last:
+        d = day.isoformat()
+        if d in published:
+            rec = verify_one(d, dest, history)
+            if rec is None:
+                write_rec({'day': d, 'mode': 'range', 'verdict': 'RED', 'extractor_v': None,
+                           'problems': ['published but not fetchable'], 'warnings': [],
+                           'stats': {}, 'explanation': None})
+                reds += 1
+            else:
+                rec['mode'] = 'range'
+                write_rec(rec)
+                if rec['verdict'] == 'RED':
+                    reds += 1
+                    print(f"::error::{d}: {rec['problems']}")
+                else:
+                    print(f'{d} clean')
+        day += dt.timedelta(days=1)
+    # Records are on disk; the WORKFLOW commits them before honouring this.
+    if reds:
+        print(f'::error::{reds} day(s) failed verification')
+        sys.exit(1)
+
+
+def render():
+    history = load_history()
+    days = sorted(history)
+    streak = 0
+    if days:
+        cursor = dt.date.fromisoformat(days[-1])
+        today = today_utc()
+        while True:
+            d = cursor.isoformat()
+            r = history.get(d)
+            if r is None:
+                # a young gap may still heal; an old one breaks the streak
+                if (today - cursor).days <= 3:
+                    cursor -= dt.timedelta(days=1)
+                    continue
+                break
+            if r['verdict'] == 'RED' or r['mode'] == 'range':
+                if r['verdict'] == 'SKIPPED' or (r['mode'] == 'range' and r['verdict'] == 'clean'):
+                    pass
+                else:
+                    break
+            if r['verdict'] == 'clean' and r['mode'] == 'daily' and r.get('extractor_v') == EXTRACTOR_VERSION:
+                streak += 1
+            elif r['verdict'] == 'SKIPPED':
+                pass  # does not count, does not break
+            else:
+                break
+            cursor -= dt.timedelta(days=1)
+    lines = [
+        '# Quarantine log',
+        '',
+        'GENERATED by scripts/verify.py render; edit the per-day files in',
+        'quarantine/days/, never this table. The site reads nothing from this',
+        "pipeline until the exit criteria hold (owner's rule, 2026-11-09).",
+        '',
+        'THE STREAK, frozen definition: consecutive UTC calendar days, ending at',
+        'the newest recorded day, each with a CLEAN daily-mode record under the',
+        'current extractor version; SKIPPED-no-upstream days neither count nor',
+        'break; a RED breaks it; a recordless day breaks it once 4+ days old.',
+        'Any change to the counting constants in verify.py or aggregate.py is an',
+        'owner-visible commit and RESTARTS the streak. Exit needs 30.',
+        '',
+        f'**Current streak: {streak} clean day(s).** Extractor v{EXTRACTOR_VERSION}.',
+        '',
+        '| day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |',
+        '|---|---|---|---|---|---|---|---|---|---|',
+    ]
+    for d in reversed(days):
+        r = history[d]
+        s = r.get('stats') or {}
+        lines.append('| {} | {} | {} | {} | {} | {} | {} | {} | {} | {} |'.format(
+            d, r.get('mode', '?'), r['verdict'], s.get('legs', ''), s.get('tk', ''),
+            s.get('sus', ''), s.get('deps', ''),
+            '; '.join(r.get('problems', [])) or '-',
+            '; '.join(r.get('warnings', [])) or '-',
+            (r.get('explanation') or '-').replace('|', '/')))
+    with open(LOG, 'w') as f:
+        f.write('\n'.join(lines) + '\n')
+    print(f'rendered {len(days)} day(s); streak {streak}')
 
 
 def main():
     mode = sys.argv[1]
-    dest = os.environ.get('RUNNER_TEMP', '/tmp')
     if mode == 'daily':
-        day = (dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=1)).isoformat()
-        got = fetch_day(day, dest)
-        if not got:
-            print(f'::warning::{day} not published yet; nothing to verify')
-            return
-        prev_day = (dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat()
-        prev = fetch_day(prev_day, dest)
-        prev_legs = [json.loads(l) for l in gzip.open(prev['flights'], 'rt')] if prev else None
-        problems, warnings, stats = check_day(day, got['flights'], got['meta'], prev_legs)
-        append_log(day, problems, warnings, stats)
-        for w in warnings:
-            print(f'::warning::{day}: {w}')
-        if problems:
-            sys.exit(f'::error::{day}: ' + '; '.join(problems))
-        print(f'{day} clean: {stats}')
-        return
-    if mode == 'range':
-        start, end = sys.argv[2], sys.argv[3]
-        day = dt.date.fromisoformat(start)
-        last = dt.date.fromisoformat(end)
-        failures = 0
-        prev_legs = None
-        while day <= last:
-            d = day.isoformat()
-            got = fetch_day(d, dest)
-            if got:
-                problems, warnings, stats = check_day(d, got['flights'], got['meta'], prev_legs)
-                append_log(d, problems, warnings, stats)
-                prev_legs = [json.loads(l) for l in gzip.open(got['flights'], 'rt')]
-                if problems:
-                    failures += 1
-                    print(f'::error::{d}: ' + '; '.join(problems))
-                else:
-                    print(f'{d} clean')
-            else:
-                prev_legs = None
-            day += dt.timedelta(days=1)
-        if failures:
-            sys.exit(f'{failures} day(s) failed verification')
-        return
-    sys.exit('usage: verify.py daily | range START END')
+        mode_daily()
+    elif mode == 'range':
+        mode_range(sys.argv[2], sys.argv[3])
+    elif mode == 'render':
+        render()
+    elif mode == 'explain':
+        rec = load_rec(sys.argv[2])
+        if not rec:
+            sys.exit(f'no record for {sys.argv[2]}')
+        rec['explanation'] = sys.argv[3]
+        write_rec(rec)
+        print(f'explanation recorded for {sys.argv[2]}')
+    elif mode == 'drill':
+        d = today_utc().isoformat()
+        write_rec({'day': d, 'mode': 'daily', 'verdict': 'RED', 'extractor_v': EXTRACTOR_VERSION,
+                   'problems': ['DRILL: deliberate test of the failure-email channel'],
+                   'warnings': [], 'stats': {}, 'explanation': 'drill, not a data problem'})
+        print('::error::DRILL red (deliberate)')
+        sys.exit(1)
+    else:
+        sys.exit('usage: verify.py daily | range START END | render | explain DAY TEXT | drill')
 
 
 if __name__ == '__main__':
