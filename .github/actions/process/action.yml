@@ -1,5 +1,5 @@
 name: Process one day
-description: Download one adsb.lol day on the runner, extract airline flights, upload them to the month's release.
+description: Download one adsb.lol day on the runner, extract airline flights, upload the summaries to the month's release.
 inputs:
   day:
     description: YYYY-MM-DD
@@ -21,14 +21,31 @@ runs:
         parts="$RUNNER_TEMP/parts"; mkdir -p "$parts" out
         i=0
         for url in $URLS; do
-          [[ "$url" == https://github.com/adsblol/* ]] || { echo "unexpected source: $url"; exit 1; }
+          [[ "$url" =~ ^https://github\.com/adsblol/globe_history_[0-9]{4}/releases/download/[A-Za-z0-9._+-]+/[A-Za-z0-9._%+-]+$ ]] \
+            || { echo "unexpected source url: $url"; exit 1; }
           i=$((i+1))
-          curl -sSfL --retry 5 --retry-delay 15 -o "$parts/$(printf %02d $i)" "$url"
+          curl -sSfL --retry 5 --retry-delay 15 --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
         done
         cat "$parts"/* | python3 scripts/extract_day.py "$DAY" out
         rm -rf "$parts"
         month="${DAY:0:7}"
-        gh release view "data-$month" >/dev/null 2>&1 || gh release create "data-$month" --title "Flights $month" \
-          --notes "Airline flight legs seen by adsb.lol receivers in $month, one file pair per day. Derived from adsb.lol globe_history (c) adsb.lol contributors, ODbL 1.0. See README.md." || true
-        gh release upload "data-$month" "out/flights-$DAY.jsonl.gz" "out/paths-$DAY.jsonl.gz" --clobber
-        echo "### $DAY: $(zcat "out/flights-$DAY.jsonl.gz" | wc -l) flight legs" >> "$GITHUB_STEP_SUMMARY"
+        # Create-or-reuse the month's release; concurrent losers fall through
+        # to the view, and a real failure still stops the job there.
+        gh release view "data-$month" >/dev/null 2>&1 \
+          || gh release create "data-$month" --title "Flights $month" \
+               --notes "Airline flight legs seen by adsb.lol receivers in $month, one file set per day. Derived from adsb.lol globe_history, (c) adsb.lol contributors, Open Database License (ODbL) 1.0: https://opendatacommons.org/licenses/odbl/1-0/ . Data in this repository is likewise ODbL 1.0; see DATA-LICENSE.md and README.md." \
+          || true
+        gh release view "data-$month" >/dev/null
+        # GitHub's secondary limit (~500 content-writes/hour) can 403 a burst;
+        # back off and retry rather than redden the day.
+        for attempt in 1 2 3 4 5; do
+          if gh release upload "data-$month" "out/flights-$DAY.jsonl.gz" "out/paths-$DAY.jsonl.gz" "out/meta-$DAY.json" --clobber; then
+            break
+          elif [ "$attempt" = 5 ]; then
+            echo "upload failed after 5 attempts"; exit 1
+          else
+            sleep $((attempt * 60))
+          fi
+        done
+        echo "### $DAY" >> "$GITHUB_STEP_SUMMARY"
+        sed 's/^/    /' "out/meta-$DAY.json" >> "$GITHUB_STEP_SUMMARY"

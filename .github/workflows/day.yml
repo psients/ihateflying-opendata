@@ -1,33 +1,78 @@
 name: Daily flights
 
-# Processes one day of the adsb.lol archive (default: yesterday, UTC) on
-# GitHub's runner and publishes the summaries to this repo's releases.
-# adsb.lol publishes each day at about 03:30 UTC the next day.
+# Processes the newest adsb.lol archive days and publishes the summaries to
+# this repository's releases. The one red condition: the day before yesterday
+# is neither published here nor available from any adsb.lol instance (a dead
+# pipeline or a dead source, caught within ~53 hours). A merely-late adsb.lol
+# publish is a warning, never an email. adsb.lol publishes each day at about
+# 03:30 UTC the following day.
 on:
   schedule:
     - cron: '17 5 * * *'   # daily 05:17 UTC
   workflow_dispatch:
     inputs:
       date:
-        description: 'Day to process, YYYY-MM-DD (empty = yesterday, UTC)'
+        description: 'Day to process, YYYY-MM-DD (empty = the newest days)'
         required: false
         default: ''
 
 permissions:
   contents: write
 
+concurrency:
+  group: opendata-process
+  cancel-in-progress: false
+
 jobs:
-  day:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
+    outputs:
+      matrix: ${{ steps.p.outputs.matrix }}
+      count: ${{ steps.p.outputs.count }}
     steps:
-      - uses: actions/checkout@v4
-      - id: src
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - id: p
         env:
           GH_TOKEN: ${{ github.token }}
           DAY: ${{ inputs.date }}
-        run: python3 scripts/plan.py one "$DAY" >> "$GITHUB_OUTPUT"
+        run: python3 scripts/plan.py one "$DAY"
+
+  days:
+    needs: plan
+    if: needs.plan.outputs.count != '0' && needs.plan.outputs.count != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ./.github/actions/process
         with:
-          day: ${{ steps.src.outputs.day }}
-          urls: ${{ steps.src.outputs.urls }}
+          day: ${{ matrix.day }}
+          urls: ${{ matrix.urls }}
+
+  manifest:
+    needs: [plan, days]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 scripts/manifest.py reindex
+          git add MANIFEST.json
+          if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "manifest: $(date -u +%F)"; then
+            for attempt in 1 2 3; do
+              git push && break || { git pull --rebase; [ "$attempt" = 3 ] && exit 1; }
+            done
+          else
+            echo "manifest unchanged"
+          fi
