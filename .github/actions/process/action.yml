@@ -28,6 +28,10 @@ runs:
           i=$((i+1))
           curl -sSfL --retry 5 --retry-delay 15 --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
         done
+        # Which archive release produced this day (staging runs ~15% smaller
+        # than prod; a consumer deserves to know which it is reading).
+        SOURCE_TAG="$(printf '%s' "$URLS" | awk '{print $1}' | sed -E 's#.*/download/([^/]+)/.*#\1#')"
+        export SOURCE_TAG
         cat "$parts"/* | python3 scripts/extract_day.py "$DAY" out
         rm -rf "$parts"
         # Sanity gate: a day that extracts implausibly (an old format

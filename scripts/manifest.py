@@ -39,9 +39,13 @@ def merge(man, meta):
     day = meta.get('day')
     if not day or not re.match(r'^\d{4}-\d{2}-\d{2}$', day):
         return False
-    man['days'][day] = {k: meta[k] for k in
-                        ('v', 'airports_rev', 'allowlist', 'scanned', 'legs', 'errors',
-                         'bad_meta', 'oversize', 'absurd_legs', 'sha256') if k in meta}
+    entry = {k: meta[k] for k in
+             ('v', 'airports_rev', 'allowlist', 'source', 'scanned', 'legs', 'errors',
+              'bad_meta', 'oversize', 'absurd_legs', 'glitch_points', 'sha256') if k in meta}
+    for k in ('asset_id', 'asset_updated'):
+        if k in meta:
+            entry[k] = meta[k]
+    man['days'][day] = entry
     return True
 
 
@@ -70,9 +74,18 @@ def reindex(man):
                 continue
             day = m.group(1)
             have = man['days'].get(day, {})
-            if have.get('v') and have.get('sha256'):
+            # A reprocessed day re-uploads its meta asset: the asset id or
+            # updated stamp changes, and only then is it re-fetched. Without
+            # this, a version bump never converges (the manifest would keep
+            # the old version forever and every backfill run would redo the
+            # same newest 250 days).
+            if have.get('v') and have.get('asset_id') == a.get('id') \
+                    and have.get('asset_updated') == a.get('updated_at'):
                 continue
-            if merge(man, fetch_json(a['browser_download_url'])):
+            meta = fetch_json(a['browser_download_url'])
+            meta['asset_id'] = a.get('id')
+            meta['asset_updated'] = a.get('updated_at')
+            if merge(man, meta):
                 changed += 1
                 if changed % 50 == 0:
                     save(man)  # a late hiccup must not repeat 1,300 fetches

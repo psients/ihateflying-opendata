@@ -18,7 +18,8 @@ Releases named `data-YYYY-MM` hold three files per day:
 - `paths-YYYY-MM-DD.jsonl.gz`: each leg's observed track (same `id`), as time-stamped
   segments `{"segs": [[[lat, lon, seconds_since_t0], ...], ...]}`. A segment never spans
   a coverage gap of more than 5 minutes, so unseen sky is never drawn as a line.
-- `meta-YYYY-MM-DD.json`: extractor version, airports revision, counts, file hashes.
+- `meta-YYYY-MM-DD.json`: extractor version, airports revision, source release tag,
+  counts, file hashes.
   `MANIFEST.json` in the repository collects these per day.
 
 Every line carries `v`, the extractor version that produced it. When the extractor
@@ -39,7 +40,8 @@ Coverage starts on 2023-02-16, the first day of the adsb.lol archive.
 | `oq`, `dq` | assignment quality for `org`/`dst`: `[feet above the airport, km from it]` at the moment of assignment; generous assignments (high or far) are real, flagged, and filterable |
 | `tk`, `ld` | whether the departure / the landing itself was observed: the leg starts or ends on the ground, or below 3,000 ft within 10 km of the assigned airport. A fragment re-acquired at altitude is never a departure |
 | `t0`, `t1` | first and last airborne sighting (Unix seconds, UTC) |
-| `km` | distance flown along the observed track |
+| `km` | distance flown along the observed track, excluding suspect hops |
+| `sus` | suspect-motion count: hops implying over 1,500 km/h across more than 10 km (teleporting fixes; jitter never jumps that far). Legs with `sus` > 0 are real flights with corrupted fixes: counted in floors, never used as route exemplars |
 | `alt` | highest barometric altitude seen (ft) |
 | `gap` | longest stretch without a position (minutes) |
 | `cov` | share of the airborne time with positions no more than 5 minutes apart |
@@ -67,9 +69,12 @@ averages. Every count is a floor.
 
 ## Integrity notes
 
-- Crowd-sourced ADS-B can be spoofed. Legs with three consecutive inter-fix ground
-  speeds above 1,500 km/h are dropped at extraction; identity and daily-cap checks run
-  at aggregation; disagreements are flagged, not displayed.
+- Crowd-sourced ADS-B can be glitchy and can be spoofed. Nothing is dropped for
+  motion (a dropped leg is a missed real flight; 93 of 95 legs an early whole-leg
+  gate removed were ordinary flights with teleporting fixes): suspect hops are
+  counted per leg (`sus`), excluded from the distance sum, kept out of route
+  exemplars, and heavy offenders are flagged at aggregation alongside identity and
+  daily-cap checks. Disagreements are flagged, not displayed.
 - `reg` and `type` come from the community aircraft database and are not independently
   verified here.
 - Do not enable GitHub's immutable releases on this repository: days are re-uploaded in

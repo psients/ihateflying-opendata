@@ -20,11 +20,11 @@ def main():
         problems.append('zero legs')
     if not 0.3 <= ratio <= 5.0:
         problems.append(f'legs/scanned {ratio:.2f} outside [0.3, 5.0]')
-    if m['absurd_legs'] > 0.01 * max(1, m['legs']):
-        problems.append(f"absurd-speed drops {m['absurd_legs']} exceed 1% of legs")
+    if m['sus_legs'] > 0.02 * max(1, m['legs']):
+        problems.append(f"suspect-motion legs {m['sus_legs']} exceed 2% of legs")
     if problems:
         sys.exit('refusing to publish: ' + '; '.join(problems))
-    print('sanity gate passed:', json.dumps({k: m[k] for k in ('scanned', 'legs', 'errors', 'bad_meta', 'absurd_legs')}))
+    print('sanity gate passed:', json.dumps({k: m[k] for k in ('scanned', 'legs', 'errors', 'bad_meta', 'sus_legs')}))
 
 
 if __name__ == '__main__':

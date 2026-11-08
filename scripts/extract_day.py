@@ -30,7 +30,7 @@ import re
 import sys
 import tarfile
 
-EXTRACTOR_VERSION = 3
+EXTRACTOR_VERSION = 4
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 AIRLINE_CS = re.compile(r'^[A-Z]{3}[0-9]{1,4}[A-Z]{0,2}$')
@@ -43,8 +43,8 @@ FT_PER_KM_GLIDE = 172.0   # a 3-degree path loses ~172 ft per km of ground dista
 TURN_KMH = 400.0          # gone 45+ min and back closer than this average = landed unseen
 PATH_GAP_S = 300          # a path segment never spans a gap longer than this
 ABSURD_KMH = 1500.0       # three consecutive legs of this ground speed = spoofed trace
-MAX_RAW_MEMBER = 64 * 1024 * 1024
-MAX_DECOMPRESSED = 256 * 1024 * 1024
+MAX_RAW_MEMBER = 8 * 1024 * 1024      # real-day max member: 0.40 MB
+MAX_DECOMPRESSED = 64 * 1024 * 1024   # real-day max: 3.48 MB
 
 _AIRPORTS = None
 _GRID = None
@@ -204,22 +204,29 @@ def departure_seen(leg, org, org_agl, org_km):
             and org_km is not None and org_km <= 10.0)
 
 
-def absurd_speed(leg):
-    """Three consecutive inter-fix ground speeds above ABSURD_KMH: a spoofed
-    or garbled trace. Real aircraft in the strongest jet streams stay under
-    ~1,350 km/h over the ground."""
-    run = 0
+def motion_stats(leg):
+    """(suspect_hops, robust_km): hops implying ground speed above
+    ABSURD_KMH are counted as suspect and EXCLUDED from the flown-distance
+    sum, and nothing is ever dropped - a dropped leg would be a missed real
+    flight (93 of 95 legs an earlier whole-leg gate removed were ordinary
+    flights with teleporting fixes, worst 564,168 km/h), while a retained
+    spike would otherwise inflate flown km fivefold. Legs with suspect
+    motion carry it in the published `sus` field; consumers exclude them
+    from route exemplars and flag heavy offenders."""
+    sus = 0
+    dist = 0.0
     for a, b in zip(leg, leg[1:]):
+        hop = km(a[1], a[2], b[1], b[2])
         dt = b[0] - a[0]
-        if dt < 5:
-            continue
-        if km(a[1], a[2], b[1], b[2]) / dt * 3600.0 > ABSURD_KMH:
-            run += 1
-            if run >= 3:
-                return True
+        # The displacement floor separates teleports from jitter: MLAT noise
+        # at one-second spacing exceeds any speed threshold (420 m in 1 s is
+        # 1,512 km/h) but never jumps 10 km. Jitter stays in the distance
+        # sum - it is sub-kilometre noise.
+        if hop > 10.0 and dt >= 1 and hop / dt * 3600.0 > ABSURD_KMH:
+            sus += 1
         else:
-            run = 0
-    return False
+            dist += hop
+    return sus, dist
 
 
 def rdp(pts, eps):
@@ -285,10 +292,7 @@ def leg_record(day, meta, leg):
     air = [p for p in leg if not p[4] and p[3] is not None]
     if len(air) < 5 or max(p[3] for p in air) < 3000:
         return None
-    if absurd_speed(leg):
-        return 'absurd'
-    path = [(p[1], p[2]) for p in leg]
-    flown = sum(km(path[i][0], path[i][1], path[i + 1][0], path[i + 1][1]) for i in range(len(path) - 1))
+    sus, flown = motion_stats(leg)
     gaps = [leg[i + 1][0] - leg[i][0] for i in range(len(leg) - 1)]
     # Coverage of the airborne window only: a gap is counted where it
     # overlaps [first airborne fix, last airborne fix], so ground taxi can
@@ -314,7 +318,7 @@ def leg_record(day, meta, leg):
         'ld': bool(leg[-1][4]) or (dst is not None and dst_agl is not None
                                    and dst_agl < 3000 and dst_km is not None and dst_km <= 10.0),
         't0': t0, 't1': int(a1),
-        'km': round(flown), 'alt': int(max(p[3] for p in air)),
+        'km': round(flown), 'sus': sus, 'alt': int(max(p[3] for p in air)),
         'gap': round(max(gaps, default=0) / 60), 'cov': round(min(1.0, covered / span), 2),
     }
     return rec, {'id': fid, 'v': EXTRACTOR_VERSION, 'segs': path_segments(leg, t0)}
@@ -369,16 +373,16 @@ def process(item):
             cs = cs.strip() if isinstance(cs, str) else ''
             flags = p[6] if isinstance(p[6], int) else 0
             points.append((base + p[0], p[1], p[2], alt, ground, flags, cs))
-        out, absurd = [], 0
+        out, sus_legs = [], 0
         for leg in split_legs(points):
             if len(leg) < 8:
                 continue
             r = leg_record(day, meta, leg)
-            if r == 'absurd':
-                absurd += 1
-            elif r:
+            if r:
                 out.append(r)
-        return out, ('absurd', absurd) if absurd else None
+                if r[0]['sus']:
+                    sus_legs += 1
+        return out, ('sus', sus_legs) if sus_legs else None
     except Exception:
         return [], 'error'
 
@@ -401,7 +405,7 @@ def main():
         sys.exit(f'bad day: {day}')
     os.makedirs(out_dir, exist_ok=True)
     load_airports()
-    stats = {'scanned': 0, 'legs': 0, 'errors': 0, 'bad_meta': 0, 'oversize': 0, 'absurd_legs': 0}
+    stats = {'scanned': 0, 'legs': 0, 'errors': 0, 'bad_meta': 0, 'oversize': 0, 'sus_legs': 0}
     fpath = os.path.join(out_dir, f'flights-{day}.jsonl.gz')
     ppath = os.path.join(out_dir, f'paths-{day}.jsonl.gz')
     with mp.Pool(max(1, os.cpu_count() or 1)) as pool, \
@@ -413,15 +417,16 @@ def main():
                 stats['bad_meta'] += 1
             elif note == 'oversize':
                 stats['oversize'] += 1
-            elif isinstance(note, tuple) and note[0] == 'absurd':
-                stats['absurd_legs'] += note[1]
+            elif isinstance(note, tuple) and note[0] == 'sus':
+                stats['sus_legs'] += note[1]
             for rec, path in result:
                 ff.write(json.dumps(rec, separators=(',', ':')) + '\n')
                 pf.write(json.dumps(path, separators=(',', ':')) + '\n')
                 stats['legs'] += 1
     meta = {
         'day': day, 'v': EXTRACTOR_VERSION, 'airports_rev': airports_rev(),
-        'allowlist': _ALLOW is not None, **stats,
+        'allowlist': _ALLOW is not None,
+        'source': os.environ.get('SOURCE_TAG', ''), **stats,
         'sha256': {os.path.basename(p): hashlib.sha256(open(p, 'rb').read()).hexdigest() for p in (fpath, ppath)},
     }
     with open(os.path.join(out_dir, f'meta-{day}.json'), 'w') as mf:

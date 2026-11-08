@@ -19,8 +19,13 @@ on:
 permissions:
   contents: write
 
+# Own group: the backfill never touches the last 14 days (plan.py caps its
+# end at today-14), so the two workflows process disjoint day sets and need
+# no shared group. GitHub keeps at most one PENDING run per group and
+# cancels the older pending one - sharing a group would let the daily cron
+# silently cancel a queued backfill batch.
 concurrency:
-  group: opendata-process
+  group: opendata-day
   cancel-in-progress: false
 
 jobs:
@@ -30,6 +35,7 @@ jobs:
     outputs:
       matrix: ${{ steps.p.outputs.matrix }}
       count: ${{ steps.p.outputs.count }}
+      red: ${{ steps.p.outputs.red }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -39,6 +45,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           DAY: ${{ inputs.date }}
         run: python3 scripts/plan.py one "$DAY"
+
+  # The alarm is its own job so self-heal work still runs on a red morning:
+  # a dead source must not also stop the healing of days it already has.
+  alarm:
+    needs: plan
+    if: needs.plan.outputs.red != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          RED: ${{ needs.plan.outputs.red }}
+        run: |
+          echo "::error::$RED"
+          exit 1
 
   days:
     needs: plan
@@ -73,7 +93,10 @@ jobs:
           git add MANIFEST.json
           if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "manifest: $(date -u +%F)"; then
             for attempt in 1 2 3; do
-              git push && break || { git pull --rebase; [ "$attempt" = 3 ] && exit 1; }
+              git push && break || {
+                git -c user.name=opendata-bot -c user.email=actions@github.com pull --rebase
+                [ "$attempt" = 3 ] && exit 1
+              }
             done
           else
             echo "manifest unchanged"

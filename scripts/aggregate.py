@@ -112,16 +112,18 @@ def season_of(day):
     return f'{d.year}S' if d < w else f'{d.year}W'
 
 
-def load_days(patterns):
-    days = collections.defaultdict(list)
+def iter_days(patterns):
+    """Yield (day, legs) in day order, one day in memory at a time: a
+    60-day window measured ~10 GB fully loaded, far beyond a 8 GB runner,
+    but a single day is ~165 MB."""
+    paths = {}
     for pattern in patterns:
-        for path in sorted(glob.glob(pattern)):
+        for path in glob.glob(pattern):
             m = re.search(r'flights-(\d{4}-\d{2}-\d{2})\.jsonl\.gz$', path)
-            if not m:
-                continue
-            for line in gzip.open(path, 'rt'):
-                days[m.group(1)].append(json.loads(line))
-    return days
+            if m:
+                paths[m.group(1)] = path
+    for day in sorted(paths):
+        yield day, [json.loads(line) for line in gzip.open(paths[day], 'rt')]
 
 
 def countable(legs, prev_end=None):
@@ -144,6 +146,9 @@ def countable(legs, prev_end=None):
 
 
 def aggregate(days, registry=None, prefix_map=None, window=None):
+    """days: an iterable of (day, legs) pairs IN DAY ORDER (the cross-day
+    15-minute rule depends on order), e.g. iter_days() or dict.items()
+    sorted."""
     flags = []
     airframes = {}
     numdays = collections.defaultdict(lambda: collections.defaultdict(set))
@@ -153,11 +158,11 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
     routes = collections.defaultdict(dict)
     carry_end = {}
 
-    for day in sorted(days):
+    for day, day_legs in days:
         if window and not (window[0] <= day <= window[1]):
             continue
         by_hex = collections.defaultdict(list)
-        for r in days[day]:
+        for r in day_legs:
             by_hex[r['hex']].append(r)
         for hx, legs in by_hex.items():
             expected = registry.get(hx) if registry else None
@@ -175,6 +180,9 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
             deps = countable(legs, carry_end.get(hx))
             if legs:
                 carry_end[hx] = max(r['t1'] for r in legs)
+            n_sus = sum(1 for r in legs if r.get('sus'))
+            if n_sus >= 3 and n_sus > len(legs) // 3:
+                flags.append({'kind': 'sus-trace', 'ref': hx, 'day': day, 'n': n_sus})
             if len(deps) > DAILY_CAP:
                 flags.append({'kind': 'daily-cap', 'ref': hx, 'day': day, 'n': len(deps)})
                 deps = deps[:DAILY_CAP]
@@ -202,6 +210,7 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                 # Route exemplar candidates: complete, well-observed tracks.
                 oq, dq = r.get('oq'), r.get('dq')
                 if (r['org'] and r['dst'] and r['org'] != r['dst']
+                        and not r.get('sus')
                         and r['tk'] and r['ld'] and r['cov'] >= exemplar_min_cov(r['km'])
                         and oq and dq and oq[0] is not None and dq[0] is not None
                         and oq[0] <= EXEMPLAR_MAX_AGL and dq[0] <= EXEMPLAR_MAX_AGL):
@@ -262,11 +271,10 @@ def main():
     registry = json.load(open(args.registry)) if args.registry else None
     prefix_map = json.load(open(args.prefix_map)) if args.prefix_map else None
     window = (args.window_start, args.window_end) if args.window_start and args.window_end else None
-    days = load_days(args.flights)
-    out = aggregate(days, registry, prefix_map, window)
+    out = aggregate(iter_days(args.flights), registry, prefix_map, window)
     with open(args.out, 'w') as f:
         json.dump(out, f, separators=(',', ':'))
-    print(f"{len(days)} day(s): {len(out['airframes'])} airframes, "
+    print(f"{len(out['airframes'])} airframes, "
           f"{len(out['flightnums'])} flight numbers, {len(out['route_exemplars'])} route exemplars, "
           f"{len(out['flags'])} flags")
 

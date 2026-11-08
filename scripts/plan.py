@@ -152,10 +152,13 @@ def main():
             if not urls:
                 sys.exit(f'no adsb.lol archive found for {day}')
             out('matrix=' + json.dumps({'include': [{'day': day.isoformat(), 'urls': urls}]}, separators=(',', ':')))
+            out('count=1')
+            out('red=')
             return
         d = today - dt.timedelta(days=1)
         done = published_here()
         todo = []
+        red = ''
         # Self-heal window: any unpublished day in the last 14 that the
         # archive has (a 3+-day outage must not leave permanent holes; the
         # done-set is already fetched, so this costs find_day calls only for
@@ -173,8 +176,11 @@ def main():
             if urls:
                 todo.append({'day': day1.isoformat(), 'urls': urls})
             else:
-                sys.exit(f'RED: {day1} is neither published here nor available from any adsb.lol '
-                         f'instance; with {d} also pending, the pipeline or the source is dead')
+                # The alarm is an OUTPUT, not an exit: the days job must
+                # still process whatever self-heal work was found, and a
+                # separate alarm job turns this red.
+                red = (f'{day1} is neither published here nor available from any adsb.lol '
+                       f'instance; with {d} also pending, the pipeline or the source is dead')
         # D (yesterday): the main network only; late publishing is never red.
         if d.isoformat() not in done:
             urls = find_day(d, instances=['prod-0'])
@@ -184,10 +190,13 @@ def main():
                 print(f'::warning::adsb.lol has not published prod-0 for {d} yet; tomorrow self-heals it')
         out('matrix=' + json.dumps({'include': todo}, separators=(',', ':')))
         out(f'count={len(todo)}')
+        out(f'red={red}')
         return
     if mode == 'range':
         start, end = parse_day(sys.argv[2]), parse_day(sys.argv[3])
-        end = min(end, today - dt.timedelta(days=2))
+        # The daily job owns the last 14 days (its self-heal window); the
+        # backfill never touches them, so the two can never race on a day.
+        end = min(end, today - dt.timedelta(days=14))
         done, vers = published_here(), manifest_versions()
         best = {}
         for repo in SOURCES:
