@@ -47,7 +47,8 @@ chain continuity 0.993.
   I2  legs/scanned in [0.4, 3.5]   (2023 era: [0.5, 3.5], the protocol's)
   I3  tk and ld rates >= 0.35
   I4  both-ends-null <= 0.35
-  I5  sus legs <= 2%
+  I5  sus legs <= 10% red, > 3% warning (real-world GPS interference moves it
+      1.0%-3.0% day to day; measured on five Oct-Nov 2026 days)
   I6  no duplicate (hex, t0)
   I7  no impossible back-to-back countable departures (cross-midnight
       context when the previous day is published)
@@ -218,8 +219,10 @@ def check_day(day, files, prev_legs, prev_meta, history):
     if null2 > b['null2']:
         problems.append(f'I4 both-ends-null {null2:.2f}')
     sus = sum(1 for r in legs if r.get('sus')) / max(1, n)
-    if sus > 0.02:
+    if sus > 0.10:
         problems.append(f'I5 sus {sus:.3f}')
+    elif sus > 0.03:
+        warnings.append(f'I5 sus {sus:.3f} (heavy GPS interference day?)')
 
     # I6
     dup = sum(1 for c in collections.Counter((r['hex'], r['t0']) for r in legs).values() if c > 1)
