@@ -1,0 +1,7 @@
+# Days admitted past the suspect-motion publish gate after investigation.
+# Format: YYYY-MM-DD SOURCE_TAG MAX_SUS_SHARE reason
+# The exception binds to that exact archive release and raises the ceiling
+# (at most 0.20); it never removes the check. verify.py still records the
+# day RED on I5, and the record carries the written explanation.
+# Adding a line is an owner-visible commit.
+2025-12-04 v2025.12.04-planes-readsb-prod-0 0.11 adsb.lol-wide timestamp lag 15:00-20:00 UTC (suspect share 69% of legs starting 18:00 UTC, 1-2% elsewhere; US, Europe and every carrier at once; staging-0 identical, 7,842 vs 7,845 legs). Raw traces show stale positions re-stamped up to ~60 s late, so the next fresh fix looks like a 10-23 km jump; positions lie on the true track. In that window legs, tk, ld, airports, coverage, gaps and duration sit between 12-03 and 12-05 (checked 2026-11-08). Only km is low on the flagged legs.

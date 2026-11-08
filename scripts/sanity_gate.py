@@ -5,10 +5,41 @@ A published day is marked done forever, so an old format quirk or a half
 archive must FAIL LOUDLY here, never upload. Thresholds from measured
 baselines (legs/scanned 1.28 allowlisted; suspect motion 1.0%-3.0% of legs).
 
+A day that trips the suspect-motion gate for an investigated, explained
+upstream cause can be admitted by a line in scripts/gate_exceptions.txt
+(an owner-visible commit). The exception names the exact archive release
+and a raised CEILING, never "no check": a different archive, or a worse
+share than the one investigated, still refuses.
+
 Usage: sanity_gate.py YYYY-MM-DD OUT_DIR
 """
 import json
+import os
 import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+SUS_SHARE_MAX = 0.10
+EXCEPTION_CEILING_MAX = 0.20   # no exception may admit worse than this
+
+
+def load_exceptions():
+    """{day: (source_tag, ceiling, reason)} from scripts/gate_exceptions.txt.
+    Format: YYYY-MM-DD SOURCE_TAG MAX_SUS_SHARE reason..."""
+    out = {}
+    try:
+        for line in open(os.path.join(HERE, 'gate_exceptions.txt')):
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            day, tag, ceiling, reason = line.split(None, 3)
+            ceiling = float(ceiling)
+            if not SUS_SHARE_MAX < ceiling <= EXCEPTION_CEILING_MAX:
+                sys.exit(f'gate_exceptions.txt: {day} ceiling {ceiling} outside '
+                         f'({SUS_SHARE_MAX}, {EXCEPTION_CEILING_MAX}]')
+            out[day] = (tag, ceiling, reason)
+    except FileNotFoundError:
+        pass
+    return out
 
 
 def main():
@@ -25,10 +56,18 @@ def main():
     # known interference zones - Baltic, Balkans, Gulf, US test ranges). Those
     # legs are real flights, kept and flagged. Only a broken extraction makes
     # nearly everything teleport.
-    if m['sus_legs'] > 0.10 * max(1, m['legs']):
-        problems.append(f"suspect-motion legs {m['sus_legs']} exceed 10% of legs")
+    limit, note = SUS_SHARE_MAX, None
+    exc = load_exceptions().get(day)
+    if exc and exc[0] == m.get('source'):
+        limit, note = exc[1], f'gate exception {exc[1]:.2f}: {exc[2]}'
+    share = m['sus_legs'] / max(1, m['legs'])
+    if share > limit:
+        problems.append(f"suspect-motion legs {m['sus_legs']} ({share:.2%}) exceed {limit:.0%} of legs"
+                        + (' (above the exception ceiling)' if note else ''))
     if problems:
         sys.exit('refusing to publish: ' + '; '.join(problems))
+    if note:
+        print(note)
     print('sanity gate passed:', json.dumps({k: m[k] for k in ('scanned', 'legs', 'errors', 'bad_meta', 'sus_legs')}))
 
 

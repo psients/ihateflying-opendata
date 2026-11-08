@@ -47,13 +47,9 @@ runs:
       run: |
         set -euo pipefail
         month="${DAY:0:7}"
-        # Create-or-reuse the month's release; concurrent losers fall through
-        # to the view, and a real failure still stops the job there.
-        gh release view "data-$month" >/dev/null 2>&1 \
-          || gh release create "data-$month" --title "Flights $month" \
-               --notes "Airline flight legs seen by adsb.lol receivers in $month, one file set per day. Derived from adsb.lol globe_history, (c) adsb.lol contributors, Open Database License (ODbL) 1.0: https://opendatacommons.org/licenses/odbl/1-0/ . Data in this repository is likewise ODbL 1.0; see DATA-LICENSE.md and README.md." \
-          || true
-        gh release view "data-$month" >/dev/null
+        # Create-or-reuse the month's release (backfill pre-creates months
+        # serially in its plan job; this is the fallback).
+        bash scripts/ensure_release.sh "$month"
         # GitHub's secondary limit (~500 content-writes/hour) can 403 a burst;
         # back off and retry rather than redden the day.
         for attempt in 1 2 3 4 5; do

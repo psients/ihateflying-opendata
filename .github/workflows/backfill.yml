@@ -41,6 +41,17 @@ jobs:
           START: ${{ inputs.start }}
           END: ${{ inputs.end }}
         run: python3 scripts/plan.py range "$START" "$END"
+      # Month releases are created HERE, one at a time, before any day job
+      # starts: parallel day jobs racing to create the same new month made
+      # two releases under one tag (data-2025-12, 2026-11-08).
+      - if: steps.p.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATRIX: ${{ steps.p.outputs.matrix }}
+        run: |
+          set -euo pipefail
+          months=$(printf '%s' "$MATRIX" | python3 -c 'import json,sys; print(" ".join(sorted({d["day"][:7] for d in json.load(sys.stdin)["include"]})))')
+          for month in $months; do bash scripts/ensure_release.sh "$month"; done
 
   days:
     needs: plan
