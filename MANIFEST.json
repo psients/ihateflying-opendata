@@ -126,6 +126,222 @@
    "sus_legs": 137,
    "v": 5
   },
+  "2026-10-08": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724195728,
+   "asset_updated": "2026-11-08T14:33:54Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 84377,
+   "oversize": 0,
+   "scanned": 71751,
+   "sha256": {
+    "flights-2026-10-08.jsonl.gz": "50ee884205083c822aa93795818dc02c84fd70d57eafd55ff1c186fc9afb5b74",
+    "paths-2026-10-08.jsonl.gz": "2c42d44b5b6f35bc573d2dc35a1fb866c0be113b2c82afb3c9a71e05390c3ec7"
+   },
+   "source": "v2026.10.08-planes-readsb-prod-0",
+   "sus_legs": 1532,
+   "v": 5
+  },
+  "2026-10-10": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724194923,
+   "asset_updated": "2026-11-08T14:33:39Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 81253,
+   "oversize": 0,
+   "scanned": 59121,
+   "sha256": {
+    "flights-2026-10-10.jsonl.gz": "59f4237755c141ea56bbb3b97bc63e423056b8b184db9f529f36a2c82b016132",
+    "paths-2026-10-10.jsonl.gz": "7d898c0a1c75ad10bba444bfe498b03d8d2c967f7c63147d85ad964a750ff09b"
+   },
+   "source": "v2026.10.10-planes-readsb-prod-0",
+   "sus_legs": 1416,
+   "v": 5
+  },
+  "2026-10-11": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724191678,
+   "asset_updated": "2026-11-08T14:32:29Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 81351,
+   "oversize": 0,
+   "scanned": 55469,
+   "sha256": {
+    "flights-2026-10-11.jsonl.gz": "83d3c6ec8178ba40a63528512e1c58eb8183fd2dc2c3eebd047c4b84ba0fe814",
+    "paths-2026-10-11.jsonl.gz": "af0b023b7d056750c4fa5e2602666137992a8a2e9d0f9b90b7584c469cb10c70"
+   },
+   "source": "v2026.10.11-planes-readsb-prod-0",
+   "sus_legs": 1552,
+   "v": 5
+  },
+  "2026-10-12": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724195546,
+   "asset_updated": "2026-11-08T14:33:50Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 84518,
+   "oversize": 0,
+   "scanned": 62491,
+   "sha256": {
+    "flights-2026-10-12.jsonl.gz": "8e1c00dc4d098e549d1755f56c05b1ca56209dfd9739de25d5979468235d554e",
+    "paths-2026-10-12.jsonl.gz": "fa819e18d546e49146390020f4226e64a127dc9d5c8e37b78ecf5cb61d1d3154"
+   },
+   "source": "v2026.10.12-planes-readsb-prod-0",
+   "sus_legs": 1504,
+   "v": 5
+  },
+  "2026-10-13": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724192491,
+   "asset_updated": "2026-11-08T14:32:46Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 80633,
+   "oversize": 0,
+   "scanned": 64752,
+   "sha256": {
+    "flights-2026-10-13.jsonl.gz": "f321b63aecfe96222d2e767fb6ef78d56f4d571bb6df1e43869910648015de66",
+    "paths-2026-10-13.jsonl.gz": "dc1e404b5222c973727c6f1d3a429e746c3ffd82660734e5a4e6bda27af24f8d"
+   },
+   "source": "v2026.10.13-planes-readsb-prod-0",
+   "sus_legs": 1584,
+   "v": 5
+  },
+  "2026-10-14": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724192917,
+   "asset_updated": "2026-11-08T14:32:56Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 79970,
+   "oversize": 0,
+   "scanned": 67631,
+   "sha256": {
+    "flights-2026-10-14.jsonl.gz": "77c7046422a56aae502583ea488acf30a3c6a51c264494ac428344f73aba5579",
+    "paths-2026-10-14.jsonl.gz": "b64528da27d6242eac7493cc54b92fb82bf02b80540e3af844d7728f28293651"
+   },
+   "source": "v2026.10.14-planes-readsb-prod-0",
+   "sus_legs": 1445,
+   "v": 5
+  },
+  "2026-10-15": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724189043,
+   "asset_updated": "2026-11-08T14:31:38Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 82726,
+   "oversize": 0,
+   "scanned": 68823,
+   "sha256": {
+    "flights-2026-10-15.jsonl.gz": "9d8b1961a76eddd572a3e286e986d34ce3adfeaec9c094df2748291b11d1ad26",
+    "paths-2026-10-15.jsonl.gz": "0f3e77ba27e140e7c928fb61a8d30d630ab9b96c25aacabac49916f0462311c1"
+   },
+   "source": "v2026.10.15-planes-readsb-prod-0",
+   "sus_legs": 1602,
+   "v": 5
+  },
+  "2026-10-18": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724179588,
+   "asset_updated": "2026-11-08T14:28:36Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 82931,
+   "oversize": 0,
+   "scanned": 63881,
+   "sha256": {
+    "flights-2026-10-18.jsonl.gz": "b439c8f76243dafab31294a11dc1afcd7d1e17ddc98a27726ec53c8ac83f0969",
+    "paths-2026-10-18.jsonl.gz": "db7f98d45a5a4ec7661bd2966b3db326a98a62868cd8d2246b80871ef1cd8b8a"
+   },
+   "source": "v2026.10.18-planes-readsb-prod-0",
+   "sus_legs": 1504,
+   "v": 5
+  },
+  "2026-10-19": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724177138,
+   "asset_updated": "2026-11-08T14:27:40Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 84459,
+   "oversize": 0,
+   "scanned": 67904,
+   "sha256": {
+    "flights-2026-10-19.jsonl.gz": "b66b9e64ae70d5f6d48acbcc59f43fffe709f72466dc97219ed24acaccbc3487",
+    "paths-2026-10-19.jsonl.gz": "c92e1bf6dfd82c36ae44ca7900325b153364113f99e0b8e86da52cfa4732a225"
+   },
+   "source": "v2026.10.19-planes-readsb-prod-0",
+   "sus_legs": 1536,
+   "v": 5
+  },
+  "2026-10-20": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724180228,
+   "asset_updated": "2026-11-08T14:28:52Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 79560,
+   "oversize": 0,
+   "scanned": 68422,
+   "sha256": {
+    "flights-2026-10-20.jsonl.gz": "368e3ef557004bdb60db79708cdb34982e6edfe3e67f698cd89eb5d0a7fd2125",
+    "paths-2026-10-20.jsonl.gz": "9c2863bef16024b1cb10e14e35831441a8c8350b33839589f56990cb150955ed"
+   },
+   "source": "v2026.10.20-planes-readsb-prod-0",
+   "sus_legs": 1521,
+   "v": 5
+  },
+  "2026-10-22": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724179620,
+   "asset_updated": "2026-11-08T14:28:37Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 81654,
+   "oversize": 0,
+   "scanned": 69735,
+   "sha256": {
+    "flights-2026-10-22.jsonl.gz": "86e5c20c98fcb3f3f8f9254a57949e006db481ea65c1afd1644b9a74250e180b",
+    "paths-2026-10-22.jsonl.gz": "83fa0b9bf9226e62c06c7cf54bc7b9436b15e3521e75b4c3308cc212b9552e9e"
+   },
+   "source": "v2026.10.22-planes-readsb-prod-0",
+   "sus_legs": 1361,
+   "v": 5
+  },
+  "2026-10-23": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724182551,
+   "asset_updated": "2026-11-08T14:29:42Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 83650,
+   "oversize": 0,
+   "scanned": 69148,
+   "sha256": {
+    "flights-2026-10-23.jsonl.gz": "381409ba0b2797b229408cbb7ddbd274ab30aac27f6a1f6432cb7ba7966ce260",
+    "paths-2026-10-23.jsonl.gz": "bc55ac8d5f25fc83c50cde926fa4e9c2f558cea085448f9be1c94fc7d5541add"
+   },
+   "source": "v2026.10.23-planes-readsb-prod-0",
+   "sus_legs": 1549,
+   "v": 5
+  },
   "2026-11-07": {
    "airports_rev": "d864bb45",
    "allowlist": true,
