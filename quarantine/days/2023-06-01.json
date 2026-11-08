@@ -1,0 +1,23 @@
+{
+ "day": "2023-06-01",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.979,
+  "deps": 26751,
+  "deps_legs": 0.5,
+  "ld": 0.47,
+  "legs": 53480,
+  "ratio": 1.25,
+  "sus": 0.002,
+  "tk": 0.5
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-08T14:21:28+00:00",
+ "warnings": [
+  "W8 midnight guard disarmed (previous day unpublished)",
+  "I11 chain continuity 0.979 (baseline 0.993)"
+ ]
+}

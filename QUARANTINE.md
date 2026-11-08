@@ -19,3 +19,10 @@ streak. Exit needs 30, with every RED explained.
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-07 | daily | clean | 76737 | 0.66 | 0.01 | 50229 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2023-06-07 | range | clean | 52890 | 0.5 | 0.003 | 26450 | - | I11 chain continuity 0.974 (baseline 0.993) | - |
+| 2023-06-06 | range | clean | 52281 | 0.5 | 0.004 | 26101 | - | I11 chain continuity 0.972 (baseline 0.993); W13 new large excluded prefixes: ['FDX', 'UPS', 'ERU'] | - |
+| 2023-06-05 | range | clean | 55075 | 0.5 | 0.003 | 27500 | - | I11 chain continuity 0.971 (baseline 0.993) | - |
+| 2023-06-04 | range | clean | 52752 | 0.49 | 0.004 | 25811 | - | I11 chain continuity 0.976 (baseline 0.993) | - |
+| 2023-06-03 | range | clean | 51830 | 0.49 | 0.004 | 25117 | - | I11 chain continuity 0.977 (baseline 0.993) | - |
+| 2023-06-02 | range | clean | 55097 | 0.5 | 0.004 | 27504 | - | I11 chain continuity 0.977 (baseline 0.993) | - |
+| 2023-06-01 | range | clean | 53480 | 0.5 | 0.002 | 26751 | - | W8 midnight guard disarmed (previous day unpublished); I11 chain continuity 0.979 (baseline 0.993) | - |
