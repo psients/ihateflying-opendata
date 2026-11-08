@@ -2,8 +2,10 @@ name: Daily flights
 
 # Processes one day of the adsb.lol archive (default: yesterday, UTC) on
 # GitHub's runner and publishes the summaries to this repo's releases.
-# Manual only for now; a daily schedule is added once the owner approves it.
+# adsb.lol publishes each day at about 03:30 UTC the next day.
 on:
+  schedule:
+    - cron: '17 5 * * *'   # daily 05:17 UTC
   workflow_dispatch:
     inputs:
       date:
