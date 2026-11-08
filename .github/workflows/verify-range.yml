@@ -1,0 +1,45 @@
+name: Verify range
+
+# Quarantine verification of a backfill batch: every published day in the
+# range is re-read and checked against the red-team invariants
+# (scripts/verify.py), with each day's predecessor as cross-midnight
+# context. Red on any break. Appends to QUARANTINE.md.
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'First day, YYYY-MM-DD'
+        required: true
+      end:
+        description: 'Last day, YYYY-MM-DD'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opendata-verify
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+        run: |
+          set -euo pipefail
+          python3 scripts/verify.py range "$START" "$END"
+          git add QUARANTINE.md
+          if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "quarantine: verified $START..$END"; then
+            for attempt in 1 2 3; do
+              git push && break || {
+                git -c user.name=opendata-bot -c user.email=actions@github.com pull --rebase
+                [ "$attempt" = 3 ] && exit 1
+              }
+            done
+          fi

@@ -78,19 +78,48 @@ jobs:
           day: ${{ matrix.day }}
           urls: ${{ matrix.urls }}
 
-  manifest:
+  # Quarantine verifier: re-reads yesterday's PUBLISHED files and checks
+  # the red-team invariants (I1-I10 in scripts/verify.py). A break = red =
+  # email. The log it appends, QUARANTINE.md, is the record the owner reads:
+  # the site touches none of this data until it shows 30 consecutive clean
+  # days with every red explained.
+  verify:
     needs: [plan, days]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/verify.py daily
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: quarantine-log
+          path: QUARANTINE.md
+          if-no-files-found: ignore
+
+  manifest:
+    needs: [plan, days, verify]
     if: always() && needs.plan.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: quarantine-log
+        continue-on-error: true
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           python3 scripts/manifest.py reindex
           git add MANIFEST.json
+          [ -f QUARANTINE.md ] && git add QUARANTINE.md
           if git -c user.name=opendata-bot -c user.email=actions@github.com commit -m "manifest: $(date -u +%F)"; then
             for attempt in 1 2 3; do
               git push && break || {
