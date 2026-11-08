@@ -44,6 +44,25 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MAX_MATRIX = 250  # GitHub allows 256 jobs per matrix
 
 
+def load_holes():
+    """scripts/upstream_holes.txt: days whose upstream archive is missing or
+    unrecoverable, with the reason. Never scheduled; verify.py records them
+    SKIPPED with that reason. Adding a day is an owner-visible commit."""
+    holes = {}
+    try:
+        for line in open(os.path.join(HERE, 'upstream_holes.txt')):
+            line = line.strip()
+            if line and not line.startswith('#'):
+                day, _, reason = line.partition(' ')
+                holes[day] = reason.strip()
+    except FileNotFoundError:
+        pass
+    return holes
+
+
+HOLES = load_holes()
+
+
 def api(path):
     """GET api.github.com/<path>. 404 -> None; other errors retried 3x."""
     headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'ihateflying-opendata'}
@@ -91,7 +110,9 @@ def urls_of(release):
 
 
 def find_day(day, instances=PREFERENCE):
-    """The day's best available release URLs, or None."""
+    """The day's best available release URLs, or None (listed holes too)."""
+    if day.isoformat() in HOLES:
+        return None
     y = str(day.year)
     repos = [r for r in SOURCES if r.endswith(y)] + [r for r in SOURCES if not r.endswith(y)]
     tag_day = day.isoformat().replace('-', '.')
@@ -206,7 +227,7 @@ def main():
                 if not m or m.group(4) not in PREFERENCE:
                     continue
                 day = f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
-                if not (start.isoformat() <= day <= end.isoformat()):
+                if not (start.isoformat() <= day <= end.isoformat()) or day in HOLES:
                     continue
                 urls = urls_of(rel)
                 rank = PREFERENCE.index(m.group(4))

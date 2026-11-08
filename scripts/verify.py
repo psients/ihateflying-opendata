@@ -76,6 +76,9 @@ chain continuity 0.993.
   W14 ratio or tk drifting >15% against the record 7 days earlier
   W15 any of the anchor carriers (KAL AAR SWA RYR DAL UAL AAL) with zero
       countable departures
+  W16 the upstream archive was damaged (meta tar_gaps > 0): the day was
+      recovered around the unreadable regions; the warning states how much
+      was skipped, so a partial day is never taken for a complete one
 """
 import collections
 import datetime as dt
@@ -205,6 +208,9 @@ def check_day(day, files, prev_legs, prev_meta, history):
         warnings.append(f'I1 extractor v{meta["v"]} (current v{EXTRACTOR_VERSION}); reprocess pending')
     if not meta.get('allowlist'):
         problems.append('I1 allowlist off')
+    if meta.get('tar_gaps'):
+        warnings.append(f"W16 upstream archive damaged: {meta['tar_gaps']} unreadable region(s), "
+                        f"{meta.get('tar_gap_bytes', 0) / 1e6:.0f} MB skipped; aircraft in them are missing")
 
     # I2-I5
     b = BOUNDS[era(day)]
@@ -369,6 +375,16 @@ def load_history():
     return hist
 
 
+def hole_reason(day):
+    try:
+        from plan import HOLES
+        if day in HOLES:
+            return f'upstream hole (scripts/upstream_holes.txt): {HOLES[day]}'
+    except Exception:
+        pass
+    return 'adsb.lol has no archive for this day'
+
+
 def published_days():
     from plan import published_here
     return published_here()
@@ -417,7 +433,7 @@ def mode_daily():
         elif back >= 2 and not upstream_has(day):
             write_rec({'day': day, 'mode': 'daily', 'verdict': 'SKIPPED', 'extractor_v': None,
                        'problems': [], 'warnings': [], 'stats': {},
-                       'explanation': 'adsb.lol has no archive for this day'})
+                       'explanation': hole_reason(day)})
             print(f'{day}: SKIPPED (no upstream archive)')
         # else: unpublished but healable - no record yet; the streak tolerates
         # gaps younger than 4 days, and the publish alarm covers persistence.
@@ -453,7 +469,7 @@ def mode_range(start, end):
         elif d not in history and not upstream_has(d):
             write_rec({'day': d, 'mode': 'range', 'verdict': 'SKIPPED', 'extractor_v': None,
                        'problems': [], 'warnings': [], 'stats': {},
-                       'explanation': 'adsb.lol has no archive for this day'})
+                       'explanation': hole_reason(d)})
             print(f'{d}: SKIPPED (no upstream archive)')
         day += dt.timedelta(days=1)
     # Records are on disk; the WORKFLOW commits them before honouring this.

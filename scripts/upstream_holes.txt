@@ -1,0 +1,4 @@
+# Days whose upstream adsb.lol archive is missing or unrecoverable.
+# plan.py never schedules them; verify.py records them SKIPPED with the reason.
+# Adding a line is an owner-visible commit. Format: YYYY-MM-DD reason
+2026-05-06 no archive on any usable instance (only mlatonly-0 exists; adsb.lol outage)

@@ -400,8 +400,19 @@ def process(item):
 
 
 def members(day, stream, stats):
-    with tarfile.open(fileobj=stream, mode='r|') as tar:
+    """Stream the day's tar. ignore_zeros: a damaged region of zero blocks
+    mid-archive (seen upstream on 2026-04-30 and 2026-05-04) otherwise reads
+    as the end of the archive and silently truncates the day. Damaged
+    regions are skipped and ACCOUNTED: tar_gaps / tar_gap_bytes in meta say
+    how much of the archive was unreadable, so a recovered day is never
+    presented as a complete one. An intact archive reads identically."""
+    expected = None
+    with tarfile.open(fileobj=stream, mode='r|', ignore_zeros=True) as tar:
         for m in tar:
+            if expected is not None and m.offset > expected:
+                stats['tar_gaps'] += 1
+                stats['tar_gap_bytes'] += m.offset - expected
+            expected = m.offset_data + ((m.size + tarfile.BLOCKSIZE - 1) // tarfile.BLOCKSIZE) * tarfile.BLOCKSIZE
             if not m.isfile() or 'trace_full_' not in m.name or '~' in m.name:
                 continue
             if m.size > MAX_RAW_MEMBER:
@@ -417,7 +428,8 @@ def main():
         sys.exit(f'bad day: {day}')
     os.makedirs(out_dir, exist_ok=True)
     load_airports()
-    stats = {'scanned': 0, 'legs': 0, 'errors': 0, 'bad_meta': 0, 'oversize': 0, 'sus_legs': 0}
+    stats = {'scanned': 0, 'legs': 0, 'errors': 0, 'bad_meta': 0, 'oversize': 0, 'sus_legs': 0,
+             'tar_gaps': 0, 'tar_gap_bytes': 0}
     excluded_counts = {}
     fpath = os.path.join(out_dir, f'flights-{day}.jsonl.gz')
     ppath = os.path.join(out_dir, f'paths-{day}.jsonl.gz')
