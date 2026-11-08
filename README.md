@@ -36,7 +36,8 @@ Coverage starts on 2023-02-16, the first day of the adsb.lol archive.
 | `reg`, `type` | registration and ICAO type code from adsb.lol's aircraft database (not independently verified) |
 | `cs` | callsign, e.g. `KAL081` |
 | `org`, `dst` | departure and arrival airport (IATA), inferred from where the aircraft was seen low; `null` when not seen |
-| `tk`, `ld` | whether the takeoff / the landing was actually observed |
+| `oq`, `dq` | assignment quality for `org`/`dst`: `[feet above the airport, km from it]` at the moment of assignment; generous assignments (high or far) are real, flagged, and filterable |
+| `tk`, `ld` | whether the departure / the landing itself was observed: the leg starts or ends on the ground, or below 3,000 ft within 10 km of the assigned airport. A fragment re-acquired at altitude is never a departure |
 | `t0`, `t1` | first and last airborne sighting (Unix seconds, UTC) |
 | `km` | distance flown along the observed track |
 | `alt` | highest barometric altitude seen (ft) |
@@ -55,10 +56,12 @@ Coverage starts on 2023-02-16, the first day of the adsb.lol archive.
 
 `scripts/aggregate.py` is the method ihateflying.org uses to turn these files into its
 displayed aggregates (published per ODbL 4.6(b)). Its header states the counting rule;
-the short form: a flight is a leg whose takeoff was seen, with 15 minutes of ground time
-since the airframe's previous leg, no same-airport circuits, at most 14 a day per
-airframe, and the broadcast registration must not contradict the expected one. Every
-count is a floor.
+the short form: a flight is a leg whose departure was actually observed (`tk`), with 15
+minutes of ground time since the airframe's previous leg, no same-airport circuits, at
+most 14 a day per airframe, and the broadcast registration must not contradict the
+expected one. Flight numbers come only from suffix-less callsigns of carriers whose
+callsign number is the booked number. Route exemplars are single real tracks (medoid of
+recent well-observed days), never averages. Every count is a floor.
 
 ## Integrity notes
 

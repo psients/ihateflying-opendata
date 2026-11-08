@@ -30,7 +30,7 @@ import re
 import sys
 import tarfile
 
-EXTRACTOR_VERSION = 2
+EXTRACTOR_VERSION = 3
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 AIRLINE_CS = re.compile(r'^[A-Z]{3}[0-9]{1,4}[A-Z]{0,2}$')
@@ -162,16 +162,46 @@ def split_legs(points):
     return out
 
 
+AIRPORT_ELEV = None
+
+
+def elev_of(code):
+    global AIRPORT_ELEV
+    if AIRPORT_ELEV is None:
+        AIRPORT_ELEV = {a[0]: a[3] for a in _AIRPORTS}
+    return AIRPORT_ELEV.get(code, 0)
+
+
 def end_airport(leg, from_start):
+    """The airport at this end plus the assignment quality: (code, agl_ft,
+    distance_km) from the first low point that matched, or (None, None, None).
+    Quality lets every consumer choose its own strictness without
+    reprocessing: a route needs a near-and-low assignment, a rough label
+    does not."""
     seq = leg if from_start else leg[::-1]
     for p in seq[:60]:
         if low(p):
             code = airport_for(p[1], p[2], p[3], p[4])
             if code:
-                return code
+                agl = 0 if p[4] else max(0, int((p[3] or 0) - elev_of(code)))
+                dist = min(km(p[1], p[2], a[1], a[2]) for a in _AIRPORTS if a[0] == code)
+                return code, agl, round(dist, 1)
         else:
-            return None
-    return None
+            return None, None, None
+    return None, None, None
+
+
+def departure_seen(leg, org, org_agl, org_km):
+    """True only when the departure itself was observed: the leg starts on
+    the ground, or airborne below 3,000 ft above its assigned origin within
+    10 km of it. A fragment re-acquired at altitude (a midnight-boundary
+    continuation, a post-gap reacquisition, a go-around remnant) is NOT a
+    departure, however low the fix: counting it would inflate the floor."""
+    first = leg[0]
+    if first[4]:
+        return True
+    return (org is not None and org_agl is not None and org_agl < 3000
+            and org_km is not None and org_km <= 10.0)
 
 
 def absurd_speed(leg):
@@ -245,7 +275,9 @@ def path_segments(leg, t0):
 
 def leg_record(day, meta, leg):
     calls = [p[6] for p in leg if p[6]]
-    cs = max(set(calls), key=calls.count) if calls else None
+    # Deterministic: highest count, ties broken alphabetically, so identical
+    # input always publishes identical bytes (the meta file carries hashes).
+    cs = max(sorted(set(calls)), key=calls.count) if calls else None
     if not cs or not AIRLINE_CS.match(cs):
         return None
     if _ALLOW is not None and cs[:3] not in _ALLOW:
@@ -258,16 +290,30 @@ def leg_record(day, meta, leg):
     path = [(p[1], p[2]) for p in leg]
     flown = sum(km(path[i][0], path[i][1], path[i + 1][0], path[i + 1][1]) for i in range(len(path) - 1))
     gaps = [leg[i + 1][0] - leg[i][0] for i in range(len(leg) - 1)]
-    span = max(1, air[-1][0] - air[0][0])
-    covered = sum(g for g in gaps if g <= PATH_GAP_S)
-    t0 = int(air[0][0])
+    # Coverage of the airborne window only: a gap is counted where it
+    # overlaps [first airborne fix, last airborne fix], so ground taxi can
+    # neither pad nor dilute it.
+    a0, a1 = air[0][0], air[-1][0]
+    span = max(1, a1 - a0)
+    covered = 0
+    for q, r in zip(leg, leg[1:]):
+        if r[0] - q[0] <= PATH_GAP_S:
+            overlap = min(r[0], a1) - max(q[0], a0)
+            if overlap > 0:
+                covered += overlap
+    org, org_agl, org_km = end_airport(leg, True)
+    dst, dst_agl, dst_km = end_airport(leg, False)
+    t0 = int(a0)
     fid = f"{day}-{meta['icao']}-{t0}"
     rec = {
         'id': fid, 'v': EXTRACTOR_VERSION, 'hex': meta['icao'],
         'reg': meta.get('r'), 'type': meta.get('t'), 'cs': cs,
-        'org': end_airport(leg, True), 'dst': end_airport(leg, False),
-        'tk': low(leg[0]), 'ld': low(leg[-1]),
-        't0': t0, 't1': int(air[-1][0]),
+        'org': org, 'oq': [org_agl, org_km] if org else None,
+        'dst': dst, 'dq': [dst_agl, dst_km] if dst else None,
+        'tk': departure_seen(leg, org, org_agl, org_km),
+        'ld': bool(leg[-1][4]) or (dst is not None and dst_agl is not None
+                                   and dst_agl < 3000 and dst_km is not None and dst_km <= 10.0),
+        't0': t0, 't1': int(a1),
         'km': round(flown), 'alt': int(max(p[3] for p in air)),
         'gap': round(max(gaps, default=0) / 60), 'cov': round(min(1.0, covered / span), 2),
     }
