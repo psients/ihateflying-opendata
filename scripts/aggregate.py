@@ -147,17 +147,24 @@ def countable(legs, prev_end=None):
     return out
 
 
-def aggregate(days, registry=None, prefix_map=None, window=None):
+def aggregate(days, registry=None, prefix_map=None, window=None, num_since=None):
     """days: an iterable of (day, legs) pairs IN DAY ORDER (the cross-day
     15-minute rule depends on order), e.g. iter_days() or dict.items()
-    sorted."""
+    sorted. num_since: flight numbers accumulate only from this day on (the
+    site shows a trailing 60-day window; over a whole archive, unbounded
+    per-day sets were the one thing that grew without limit).
+
+    Memory stays bounded however many days are fed: floors are counters,
+    and route candidates keep only the last EXEMPLAR_RECENT_DAYS days per
+    route and season - all the exemplar rule ever reads (measured: holding
+    every day cost ~7.5 MB/day, ~10 GB over the full archive)."""
     flags = []
     airframes = {}
     numdays = collections.defaultdict(lambda: collections.defaultdict(set))
     numalldays = collections.defaultdict(set)
     numtypes = {}
     numlast = {}
-    routes = collections.defaultdict(dict)
+    routes = collections.defaultdict(lambda: {'n': 0, 'recent': collections.deque(maxlen=EXEMPLAR_RECENT_DAYS)})
     carry_end = {}
 
     for day, day_legs in days:
@@ -211,7 +218,7 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                     digits = cs[3:].lstrip('0')
                     if digits.isdigit():
                         num = prefix_map[cs[:3]] + digits
-                if num and r.get('reg') and r.get('org'):
+                if num and r.get('reg') and r.get('org') and (num_since is None or day >= num_since):
                     key = (num, r['org'])
                     numdays[key][r['reg']].add(day)
                     numalldays[key].add(day)
@@ -227,10 +234,15 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                     route = f"{r['org']}-{r['dst']}"
                     gc = gc_km(r['org'], r['dst'])
                     if gc and gc > 50 and r['km'] <= EXEMPLAR_MAX_VS_GC * gc:
-                        cand = routes[(route, season_of(day))]
-                        best = cand.get(day)
-                        if best is None or r['cov'] > best['cov']:
-                            cand[day] = {'id': r['id'], 'day': day, 'km': r['km'], 'cov': r['cov']}
+                        slot = routes[(route, season_of(day))]
+                        new = {'id': r['id'], 'day': day, 'km': r['km'], 'cov': r['cov']}
+                        recent = slot['recent']
+                        if recent and recent[-1]['day'] == day:
+                            if r['cov'] > recent[-1]['cov']:
+                                recent[-1] = new      # best-covered track of the day
+                        else:
+                            recent.append(new)        # days arrive in order
+                            slot['n'] += 1
 
 
     flightnums = []
@@ -249,18 +261,18 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
                            'entries': entries[:5], 'last_seen': numlast[key]})
 
     exemplars = []
-    for (route, season), by_day in routes.items():
-        if len(by_day) < EXEMPLAR_MIN_DAYS:
+    for (route, season), slot in routes.items():
+        if slot['n'] < EXEMPLAR_MIN_DAYS:
             continue
         # Fence lengths over the RECENT window, not the whole season: after a
         # reroute (a war detour adds a few percent), the fence must follow
         # within days, not after a quarter of the season.
-        recent = sorted(by_day.values(), key=lambda c: c['day'])[-EXEMPLAR_RECENT_DAYS:]
+        recent = list(slot['recent'])
         kms = sorted(c['km'] for c in recent)
         q1, q3 = kms[len(kms) // 4], kms[(3 * len(kms)) // 4]
         fenced = [c for c in recent if q1 <= c['km'] <= q3] or recent
         fenced = fenced[-MEDOID_LAST_DAYS:]
-        exemplars.append({'route': route, 'season': season, 'n_days': len(by_day),
+        exemplars.append({'route': route, 'season': season, 'n_days': slot['n'],
                           'candidates': [{'day': c['day'], 'id': c['id'], 'km': c['km'], 'cov': c['cov']} for c in fenced]})
 
     return {'airframes': sorted(airframes.values(), key=lambda a: a['hex']),

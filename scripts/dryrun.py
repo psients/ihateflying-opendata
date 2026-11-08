@@ -80,7 +80,10 @@ def main():
 
     reg_map = majority_reg(patterns)
     prefix_map = json.load(open(os.path.join(HERE, 'prefix_map_candidate.json')))
-    out = aggregate(iter_days(patterns), reg_map, prefix_map)
+    # Flight numbers over the trailing 60 days, as the site will show them.
+    all_days = sorted(re.search(r'(\d{4}-\d{2}-\d{2})', p).group(1) for p in glob.glob(patterns[0]))
+    num_since = all_days[-60] if len(all_days) >= 60 else None
+    out = aggregate(iter_days(patterns), reg_map, prefix_map, num_since=num_since)
     peak_mb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // (1024 * 1024 if sys.platform == 'darwin' else 1024)
 
     floors = {a['hex']: a['departures'] for a in out['airframes']}
