@@ -80,11 +80,16 @@ averages. Every count is a floor.
 - Do not enable GitHub's immutable releases on this repository: days are re-uploaded in
   place when the extractor version changes.
 
-## Privacy
+## Scope and privacy
 
-This repository summarises data the adsb.lol archive already publishes in raw form.
-[PENDING OWNER DECISION: either the airline-prefix allowlist (`scripts/airlines.txt`)
-ships enabled, or this section gains a removal-request contact address.]
+Only scheduled passenger airlines are extracted: alliance members, national
+carriers, major low-cost carriers, and the regional affiliates that operate
+their marketed flights (`scripts/airlines.txt`, one ICAO callsign prefix per
+line). Cargo-only operators, business-jet and fractional operators, charter-
+on-demand, air taxis, training and private flying are not included, by the
+owner's decision. The underlying adsb.lol archive publishes the raw,
+unfiltered data regardless; questions about this repository's files are
+welcome as issues here.
 
 ## Licence
 
