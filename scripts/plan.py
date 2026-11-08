@@ -194,9 +194,10 @@ def main():
         return
     if mode == 'range':
         start, end = parse_day(sys.argv[2]), parse_day(sys.argv[3])
-        # The daily job owns the last 14 days (its self-heal window); the
-        # backfill never touches them, so the two can never race on a day.
-        end = min(end, today - dt.timedelta(days=14))
+        # The daily job's self-heal reaches back 15 days (today-15 ..
+        # today-1); ending at today-16 keeps the two day sets disjoint,
+        # so daily and backfill can never claim the same day.
+        end = min(end, today - dt.timedelta(days=16))
         done, vers = published_here(), manifest_versions()
         best = {}
         for repo in SOURCES:

@@ -41,7 +41,7 @@ def merge(man, meta):
         return False
     entry = {k: meta[k] for k in
              ('v', 'airports_rev', 'allowlist', 'source', 'scanned', 'legs', 'errors',
-              'bad_meta', 'oversize', 'absurd_legs', 'glitch_points', 'sha256') if k in meta}
+              'bad_meta', 'oversize', 'sus_legs', 'sha256') if k in meta}
     for k in ('asset_id', 'asset_updated'):
         if k in meta:
             entry[k] = meta[k]

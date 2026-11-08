@@ -2,8 +2,8 @@ name: Backfill
 
 # Processes every archived day between two dates that this repository has
 # not published with the current extractor version (at most 250 days per
-# run; run again to continue; the end date is capped at today-14 because the
-# daily job owns the last 14 days, so the two never race on a day). Run ONE
+# run; run again to continue; the end date is capped at today-16: the daily
+# job's self-heal owns the newest 15 days, so the two never race). Run ONE
 # batch at a time: GitHub keeps at most one pending run per concurrency
 # group and CANCELS the older pending one, so dispatch the next batch only
 # when this group is idle.

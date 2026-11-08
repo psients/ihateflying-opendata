@@ -8,7 +8,7 @@ Daily summaries of airline flights seen by the open ADS-B receiver network at
 and published openly, as the source licence requires.
 
 Each day of the adsb.lol archive (about 3 GB of raw aircraft tracks) is processed
-on a GitHub runner and reduced to two small files. Nothing raw is kept.
+on a GitHub runner and reduced to three small files. Nothing raw is kept.
 
 ## Files
 

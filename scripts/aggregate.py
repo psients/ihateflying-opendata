@@ -25,12 +25,14 @@ flagged - transponder addresses are reassigned when aircraft change
 registries, and a floor must never carry another airframe's flights.
 
 Route exemplar: for each directional route and season, candidate legs must
-have their departure and landing observed, both ends assigned from below
-1,500 ft AGL, coverage of at least 0.8, and a flown length within 1.3x the
-great circle (a diversion or a return is not the route). At least 5 distinct
-observed days are required; the published exemplar is the MEDOID of the last
-up-to-10 qualifying day-tracks: the one actually-flown track closest to the
-others. An actual flown path, never an average: averages draw lines no
+have no suspect motion (sus = 0), their departure and landing observed, both
+ends assigned from below 1,500 ft AGL, a flown length within 1.3x the great
+circle (a diversion or a return is not the route), and a coverage floor
+tiered by distance (0.8 under 3,000 km, 0.5 to 7,000, 0.25 above - receivers
+thin out over oceans). At least 5 distinct observed days are required; the
+length fence is the quartile range of the last 14 qualifying days, and the
+published exemplar is the MEDOID of the fenced recent day-tracks: the one
+actually-flown track closest to the others. An actual flown path, never an average: averages draw lines no
 aircraft ever flew. (This file selects the exemplar day and id; the medoid
 distance runs where the path files are at hand, over those candidates.)
 
@@ -159,7 +161,15 @@ def aggregate(days, registry=None, prefix_map=None, window=None):
     carry_end = {}
 
     for day, day_legs in days:
-        if window and not (window[0] <= day <= window[1]):
+        if window and day > window[1]:
+            break
+        if window and day < window[0]:
+            # A context day before the window primes the cross-midnight
+            # carry and nothing else: without this, a quick turnaround
+            # across the window's first midnight would count twice.
+            for r in day_legs:
+                prev = carry_end.get(r['hex'])
+                carry_end[r['hex']] = r['t1'] if prev is None else max(prev, r['t1'])
             continue
         by_hex = collections.defaultdict(list)
         for r in day_legs:
