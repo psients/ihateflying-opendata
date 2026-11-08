@@ -19,9 +19,9 @@ on:
 permissions:
   contents: write
 
-# Own group: the backfill never touches the last 14 days (plan.py caps its
-# end at today-14), so the two workflows process disjoint day sets and need
-# no shared group. GitHub keeps at most one PENDING run per group and
+# Own group: the backfill ends at today-16 while this job self-heals
+# today-15 .. today-1, so the two workflows process disjoint day sets and
+# need no shared group. GitHub keeps at most one PENDING run per group and
 # cancels the older pending one - sharing a group would let the daily cron
 # silently cancel a queued backfill batch.
 concurrency:
