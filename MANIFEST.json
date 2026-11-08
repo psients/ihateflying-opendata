@@ -1,0 +1,22 @@
+{
+ "days": {
+  "2026-11-07": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 724147267,
+   "asset_updated": "2026-11-08T14:16:41Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 76737,
+   "oversize": 0,
+   "scanned": 59983,
+   "sha256": {
+    "flights-2026-11-07.jsonl.gz": "caf71ae5aa083611cfedefa4c1d387aaf3d546d6e519bdc6da18c5e03e17ed1f",
+    "paths-2026-11-07.jsonl.gz": "812d9a1fba7478cf5c75f9f2d1c9f961dfa6f73bc714055714dc506e62746f71"
+   },
+   "source": "v2026.11.07-planes-readsb-prod-0",
+   "sus_legs": 791,
+   "v": 5
+  }
+ }
+}
