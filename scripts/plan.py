@@ -81,9 +81,9 @@ def load_overrides():
 OVERRIDES = load_overrides()
 
 
-def api(path):
+def api(path, accept='application/vnd.github+json'):
     """GET api.github.com/<path>. 404 -> None; other errors retried 3x."""
-    headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'ihateflying-opendata'}
+    headers = {'Accept': accept, 'User-Agent': 'ihateflying-opendata'}
     if os.environ.get('GH_TOKEN'):
         headers['Authorization'] = 'Bearer ' + os.environ['GH_TOKEN']
     for attempt in range(4):
@@ -167,11 +167,16 @@ def published_here():
 
 
 def manifest_versions():
-    try:
-        man = json.load(open(os.path.join(HERE, '..', 'MANIFEST.json')))
-        return {d: e.get('v', 0) for d, e in man.get('days', {}).items()}
-    except Exception:
+    """Extractor version per published day, from the LIVE MANIFEST.json on
+    main - never this checkout's copy. A dispatched run checks out the
+    commit of its dispatch moment, so a batch queued behind another read a
+    manifest missing everything the first published, took those days as
+    version 0, and redid all 250 (2026-11-08, two pairs). An unreadable
+    manifest stops the plan rather than silently redoing published days."""
+    man = api(f'repos/{OWN}/contents/MANIFEST.json?ref=main', accept='application/vnd.github.raw')
+    if man is None:
         return {}
+    return {d: e.get('v', 0) for d, e in man.get('days', {}).items()}
 
 
 def out(line):
