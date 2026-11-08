@@ -19,6 +19,8 @@ streak. Exit needs 30, with every RED explained.
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-07 | daily | clean | 76737 | 0.66 | 0.01 | 50229 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-10-23 | daily | clean | 83650 | 0.68 | 0.019 | 56236 | - | - | - |
+| 2026-10-22 | daily | clean | 81654 | 0.67 | 0.017 | 54256 | - | - | - |
 | 2023-06-07 | range | clean | 52890 | 0.5 | 0.003 | 26450 | - | I11 chain continuity 0.974 (baseline 0.993) | - |
 | 2023-06-06 | range | clean | 52281 | 0.5 | 0.004 | 26101 | - | I11 chain continuity 0.972 (baseline 0.993); W13 new large excluded prefixes: ['FDX', 'UPS', 'ERU'] | - |
 | 2023-06-05 | range | clean | 55075 | 0.5 | 0.003 | 27500 | - | I11 chain continuity 0.971 (baseline 0.993) | - |
