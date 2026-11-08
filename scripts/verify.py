@@ -60,11 +60,18 @@ chain continuity 0.993.
       than 300 s apart, so it cannot be re-checked here)
   I10 countable departures / legs in [0.40, 0.85]
   I11 flight-chain continuity (prev dst = next org per airframe, where
-      both known) >= 0.97 red, < 0.985 warning (baseline 0.993; a
-      single-airport relabel moves it ~0.007, a systemic one far more)
+      both known): red below 0.95 in every era; warning below 0.985
+      (2023 era: below 0.97). Baselines: 0.993 on 2026-11-07; 0.971-0.979
+      across 2023-06-01..07, where breaks show the same ground-time pattern
+      as 2026 (median 2.0 h vs 1.6 h for continuous pairs) - more unseen
+      flights from sparser receivers, not a new error class. A systemic
+      relabel measured 0.883 (red); a single-hub relabel moves it ~0.008
+      (warning).
   W12 any top-30 prefix collapsing >70% day over day
-  W13 any excluded prefix (meta excluded_top) >= 300 legs that was not in
-      yesterday's excluded_top (allowlist drift: a new or missing airline)
+  W13 an excluded prefix (meta excluded_top) with >= 300 legs that was not
+      in yesterday's top 10 AND at least doubled (yesterday's 10th count is
+      below half of today's): allowlist drift, a new or missing airline,
+      without top-10 membership flicker
   W14 ratio or tk drifting >15% against the record 7 days earlier
   W15 any of the anchor carriers (KAL AAR SWA RYR DAL UAL AAL) with zero
       countable departures
@@ -95,9 +102,10 @@ REPO = os.environ.get('GITHUB_REPOSITORY', 'psients/ihateflying-opendata')
 ANCHORS = ('KAL', 'AAR', 'SWA', 'RYR', 'DAL', 'UAL', 'AAL')
 
 BOUNDS = {
-    '2023': {'ratio': (0.5, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35},
-    'now': {'ratio': (0.4, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35},
+    '2023': {'ratio': (0.5, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35, 'chain_warn': 0.97},
+    'now': {'ratio': (0.4, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35, 'chain_warn': 0.985},
 }
+CHAIN_RED = 0.95
 
 
 def era(day):
@@ -286,10 +294,10 @@ def check_day(day, files, prev_legs, prev_meta, history):
                 ok += a['dst'] == c['org']
     if tot >= 200:
         cont = ok / tot
-        if cont < 0.97:
+        if cont < CHAIN_RED:
             problems.append(f'I11 chain continuity {cont:.3f}')
-        elif cont < 0.985:
-            warnings.append(f'I11 chain continuity {cont:.3f} (baseline 0.993)')
+        elif cont < b['chain_warn']:
+            warnings.append(f"I11 chain continuity {cont:.3f} (era warning line {b['chain_warn']})")
 
     # W12 volume collapse vs yesterday
     if prev_legs is not None:
@@ -301,8 +309,10 @@ def check_day(day, files, prev_legs, prev_meta, history):
 
     # W13 excluded-prefix drift vs yesterday's meta
     if prev_meta is not None:
-        prev_ex = set(prev_meta.get('excluded_top', {}))
-        new_big = [p for p, c in meta.get('excluded_top', {}).items() if c >= 300 and p not in prev_ex]
+        prev_top = prev_meta.get('excluded_top', {})
+        floor10 = min(prev_top.values()) if len(prev_top) >= 10 else 0
+        new_big = [p for p, c in meta.get('excluded_top', {}).items()
+                   if c >= 300 and p not in prev_top and floor10 < c / 2]
         if new_big:
             warnings.append(f'W13 new large excluded prefixes: {new_big}')
 
