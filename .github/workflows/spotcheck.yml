@@ -1,0 +1,38 @@
+name: Spot-check detail
+
+# Writes dryrun/spotcheck-detail-DATE.json for the week's seeded selection
+# (dryrun/spotcheck-DATE.json): the same aggregation as the dry-run, plus
+# the leg-level context and route tracks an in-session check compares
+# against independent sources. Reads published data only; commits the
+# detail file.
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Selection date, YYYY-MM-DD (empty = newest)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opendata-spotcheck
+  cancel-in-progress: false
+
+jobs:
+  detail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          DATE: ${{ inputs.date }}
+        run: |
+          set -euo pipefail
+          [[ -z "$DATE" || "$DATE" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || { echo "bad date: $DATE"; exit 1; }
+          python3 scripts/spotcheck.py $DATE
+          mkdir -p "$RUNNER_TEMP/produced/dryrun"
+          cp dryrun/spotcheck-detail-*.json "$RUNNER_TEMP/produced/dryrun/"
+          bash scripts/commit_state.sh "spot-check detail: $(date -u +%F)" "$RUNNER_TEMP/produced"
