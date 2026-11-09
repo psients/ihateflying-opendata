@@ -1,0 +1,22 @@
+{
+ "day": "2026-04-21",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.991,
+  "deps": 49503,
+  "deps_legs": 0.66,
+  "ld": 0.66,
+  "legs": 75161,
+  "ratio": 1.2,
+  "sus": 0.006,
+  "tk": 0.66
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:19:29+00:00",
+ "warnings": [
+  "W13 new large excluded prefixes: ['NDU', 'UPS', 'FDX']"
+ ]
+}

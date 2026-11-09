@@ -1,0 +1,23 @@
+{
+ "day": "2023-04-01",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.97,
+  "deps": 20035,
+  "deps_legs": 0.45,
+  "ld": 0.44,
+  "legs": 44784,
+  "ratio": 1.41,
+  "sus": 0.002,
+  "tk": 0.45
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:18:33+00:00",
+ "warnings": [
+  "I11 chain continuity 0.970 (era warning line 0.97)",
+  "W13 new large excluded prefixes: ['LXJ']"
+ ]
+}

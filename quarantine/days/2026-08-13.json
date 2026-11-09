@@ -1,0 +1,22 @@
+{
+ "day": "2026-08-13",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.992,
+  "deps": 42103,
+  "deps_legs": 0.67,
+  "ld": 0.65,
+  "legs": 62781,
+  "ratio": 0.95,
+  "sus": 0.012,
+  "tk": 0.68
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:26:09+00:00",
+ "warnings": [
+  "W18 partial day: 62781 legs, 73% of the surrounding median (85573); its counts understate real traffic"
+ ]
+}

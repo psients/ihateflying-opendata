@@ -1,0 +1,50 @@
+{
+ "day": "2023-03-06",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2023-03-06",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I11 chain continuity 0.945"
+   ],
+   "stats": {
+    "chain": 0.945,
+    "deps": 20311,
+    "deps_legs": 0.44,
+    "ld": 0.44,
+    "legs": 46234,
+    "ratio": 1.36,
+    "sus": 0.041,
+    "tk": 0.44
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:17:22+00:00",
+   "warnings": [
+    "I5 sus 0.041 (heavy GPS interference day?)"
+   ]
+  }
+ ],
+ "problems": [
+  "I11 chain continuity 0.945"
+ ],
+ "stats": {
+  "chain": 0.945,
+  "deps": 20311,
+  "deps_legs": 0.44,
+  "ld": 0.44,
+  "legs": 46234,
+  "ratio": 1.36,
+  "sus": 0.041,
+  "tk": 0.44
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:17:22+00:00",
+ "warnings": [
+  "I5 sus 0.041 (heavy GPS interference day?)"
+ ]
+}

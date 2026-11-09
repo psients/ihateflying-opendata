@@ -1,0 +1,58 @@
+{
+ "day": "2023-02-16",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2023-02-16",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I3 tk 0.19 ld 0.20",
+    "I4 both-ends-null 0.41",
+    "I10 departures/legs 0.18",
+    "I11 chain continuity 0.850"
+   ],
+   "stats": {
+    "chain": 0.85,
+    "deps": 1335,
+    "deps_legs": 0.18,
+    "ld": 0.2,
+    "legs": 7356,
+    "ratio": 0.56,
+    "sus": 0.001,
+    "tk": 0.19
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:16:37+00:00",
+   "warnings": [
+    "W18 partial day: 7356 legs, 27% of the surrounding median (27229); its counts understate real traffic",
+    "W8 midnight guard disarmed (previous day unpublished)"
+   ]
+  }
+ ],
+ "problems": [
+  "I3 tk 0.19 ld 0.20",
+  "I4 both-ends-null 0.41",
+  "I10 departures/legs 0.18",
+  "I11 chain continuity 0.850"
+ ],
+ "stats": {
+  "chain": 0.85,
+  "deps": 1335,
+  "deps_legs": 0.18,
+  "ld": 0.2,
+  "legs": 7356,
+  "ratio": 0.56,
+  "sus": 0.001,
+  "tk": 0.19
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:16:37+00:00",
+ "warnings": [
+  "W18 partial day: 7356 legs, 27% of the surrounding median (27229); its counts understate real traffic",
+  "W8 midnight guard disarmed (previous day unpublished)"
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "day": "2023-03-01",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2023-03-01",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I11 chain continuity 0.939"
+   ],
+   "stats": {
+    "chain": 0.939,
+    "deps": 19731,
+    "deps_legs": 0.48,
+    "ld": 0.45,
+    "legs": 41126,
+    "ratio": 1.23,
+    "sus": 0.006,
+    "tk": 0.48
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:17:08+00:00",
+   "warnings": []
+  }
+ ],
+ "problems": [
+  "I11 chain continuity 0.939"
+ ],
+ "stats": {
+  "chain": 0.939,
+  "deps": 19731,
+  "deps_legs": 0.48,
+  "ld": 0.45,
+  "legs": 41126,
+  "ratio": 1.23,
+  "sus": 0.006,
+  "tk": 0.48
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:17:08+00:00",
+ "warnings": []
+}

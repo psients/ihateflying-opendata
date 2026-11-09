@@ -1,0 +1,22 @@
+{
+ "day": "2023-03-21",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.976,
+  "deps": 21951,
+  "deps_legs": 0.49,
+  "ld": 0.46,
+  "legs": 45240,
+  "ratio": 1.3,
+  "sus": 0.026,
+  "tk": 0.49
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:18:03+00:00",
+ "warnings": [
+  "W13 new large excluded prefixes: ['FDX']"
+ ]
+}

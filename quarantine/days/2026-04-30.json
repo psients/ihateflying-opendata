@@ -1,0 +1,52 @@
+{
+ "day": "2026-04-30",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2026-04-30",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I6 7644 duplicate (hex, t0)",
+    "I11 chain continuity 0.900"
+   ],
+   "stats": {
+    "chain": 0.9,
+    "deps": 46595,
+    "deps_legs": 0.59,
+    "ld": 0.64,
+    "legs": 79373,
+    "ratio": 1.19,
+    "sus": 0.007,
+    "tk": 0.65
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T04:20:00+00:00",
+   "warnings": [
+    "W16 upstream archive irregular: 1 region(s) unreadable as tar records, 64 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there)"
+   ]
+  }
+ ],
+ "problems": [
+  "I6 7644 duplicate (hex, t0)",
+  "I11 chain continuity 0.900"
+ ],
+ "stats": {
+  "chain": 0.9,
+  "deps": 46595,
+  "deps_legs": 0.59,
+  "ld": 0.64,
+  "legs": 79373,
+  "ratio": 1.19,
+  "sus": 0.007,
+  "tk": 0.65
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T04:20:00+00:00",
+ "warnings": [
+  "W16 upstream archive irregular: 1 region(s) unreadable as tar records, 64 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there)"
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "day": "2026-04-13",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.992,
+  "deps": 51984,
+  "deps_legs": 0.66,
+  "ld": 0.65,
+  "legs": 79109,
+  "ratio": 1.38,
+  "sus": 0.01,
+  "tk": 0.66
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:19:02+00:00",
+ "warnings": [
+  "W12 prefix volume collapse: ['DLH']"
+ ]
+}

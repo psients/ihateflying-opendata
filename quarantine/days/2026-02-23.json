@@ -1,0 +1,23 @@
+{
+ "day": "2026-02-23",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.991,
+  "deps": 47237,
+  "deps_legs": 0.64,
+  "ld": 0.63,
+  "legs": 73511,
+  "ratio": 1.35,
+  "sus": 0.009,
+  "tk": 0.65
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:16:13+00:00",
+ "warnings": [
+  "W12 prefix volume collapse: ['JBU']",
+  "W13 new large excluded prefixes: ['NDU']"
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "day": "2025-10-09",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.983,
+  "deps": 51714,
+  "deps_legs": 0.64,
+  "ld": 0.62,
+  "legs": 80604,
+  "ratio": 1.22,
+  "sus": 0.007,
+  "tk": 0.65
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:08:09+00:00",
+ "warnings": [
+  "I11 chain continuity 0.983 (era warning line 0.985)"
+ ]
+}

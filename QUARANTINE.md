@@ -14,17 +14,1355 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 0.
+**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 29.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-07 | daily | clean | 76737 | 0.66 | 0.01 | 50229 | - | W8 midnight guard disarmed (previous day unpublished) | - |
-| 2026-10-23 | daily | clean | 83650 | 0.68 | 0.019 | 56236 | - | - | - |
-| 2026-10-22 | daily | clean | 81654 | 0.67 | 0.017 | 54256 | - | - | - |
-| 2023-06-07 | range | clean | 52890 | 0.5 | 0.003 | 26450 | - | I11 chain continuity 0.974 (baseline 0.993) | - |
-| 2023-06-06 | range | clean | 52281 | 0.5 | 0.004 | 26101 | - | I11 chain continuity 0.972 (baseline 0.993); W13 new large excluded prefixes: ['FDX', 'UPS', 'ERU'] | - |
-| 2023-06-05 | range | clean | 55075 | 0.5 | 0.003 | 27500 | - | I11 chain continuity 0.971 (baseline 0.993) | - |
-| 2023-06-04 | range | clean | 52752 | 0.49 | 0.004 | 25811 | - | I11 chain continuity 0.976 (baseline 0.993) | - |
-| 2023-06-03 | range | clean | 51830 | 0.49 | 0.004 | 25117 | - | I11 chain continuity 0.977 (baseline 0.993) | - |
-| 2023-06-02 | range | clean | 55097 | 0.5 | 0.004 | 27504 | - | I11 chain continuity 0.977 (baseline 0.993) | - |
-| 2023-06-01 | range | clean | 53480 | 0.5 | 0.002 | 26751 | - | W8 midnight guard disarmed (previous day unpublished); I11 chain continuity 0.979 (baseline 0.993) | - |
+| 2026-10-24 | range | clean | 80366 | 0.67 | 0.02 | 53195 | - | - | - |
+| 2026-10-23 | range | clean | 83650 | 0.68 | 0.019 | 56236 | - | - | - |
+| 2026-10-22 | range | clean | 81654 | 0.67 | 0.017 | 54256 | - | - | - |
+| 2026-10-21 | range | clean | 78722 | 0.66 | 0.025 | 51821 | - | - | - |
+| 2026-10-20 | range | clean | 79560 | 0.68 | 0.019 | 53349 | - | W13 new large excluded prefixes: ['FDX', 'UPS', 'ERU'] | - |
+| 2026-10-19 | range | clean | 84459 | 0.68 | 0.018 | 56912 | - | - | - |
+| 2026-10-18 | range | clean | 82931 | 0.66 | 0.018 | 54424 | - | - | - |
+| 2026-10-17 | range | clean | 81224 | 0.66 | 0.03 | 53514 | - | - | - |
+| 2026-10-16 | range | clean | 84385 | 0.67 | 0.022 | 56016 | - | - | - |
+| 2026-10-15 | range | clean | 82726 | 0.67 | 0.019 | 55094 | - | - | - |
+| 2026-10-14 | range | clean | 79970 | 0.68 | 0.018 | 53587 | - | - | - |
+| 2026-10-13 | range | clean | 80633 | 0.67 | 0.02 | 53848 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2026-10-12 | range | clean | 84518 | 0.68 | 0.018 | 56989 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-10-11 | range | clean | 81351 | 0.68 | 0.019 | 54570 | - | - | - |
+| 2026-10-10 | range | clean | 81253 | 0.66 | 0.017 | 53248 | - | - | - |
+| 2026-10-09 | range | clean | 85345 | 0.68 | 0.021 | 57298 | - | - | - |
+| 2026-10-08 | range | clean | 84377 | 0.66 | 0.018 | 55657 | - | - | - |
+| 2026-10-07 | range | clean | 82557 | 0.65 | 0.018 | 53376 | - | - | - |
+| 2026-10-06 | range | clean | 82862 | 0.65 | 0.015 | 53777 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2026-10-05 | range | clean | 86247 | 0.67 | 0.015 | 57207 | - | - | - |
+| 2026-10-04 | range | clean | 82995 | 0.67 | 0.016 | 54941 | - | - | - |
+| 2026-10-03 | range | clean | 81057 | 0.66 | 0.02 | 52765 | - | - | - |
+| 2026-10-02 | range | clean | 86542 | 0.67 | 0.017 | 57428 | - | - | - |
+| 2026-10-01 | range | clean | 83615 | 0.66 | 0.019 | 54840 | - | - | - |
+| 2026-09-30 | range | clean | 81231 | 0.66 | 0.021 | 53296 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-09-29 | range | clean | 81763 | 0.66 | 0.018 | 53633 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2026-09-28 | range | clean | 85365 | 0.67 | 0.013 | 56962 | - | - | - |
+| 2026-09-27 | range | clean | 82913 | 0.66 | 0.018 | 54235 | - | - | - |
+| 2026-09-26 | range | clean | 81266 | 0.65 | 0.017 | 52688 | - | - | - |
+| 2026-09-25 | range | clean | 86076 | 0.65 | 0.04 | 55661 | - | I5 sus 0.040 (heavy GPS interference day?) | - |
+| 2026-09-24 | range | clean | 83966 | 0.67 | 0.021 | 55641 | - | - | - |
+| 2026-09-23 | range | clean | 81225 | 0.66 | 0.021 | 53347 | - | - | - |
+| 2026-09-22 | range | clean | 80794 | 0.66 | 0.016 | 53241 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-09-21 | range | clean | 83043 | 0.67 | 0.018 | 54986 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-09-20 | range | clean | 82595 | 0.67 | 0.021 | 54473 | - | - | - |
+| 2026-09-19 | range | clean | 79514 | 0.65 | 0.022 | 51105 | - | - | - |
+| 2026-09-18 | range | clean | 86263 | 0.66 | 0.018 | 56832 | - | - | - |
+| 2026-09-17 | range | clean | 82536 | 0.66 | 0.021 | 54048 | - | - | - |
+| 2026-09-16 | range | clean | 80312 | 0.66 | 0.02 | 52980 | - | - | - |
+| 2026-09-15 | range | clean | 81018 | 0.66 | 0.02 | 53400 | - | W13 new large excluded prefixes: ['UPS', 'NDU'] | - |
+| 2026-09-14 | range | clean | 85735 | 0.68 | 0.019 | 57654 | - | - | - |
+| 2026-09-13 | range | clean | 83148 | 0.66 | 0.022 | 54797 | - | - | - |
+| 2026-09-12 | range | clean | 81090 | 0.65 | 0.022 | 52347 | - | - | - |
+| 2026-09-11 | range | clean | 85650 | 0.66 | 0.021 | 56050 | - | - | - |
+| 2026-09-10 | range | clean | 83056 | 0.66 | 0.021 | 54397 | - | - | - |
+| 2026-09-09 | range | clean | 79998 | 0.66 | 0.022 | 52551 | - | - | - |
+| 2026-09-08 | range | clean | 79079 | 0.66 | 0.02 | 52148 | - | - | - |
+| 2026-09-07 | range | clean | 82892 | 0.68 | 0.022 | 55761 | - | - | - |
+| 2026-09-06 | range | clean | 80589 | 0.66 | 0.02 | 52784 | - | - | - |
+| 2026-09-05 | range | clean | 82069 | 0.65 | 0.019 | 53487 | - | - | - |
+| 2026-09-04 | range | clean | 86578 | 0.67 | 0.018 | 57289 | - | - | - |
+| 2026-09-03 | range | clean | 83567 | 0.66 | 0.02 | 55035 | - | - | - |
+| 2026-09-02 | range | clean | 80716 | 0.66 | 0.022 | 52632 | - | - | - |
+| 2026-09-01 | range | clean | 81162 | 0.65 | 0.029 | 52782 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-08-31 | range | clean | 86065 | 0.66 | 0.024 | 56785 | - | - | - |
+| 2026-08-30 | range | clean | 85297 | 0.66 | 0.022 | 55684 | - | - | - |
+| 2026-08-29 | range | clean | 84562 | 0.64 | 0.018 | 54037 | - | - | - |
+| 2026-08-28 | range | clean | 87323 | 0.65 | 0.02 | 56753 | - | - | - |
+| 2026-08-27 | range | clean | 84501 | 0.66 | 0.021 | 55469 | - | - | - |
+| 2026-08-26 | range | clean | 82715 | 0.65 | 0.022 | 53664 | - | - | - |
+| 2026-08-25 | range | clean | 83902 | 0.65 | 0.019 | 54272 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-08-24 | range | clean | 87423 | 0.66 | 0.021 | 57527 | - | - | - |
+| 2026-08-23 | range | clean | 85478 | 0.65 | 0.019 | 55250 | - | - | - |
+| 2026-08-22 | range | clean | 83925 | 0.64 | 0.02 | 53050 | - | - | - |
+| 2026-08-21 | range | clean | 88007 | 0.64 | 0.018 | 56164 | - | - | - |
+| 2026-08-20 | range | clean | 85082 | 0.65 | 0.018 | 54344 | - | - | - |
+| 2026-08-19 | range | clean | 81394 | 0.61 | 0.023 | 48700 | - | I11 chain continuity 0.974 (era warning line 0.985) | - |
+| 2026-08-18 | range | clean | 85213 | 0.64 | 0.018 | 54151 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-08-17 | range | clean | 88668 | 0.65 | 0.019 | 57534 | - | - | - |
+| 2026-08-16 | range | clean | 86244 | 0.64 | 0.022 | 54760 | - | - | - |
+| 2026-08-15 | range | clean | 85933 | 0.64 | 0.026 | 54143 | - | - | - |
+| 2026-08-14 | range | clean | 89123 | 0.66 | 0.028 | 58167 | - | - | - |
+| 2026-08-13 | range | clean | 62781 | 0.68 | 0.012 | 42103 | - | W18 partial day: 62781 legs, 73% of the surrounding median (85573); its counts understate real traffic | - |
+| 2026-08-12 | range | clean | 71781 | 0.61 | 0.028 | 43696 | - | - | - |
+| 2026-08-11 | range | clean | 84006 | 0.65 | 0.015 | 54190 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2026-08-10 | range | clean | 86385 | 0.66 | 0.017 | 56296 | - | - | - |
+| 2026-08-09 | range | RED | 64684 | 0.55 | 0.02 | 35034 | I11 chain continuity 0.931 | W18 partial day: 64684 legs, 75% of the surrounding median (85951); its counts understate real traffic | - |
+| 2026-08-08 | range | clean | 83231 | 0.64 | 0.011 | 53014 | - | - | - |
+| 2026-08-07 | range | clean | 87193 | 0.65 | 0.011 | 56438 | - | - | - |
+| 2026-08-06 | range | clean | 85969 | 0.65 | 0.012 | 55524 | - | - | - |
+| 2026-08-05 | range | clean | 85528 | 0.65 | 0.01 | 55170 | - | - | - |
+| 2026-08-04 | range | clean | 86993 | 0.65 | 0.011 | 56522 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2026-08-03 | range | clean | 88700 | 0.66 | 0.012 | 57976 | - | - | - |
+| 2026-08-02 | range | clean | 78934 | 0.65 | 0.011 | 50931 | - | - | - |
+| 2026-08-01 | range | clean | 59687 | 0.55 | 0.013 | 32488 | - | W18 partial day: 59687 legs, 70% of the surrounding median (85154); its counts understate real traffic; I11 chain continuity 0.976 (era warning line 0.985) | - |
+| 2026-07-31 | range | clean | 87496 | 0.67 | 0.016 | 58092 | - | - | - |
+| 2026-07-30 | range | clean | 86003 | 0.67 | 0.01 | 57120 | - | - | - |
+| 2026-07-29 | range | clean | 82872 | 0.67 | 0.012 | 54909 | - | - | - |
+| 2026-07-28 | range | clean | 81598 | 0.66 | 0.014 | 53285 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-07-27 | range | clean | 84781 | 0.66 | 0.013 | 55560 | - | - | - |
+| 2026-07-26 | range | clean | 84010 | 0.66 | 0.017 | 55443 | - | - | - |
+| 2026-07-25 | range | clean | 82969 | 0.65 | 0.017 | 53357 | - | - | - |
+| 2026-07-24 | range | clean | 87355 | 0.65 | 0.017 | 56717 | - | - | - |
+| 2026-07-23 | range | clean | 84743 | 0.67 | 0.015 | 56309 | - | - | - |
+| 2026-07-22 | range | clean | 81688 | 0.66 | 0.013 | 53483 | - | - | - |
+| 2026-07-21 | range | clean | 80509 | 0.66 | 0.015 | 52531 | - | W13 new large excluded prefixes: ['FDX', 'UPS', 'NDU'] | - |
+| 2026-07-20 | range | clean | 84883 | 0.67 | 0.015 | 56850 | - | - | - |
+| 2026-07-19 | range | clean | 83414 | 0.65 | 0.012 | 53719 | - | - | - |
+| 2026-07-18 | range | clean | 82062 | 0.63 | 0.012 | 51414 | - | - | - |
+| 2026-07-17 | range | clean | 86700 | 0.65 | 0.012 | 56245 | - | - | - |
+| 2026-07-16 | range | clean | 85275 | 0.66 | 0.011 | 55584 | - | - | - |
+| 2026-07-15 | range | clean | 83326 | 0.66 | 0.013 | 54657 | - | - | - |
+| 2026-07-14 | range | clean | 83722 | 0.66 | 0.014 | 54783 | - | W13 new large excluded prefixes: ['FDX', 'UPS', 'NDU'] | - |
+| 2026-07-13 | range | clean | 86215 | 0.67 | 0.013 | 57039 | - | - | - |
+| 2026-07-12 | range | clean | 83896 | 0.67 | 0.013 | 55429 | - | - | - |
+| 2026-07-11 | range | clean | 81004 | 0.63 | 0.016 | 50709 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-07-10 | range | clean | 85010 | 0.66 | 0.014 | 55764 | - | - | - |
+| 2026-07-09 | range | clean | 83017 | 0.66 | 0.016 | 54476 | - | - | - |
+| 2026-07-08 | range | clean | 82546 | 0.66 | 0.016 | 54418 | - | - | - |
+| 2026-07-07 | range | clean | 82269 | 0.67 | 0.016 | 54337 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2026-07-06 | range | clean | 83663 | 0.66 | 0.018 | 55098 | - | - | - |
+| 2026-07-05 | range | clean | 80066 | 0.65 | 0.022 | 51898 | - | - | - |
+| 2026-07-04 | range | clean | 79291 | 0.64 | 0.022 | 50504 | - | - | - |
+| 2026-07-03 | range | clean | 84178 | 0.66 | 0.018 | 55183 | - | - | - |
+| 2026-07-02 | range | clean | 83207 | 0.67 | 0.019 | 55371 | - | - | - |
+| 2026-07-01 | range | clean | 81795 | 0.65 | 0.014 | 53195 | - | - | - |
+| 2026-06-30 | range | clean | 81577 | 0.66 | 0.007 | 53424 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-06-29 | range | clean | 84277 | 0.67 | 0.009 | 55707 | - | - | - |
+| 2026-06-28 | range | clean | 83475 | 0.66 | 0.008 | 54577 | - | - | - |
+| 2026-06-27 | range | clean | 80812 | 0.65 | 0.008 | 51933 | - | - | - |
+| 2026-06-26 | range | clean | 84842 | 0.67 | 0.01 | 56086 | - | - | - |
+| 2026-06-25 | range | clean | 82825 | 0.67 | 0.01 | 55320 | - | - | - |
+| 2026-06-24 | range | clean | 80553 | 0.67 | 0.01 | 53412 | - | - | - |
+| 2026-06-23 | range | clean | 80178 | 0.67 | 0.026 | 53072 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-06-22 | range | clean | 83088 | 0.66 | 0.014 | 54887 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-06-21 | range | clean | 82429 | 0.66 | 0.019 | 53946 | - | - | - |
+| 2026-06-20 | range | clean | 79292 | 0.66 | 0.015 | 51880 | - | - | - |
+| 2026-06-19 | range | clean | 81475 | 0.67 | 0.014 | 54044 | - | - | - |
+| 2026-06-18 | range | clean | 80656 | 0.67 | 0.011 | 53414 | - | - | - |
+| 2026-06-17 | range | clean | 78846 | 0.66 | 0.009 | 51730 | - | - | - |
+| 2026-06-16 | range | clean | 79320 | 0.67 | 0.008 | 52487 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-06-15 | range | clean | 81743 | 0.68 | 0.007 | 54915 | - | - | - |
+| 2026-06-14 | range | clean | 80679 | 0.66 | 0.012 | 52684 | - | - | - |
+| 2026-06-13 | range | clean | 79286 | 0.65 | 0.008 | 51189 | - | W13 new large excluded prefixes: ['CAP'] | - |
+| 2026-06-12 | range | clean | 77847 | 0.63 | 0.006 | 48451 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2026-06-11 | range | clean | 57435 | 0.45 | 0.001 | 25491 | - | W18 partial day: 57435 legs, 73% of the surrounding median (79066); its counts understate real traffic; I11 chain continuity 0.954 (era warning line 0.985); W12 prefix volume collapse: ['CSN', 'CES', 'JAL', 'ANA'] | - |
+| 2026-06-10 | range | clean | 73648 | 0.63 | 0.007 | 46338 | - | - | - |
+| 2026-06-09 | range | clean | 77035 | 0.67 | 0.007 | 50996 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-06-08 | range | clean | 79774 | 0.67 | 0.008 | 53448 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-06-07 | range | clean | 78571 | 0.66 | 0.009 | 51679 | - | - | - |
+| 2026-06-06 | range | clean | 76441 | 0.65 | 0.008 | 49367 | - | - | - |
+| 2026-06-05 | range | clean | 81202 | 0.66 | 0.009 | 53641 | - | - | - |
+| 2026-06-04 | range | clean | 78779 | 0.67 | 0.01 | 52160 | - | - | - |
+| 2026-06-03 | range | clean | 75319 | 0.66 | 0.012 | 49686 | - | - | - |
+| 2026-06-02 | range | clean | 75065 | 0.67 | 0.009 | 50167 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-06-01 | range | clean | 79649 | 0.68 | 0.009 | 53938 | - | - | - |
+| 2026-05-31 | range | clean | 78140 | 0.68 | 0.009 | 52583 | - | - | - |
+| 2026-05-30 | range | clean | 76484 | 0.66 | 0.008 | 50431 | - | - | - |
+| 2026-05-29 | range | clean | 80362 | 0.67 | 0.009 | 53898 | - | - | - |
+| 2026-05-28 | range | clean | 78363 | 0.68 | 0.01 | 52719 | - | - | - |
+| 2026-05-27 | range | clean | 75911 | 0.67 | 0.007 | 50884 | - | - | - |
+| 2026-05-26 | range | clean | 76538 | 0.67 | 0.01 | 51335 | - | - | - |
+| 2026-05-25 | range | clean | 78185 | 0.68 | 0.012 | 52988 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-05-24 | range | clean | 76129 | 0.67 | 0.013 | 51070 | - | - | - |
+| 2026-05-23 | range | clean | 75882 | 0.67 | 0.013 | 50368 | - | - | - |
+| 2026-05-22 | range | clean | 79846 | 0.68 | 0.01 | 53943 | - | - | - |
+| 2026-05-21 | range | clean | 77285 | 0.68 | 0.011 | 51989 | - | - | - |
+| 2026-05-20 | range | clean | 73086 | 0.67 | 0.011 | 48794 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-05-19 | range | clean | 74162 | 0.66 | 0.011 | 48474 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-05-18 | range | clean | 79098 | 0.67 | 0.009 | 52259 | - | - | - |
+| 2026-05-17 | range | clean | 77598 | 0.66 | 0.008 | 50620 | - | - | - |
+| 2026-05-16 | range | clean | 75343 | 0.65 | 0.006 | 48786 | - | - | - |
+| 2026-05-15 | range | clean | 79190 | 0.63 | 0.017 | 49620 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-05-14 | range | clean | 77497 | 0.66 | 0.004 | 50472 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-05-13 | range | clean | 75437 | 0.65 | 0.007 | 48739 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-05-12 | range | clean | 75336 | 0.66 | 0.009 | 49068 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-05-11 | range | clean | 79014 | 0.67 | 0.009 | 52181 | - | - | - |
+| 2026-05-10 | range | clean | 77777 | 0.66 | 0.01 | 50692 | - | - | - |
+| 2026-05-09 | range | clean | 76148 | 0.65 | 0.01 | 48896 | - | - | - |
+| 2026-05-08 | range | clean | 80576 | 0.67 | 0.004 | 53673 | - | W13 new large excluded prefixes: ['CHX', 'WIF'] | - |
+| 2026-05-07 | range | clean | 23632 | 0.55 | 0.005 | 12840 | - | W18 partial day: 23632 legs, 30% of the surrounding median (78030); its counts understate real traffic; W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-05-06 | range | SKIPPED |  |  |  |  | - | - | upstream hole (scripts/upstream_holes.txt): no archive on any usable instance (only mlatonly-0 exists; adsb.lol outage) |
+| 2026-05-05 | range | SKIPPED |  |  |  |  | - | - | upstream hole (scripts/upstream_holes.txt): prod-0 holds heatmap files only and staging-0 holds 1 aircraft trace (checked 2026-11-08; adsb.lol outage window) |
+| 2026-05-04 | range | RED | 102964 | 0.64 | 0.004 | 50712 | I6 23001 duplicate (hex, t0); I11 chain continuity 0.779 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 62 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there); W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-05-03 | range | clean | 78283 | 0.66 | 0.006 | 51228 | - | - | - |
+| 2026-05-02 | range | clean | 75345 | 0.65 | 0.007 | 48302 | - | - | - |
+| 2026-05-01 | range | clean | 81494 | 0.66 | 0.006 | 53576 | - | - | - |
+| 2026-04-30 | range | RED | 79373 | 0.65 | 0.007 | 46595 | I6 7644 duplicate (hex, t0); I11 chain continuity 0.900 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 64 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there) | - |
+| 2026-04-29 | range | clean | 75465 | 0.65 | 0.009 | 49013 | - | - | - |
+| 2026-04-28 | range | clean | 75392 | 0.66 | 0.007 | 49159 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2026-04-27 | range | clean | 79711 | 0.67 | 0.006 | 52947 | - | - | - |
+| 2026-04-26 | range | clean | 77949 | 0.67 | 0.007 | 51795 | - | - | - |
+| 2026-04-25 | range | clean | 75604 | 0.66 | 0.007 | 49361 | - | - | - |
+| 2026-04-24 | range | clean | 80362 | 0.67 | 0.007 | 53791 | - | - | - |
+| 2026-04-23 | range | clean | 78115 | 0.67 | 0.01 | 51829 | - | - | - |
+| 2026-04-22 | range | clean | 75178 | 0.66 | 0.005 | 49298 | - | - | - |
+| 2026-04-21 | range | clean | 75161 | 0.66 | 0.006 | 49503 | - | W13 new large excluded prefixes: ['NDU', 'UPS', 'FDX'] | - |
+| 2026-04-20 | range | clean | 79303 | 0.67 | 0.006 | 52748 | - | - | - |
+| 2026-04-19 | range | clean | 77924 | 0.66 | 0.006 | 51365 | - | - | - |
+| 2026-04-18 | range | clean | 75394 | 0.65 | 0.008 | 48899 | - | - | - |
+| 2026-04-17 | range | clean | 79563 | 0.66 | 0.011 | 52495 | - | - | - |
+| 2026-04-16 | range | clean | 76799 | 0.66 | 0.01 | 50443 | - | - | - |
+| 2026-04-15 | range | clean | 73832 | 0.65 | 0.011 | 47907 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-04-14 | range | clean | 74627 | 0.65 | 0.011 | 48505 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-04-13 | range | clean | 79109 | 0.66 | 0.01 | 51984 | - | W12 prefix volume collapse: ['DLH'] | - |
+| 2026-04-12 | range | clean | 77963 | 0.66 | 0.011 | 50981 | - | - | - |
+| 2026-04-11 | range | clean | 76118 | 0.65 | 0.009 | 49259 | - | - | - |
+| 2026-04-10 | range | clean | 78804 | 0.66 | 0.01 | 51647 | - | W12 prefix volume collapse: ['DLH']; W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-04-09 | range | clean | 78005 | 0.67 | 0.011 | 51772 | - | - | - |
+| 2026-04-08 | range | clean | 76197 | 0.66 | 0.009 | 49972 | - | - | - |
+| 2026-04-07 | range | clean | 77760 | 0.65 | 0.01 | 50533 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-04-06 | range | clean | 81625 | 0.66 | 0.011 | 53397 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-04-05 | range | clean | 77992 | 0.65 | 0.011 | 50685 | - | - | - |
+| 2026-04-04 | range | clean | 77117 | 0.64 | 0.011 | 49012 | - | - | - |
+| 2026-04-03 | range | clean | 81200 | 0.66 | 0.014 | 53088 | - | - | - |
+| 2026-04-02 | range | clean | 75194 | 0.6 | 0.022 | 44509 | - | I11 chain continuity 0.978 (era warning line 0.985) | - |
+| 2026-04-01 | range | clean | 75721 | 0.62 | 0.017 | 46753 | - | - | - |
+| 2026-03-31 | range | clean | 76965 | 0.65 | 0.012 | 49462 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-03-30 | range | clean | 80407 | 0.66 | 0.009 | 52924 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-03-29 | range | clean | 79306 | 0.66 | 0.009 | 51612 | - | - | - |
+| 2026-03-28 | range | clean | 76217 | 0.64 | 0.009 | 48498 | - | W13 new large excluded prefixes: ['CAP'] | - |
+| 2026-03-27 | range | clean | 79933 | 0.66 | 0.008 | 52237 | - | - | - |
+| 2026-03-26 | range | clean | 76679 | 0.65 | 0.01 | 49615 | - | - | - |
+| 2026-03-25 | range | clean | 72965 | 0.62 | 0.009 | 44868 | - | - | - |
+| 2026-03-24 | range | clean | 71321 | 0.62 | 0.009 | 43852 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-03-23 | range | clean | 78344 | 0.66 | 0.01 | 51102 | - | - | - |
+| 2026-03-22 | range | clean | 77197 | 0.65 | 0.014 | 49581 | - | - | - |
+| 2026-03-21 | range | clean | 74823 | 0.64 | 0.014 | 47696 | - | - | - |
+| 2026-03-20 | range | clean | 78912 | 0.66 | 0.012 | 51820 | - | - | - |
+| 2026-03-19 | range | clean | 76426 | 0.66 | 0.014 | 49814 | - | - | - |
+| 2026-03-18 | range | clean | 73134 | 0.65 | 0.018 | 47071 | - | - | - |
+| 2026-03-17 | range | clean | 71711 | 0.64 | 0.013 | 45847 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-03-16 | range | clean | 72020 | 0.65 | 0.012 | 46189 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-03-15 | range | clean | 73599 | 0.64 | 0.014 | 46509 | - | - | - |
+| 2026-03-14 | range | clean | 73586 | 0.64 | 0.017 | 46609 | - | - | - |
+| 2026-03-13 | range | clean | 77236 | 0.65 | 0.014 | 49812 | - | - | - |
+| 2026-03-12 | range | clean | 73186 | 0.65 | 0.01 | 47331 | - | - | - |
+| 2026-03-11 | range | clean | 70020 | 0.65 | 0.01 | 45054 | - | - | - |
+| 2026-03-10 | range | clean | 71479 | 0.65 | 0.01 | 46434 | - | W13 new large excluded prefixes: ['UPS', 'NDU'] | - |
+| 2026-03-09 | range | clean | 77475 | 0.66 | 0.015 | 51221 | - | - | - |
+| 2026-03-08 | range | clean | 76225 | 0.66 | 0.017 | 50198 | - | - | - |
+| 2026-03-07 | range | clean | 70136 | 0.62 | 0.011 | 42783 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2026-03-06 | range | clean | 75630 | 0.66 | 0.01 | 49836 | - | - | - |
+| 2026-03-05 | range | clean | 72485 | 0.66 | 0.01 | 47568 | - | - | - |
+| 2026-03-04 | range | clean | 68387 | 0.66 | 0.009 | 44656 | - | - | - |
+| 2026-03-03 | range | clean | 68579 | 0.66 | 0.01 | 44950 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-03-02 | range | clean | 75703 | 0.67 | 0.008 | 50112 | - | - | - |
+| 2026-03-01 | range | clean | 73980 | 0.66 | 0.01 | 48377 | - | - | - |
+| 2026-02-28 | range | clean | 74573 | 0.64 | 0.01 | 47275 | - | - | - |
+| 2026-02-27 | range | clean | 81108 | 0.65 | 0.01 | 52742 | - | - | - |
+| 2026-02-26 | range | clean | 77536 | 0.65 | 0.009 | 50011 | - | - | - |
+| 2026-02-25 | range | clean | 72830 | 0.64 | 0.01 | 45996 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-02-24 | range | clean | 70145 | 0.63 | 0.009 | 44050 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-02-23 | range | clean | 73511 | 0.65 | 0.009 | 47237 | - | W12 prefix volume collapse: ['JBU']; W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-02-22 | range | clean | 74787 | 0.65 | 0.011 | 48448 | - | - | - |
+| 2026-02-21 | range | clean | 75701 | 0.65 | 0.013 | 48770 | - | - | - |
+| 2026-02-20 | range | clean | 78599 | 0.66 | 0.01 | 51557 | - | - | - |
+| 2026-02-19 | range | clean | 74602 | 0.66 | 0.011 | 48679 | - | - | - |
+| 2026-02-18 | range | clean | 71271 | 0.65 | 0.01 | 45970 | - | - | - |
+| 2026-02-17 | range | clean | 72946 | 0.65 | 0.01 | 46871 | - | W13 new large excluded prefixes: ['UPS', 'ERU'] | - |
+| 2026-02-16 | range | clean | 77345 | 0.66 | 0.008 | 50983 | - | - | - |
+| 2026-02-15 | range | clean | 75963 | 0.65 | 0.011 | 48802 | - | - | - |
+| 2026-02-14 | range | clean | 76040 | 0.64 | 0.013 | 48222 | - | - | - |
+| 2026-02-13 | range | clean | 79868 | 0.66 | 0.012 | 52180 | - | - | - |
+| 2026-02-12 | range | clean | 75477 | 0.64 | 0.009 | 47764 | - | W12 prefix volume collapse: ['DLH'] | - |
+| 2026-02-11 | range | clean | 71223 | 0.62 | 0.01 | 44030 | - | - | - |
+| 2026-02-10 | range | clean | 71674 | 0.63 | 0.009 | 44599 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2026-02-09 | range | clean | 76796 | 0.64 | 0.01 | 49126 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-02-08 | range | clean | 74128 | 0.64 | 0.012 | 46864 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2026-02-07 | range | clean | 71410 | 0.63 | 0.013 | 45037 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-02-06 | range | clean | 76294 | 0.65 | 0.009 | 49433 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-02-05 | range | clean | 74093 | 0.63 | 0.008 | 46517 | - | - | - |
+| 2026-02-04 | range | clean | 69163 | 0.62 | 0.008 | 42641 | - | - | - |
+| 2026-02-03 | range | clean | 70379 | 0.63 | 0.008 | 43833 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-02-02 | range | clean | 76523 | 0.64 | 0.009 | 48401 | - | - | - |
+| 2026-02-01 | range | clean | 73209 | 0.63 | 0.01 | 45749 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-01-31 | range | clean | 69865 | 0.61 | 0.009 | 42410 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2026-01-30 | range | clean | 75939 | 0.63 | 0.008 | 47705 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-01-29 | range | clean | 72930 | 0.63 | 0.008 | 45831 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2026-01-28 | range | clean | 67571 | 0.62 | 0.008 | 41648 | - | - | - |
+| 2026-01-27 | range | clean | 66642 | 0.6 | 0.009 | 39949 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2026-01-26 | range | clean | 66282 | 0.61 | 0.009 | 40156 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-01-25 | range | clean | 62377 | 0.58 | 0.014 | 36196 | - | I11 chain continuity 0.979 (era warning line 0.985); W12 prefix volume collapse: ['RPA', 'EDV'] | - |
+| 2026-01-24 | range | clean | 68039 | 0.6 | 0.013 | 40528 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-01-23 | range | clean | 42449 | 0.54 | 0.014 | 22986 | - | W18 partial day: 42449 legs, 59% of the surrounding median (71441); its counts understate real traffic; I11 chain continuity 0.977 (era warning line 0.985); W12 prefix volume collapse: ['SWA', 'DAL', 'AAL', 'UAL', 'SKW', 'RPA', 'ASA', 'ENY', 'JBU', 'EDV', 'JIA'] | - |
+| 2026-01-22 | range | clean | 73420 | 0.63 | 0.01 | 46232 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-01-21 | range | clean | 69313 | 0.62 | 0.01 | 42805 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2026-01-20 | range | clean | 70686 | 0.63 | 0.011 | 44117 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2026-01-19 | range | clean | 75613 | 0.63 | 0.013 | 47556 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-01-18 | range | clean | 73233 | 0.62 | 0.011 | 45141 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2026-01-17 | range | clean | 72196 | 0.61 | 0.013 | 43959 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2026-01-16 | range | clean | 76789 | 0.63 | 0.011 | 48279 | - | - | - |
+| 2026-01-15 | range | clean | 73245 | 0.62 | 0.009 | 45462 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2026-01-14 | range | clean | 69384 | 0.62 | 0.01 | 42559 | - | I11 chain continuity 0.981 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-01-13 | range | clean | 69714 | 0.61 | 0.01 | 42605 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2026-01-12 | range | clean | 76620 | 0.63 | 0.02 | 48361 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2026-01-11 | range | clean | 75291 | 0.63 | 0.017 | 46995 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2026-01-10 | range | clean | 72659 | 0.62 | 0.016 | 44511 | - | - | - |
+| 2026-01-09 | range | clean | 76792 | 0.63 | 0.015 | 48229 | - | - | - |
+| 2026-01-08 | range | clean | 73611 | 0.63 | 0.014 | 46227 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2026-01-07 | range | clean | 70616 | 0.62 | 0.015 | 43283 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2026-01-06 | range | clean | 73880 | 0.63 | 0.013 | 46114 | - | I11 chain continuity 0.981 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2026-01-05 | range | clean | 80116 | 0.63 | 0.015 | 50469 | - | - | - |
+| 2026-01-04 | range | clean | 80438 | 0.64 | 0.014 | 50963 | - | - | - |
+| 2026-01-03 | range | clean | 78662 | 0.63 | 0.015 | 49133 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2026-01-02 | range | clean | 79628 | 0.64 | 0.017 | 50895 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['CXK'] | - |
+| 2026-01-01 | range | clean | 72049 | 0.63 | 0.016 | 44973 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-12-31 | range | clean | 75853 | 0.63 | 0.018 | 47561 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2025-12-30 | range | clean | 79998 | 0.64 | 0.017 | 51167 | - | - | - |
+| 2025-12-29 | range | clean | 80595 | 0.64 | 0.017 | 51485 | - | - | - |
+| 2025-12-28 | range | clean | 81578 | 0.64 | 0.017 | 51956 | - | - | - |
+| 2025-12-27 | range | clean | 77844 | 0.64 | 0.014 | 49090 | - | W13 new large excluded prefixes: ['CXK'] | - |
+| 2025-12-26 | range | clean | 76033 | 0.63 | 0.013 | 47870 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-12-25 | range | clean | 65314 | 0.61 | 0.009 | 39362 | - | W15 anchor carriers with zero departures: ['RYR']; I11 chain continuity 0.982 (era warning line 0.985); W12 prefix volume collapse: ['RYR', 'EZY'] | - |
+| 2025-12-24 | range | clean | 73603 | 0.63 | 0.008 | 46011 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-12-23 | range | clean | 78729 | 0.65 | 0.011 | 50720 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-12-22 | range | clean | 81566 | 0.65 | 0.01 | 52789 | - | - | - |
+| 2025-12-21 | range | clean | 81551 | 0.64 | 0.01 | 52052 | - | - | - |
+| 2025-12-20 | range | clean | 79854 | 0.64 | 0.012 | 51006 | - | - | - |
+| 2025-12-19 | range | clean | 81243 | 0.65 | 0.011 | 52585 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-12-18 | range | clean | 77778 | 0.65 | 0.009 | 49998 | - | - | - |
+| 2025-12-17 | range | clean | 73226 | 0.64 | 0.012 | 46302 | - | - | - |
+| 2025-12-16 | range | clean | 74325 | 0.64 | 0.011 | 47277 | - | - | - |
+| 2025-12-15 | range | clean | 79388 | 0.66 | 0.009 | 51790 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-12-14 | range | clean | 75582 | 0.64 | 0.009 | 47884 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-12-13 | range | clean | 74328 | 0.63 | 0.009 | 46945 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-12-12 | range | clean | 79431 | 0.65 | 0.008 | 51372 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-12-11 | range | clean | 74936 | 0.63 | 0.014 | 47003 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-12-10 | range | clean | 72431 | 0.63 | 0.01 | 45111 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-12-09 | range | clean | 72224 | 0.63 | 0.017 | 45136 | - | - | - |
+| 2025-12-08 | range | clean | 78990 | 0.65 | 0.01 | 51301 | - | - | - |
+| 2025-12-07 | range | clean | 74787 | 0.64 | 0.022 | 47490 | - | - | - |
+| 2025-12-06 | range | clean | 74127 | 0.64 | 0.007 | 46955 | - | - | - |
+| 2025-12-05 | range | clean | 78151 | 0.65 | 0.007 | 50606 | - | - | - |
+| 2025-12-04 | range | RED | 75646 | 0.64 | 0.104 | 48225 | I5 sus 0.104 | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-12-03 | range | clean | 73028 | 0.64 | 0.006 | 46526 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-12-02 | range | clean | 74012 | 0.63 | 0.007 | 45880 | - | - | - |
+| 2025-12-01 | range | clean | 81472 | 0.65 | 0.008 | 52813 | - | - | - |
+| 2025-11-30 | range | clean | 79005 | 0.64 | 0.008 | 50531 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-11-29 | range | clean | 73824 | 0.63 | 0.006 | 46032 | - | - | - |
+| 2025-11-28 | range | clean | 70443 | 0.64 | 0.009 | 44619 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-11-27 | range | clean | 71233 | 0.62 | 0.011 | 44103 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-11-26 | range | clean | 75083 | 0.64 | 0.009 | 47875 | - | - | - |
+| 2025-11-25 | range | clean | 74915 | 0.64 | 0.008 | 48048 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2025-11-24 | range | clean | 78875 | 0.65 | 0.011 | 50752 | - | - | - |
+| 2025-11-23 | range | clean | 78512 | 0.65 | 0.006 | 50965 | - | - | - |
+| 2025-11-22 | range | clean | 75672 | 0.64 | 0.006 | 47925 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-11-21 | range | clean | 78707 | 0.65 | 0.006 | 50926 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-11-20 | range | clean | 74428 | 0.64 | 0.006 | 47100 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-11-19 | range | clean | 71778 | 0.64 | 0.009 | 45455 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-11-18 | range | clean | 71948 | 0.64 | 0.008 | 45699 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2025-11-17 | range | clean | 78725 | 0.65 | 0.007 | 51180 | - | - | - |
+| 2025-11-16 | range | clean | 76315 | 0.64 | 0.008 | 48680 | - | - | - |
+| 2025-11-15 | range | clean | 73815 | 0.63 | 0.009 | 46089 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-11-14 | range | clean | 79375 | 0.65 | 0.008 | 51504 | - | - | - |
+| 2025-11-13 | range | clean | 74807 | 0.65 | 0.007 | 47999 | - | - | - |
+| 2025-11-12 | range | clean | 71077 | 0.64 | 0.006 | 45098 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-11-11 | range | clean | 71469 | 0.64 | 0.006 | 45533 | - | I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-11-10 | range | clean | 76173 | 0.64 | 0.005 | 48667 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2025-11-09 | range | clean | 73834 | 0.63 | 0.006 | 46300 | - | - | - |
+| 2025-11-08 | range | clean | 72190 | 0.62 | 0.006 | 44296 | - | - | - |
+| 2025-11-07 | range | clean | 78718 | 0.66 | 0.006 | 51120 | - | - | - |
+| 2025-11-06 | range | clean | 75669 | 0.65 | 0.005 | 48803 | - | - | - |
+| 2025-11-05 | range | clean | 72241 | 0.64 | 0.005 | 46048 | - | - | - |
+| 2025-11-04 | range | clean | 72548 | 0.64 | 0.006 | 46355 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2025-11-03 | range | clean | 79694 | 0.66 | 0.007 | 51866 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-11-02 | range | clean | 76481 | 0.65 | 0.006 | 49087 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-11-01 | range | clean | 73140 | 0.64 | 0.007 | 46157 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-10-31 | range | clean | 78636 | 0.65 | 0.008 | 50549 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-10-30 | range | clean | 77194 | 0.64 | 0.007 | 48961 | - | - | - |
+| 2025-10-29 | range | clean | 75851 | 0.64 | 0.007 | 48181 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-10-28 | range | clean | 75029 | 0.65 | 0.005 | 48509 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'NDU'] | - |
+| 2025-10-27 | range | clean | 79837 | 0.66 | 0.006 | 52138 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-10-26 | range | clean | 75840 | 0.64 | 0.006 | 48425 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-10-25 | range | clean | 76169 | 0.64 | 0.006 | 48602 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-10-24 | range | clean | 81293 | 0.66 | 0.008 | 53095 | - | - | - |
+| 2025-10-23 | range | clean | 79105 | 0.66 | 0.009 | 51778 | - | - | - |
+| 2025-10-22 | range | clean | 76542 | 0.66 | 0.009 | 50103 | - | I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-10-21 | range | clean | 77572 | 0.66 | 0.01 | 50801 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-10-20 | range | clean | 81246 | 0.67 | 0.007 | 53844 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-10-19 | range | clean | 79095 | 0.65 | 0.006 | 51110 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-10-18 | range | clean | 77166 | 0.63 | 0.007 | 48360 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-10-17 | range | clean | 82559 | 0.65 | 0.007 | 53463 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-10-16 | range | clean | 79796 | 0.66 | 0.008 | 51958 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-10-15 | range | RED | 100645 | 0.65 | 0.009 | 36399 | I6 43920 duplicate (hex, t0); I10 departures/legs 0.36; I11 chain continuity 0.582 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 26 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there) | - |
+| 2025-10-14 | range | clean | 77412 | 0.65 | 0.008 | 49881 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-10-13 | range | clean | 80927 | 0.65 | 0.007 | 52537 | - | - | - |
+| 2025-10-12 | range | clean | 78616 | 0.64 | 0.007 | 50159 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['ERU'] | - |
+| 2025-10-11 | range | clean | 78041 | 0.63 | 0.008 | 49051 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-10-10 | range | clean | 82482 | 0.66 | 0.007 | 53851 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-10-09 | range | clean | 80604 | 0.65 | 0.007 | 51714 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-10-08 | range | clean | 78348 | 0.64 | 0.009 | 49687 | - | - | - |
+| 2025-10-07 | range | clean | 79539 | 0.64 | 0.011 | 50296 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-10-06 | range | clean | 82832 | 0.65 | 0.009 | 53070 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-10-05 | range | clean | 79286 | 0.64 | 0.011 | 50233 | - | - | - |
+| 2025-10-04 | range | clean | 77557 | 0.63 | 0.013 | 48374 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-10-03 | range | clean | 82578 | 0.64 | 0.011 | 52738 | - | - | - |
+| 2025-10-02 | range | clean | 80392 | 0.64 | 0.01 | 51267 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-10-01 | range | clean | 77781 | 0.63 | 0.01 | 48962 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-09-30 | range | clean | 78711 | 0.63 | 0.011 | 49443 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-09-29 | range | clean | 82173 | 0.65 | 0.01 | 53049 | - | - | - |
+| 2025-09-28 | range | clean | 79312 | 0.64 | 0.012 | 50698 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-09-27 | range | clean | 77306 | 0.63 | 0.007 | 48294 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-09-26 | range | clean | 81953 | 0.65 | 0.011 | 52878 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-09-25 | range | clean | 78729 | 0.65 | 0.013 | 50684 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2025-09-24 | range | clean | 73258 | 0.65 | 0.01 | 47065 | - | - | - |
+| 2025-09-23 | range | clean | 74910 | 0.65 | 0.006 | 48323 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-09-22 | range | clean | 81143 | 0.65 | 0.009 | 52461 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-09-21 | range | clean | 78267 | 0.64 | 0.009 | 49874 | - | - | - |
+| 2025-09-20 | range | clean | 75344 | 0.63 | 0.009 | 46916 | - | - | - |
+| 2025-09-19 | range | clean | 80763 | 0.65 | 0.011 | 52266 | - | - | - |
+| 2025-09-18 | range | clean | 78942 | 0.66 | 0.009 | 51674 | - | - | - |
+| 2025-09-17 | range | clean | 75603 | 0.64 | 0.01 | 48491 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-09-16 | range | clean | 76352 | 0.65 | 0.01 | 49427 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-09-15 | range | clean | 80589 | 0.67 | 0.01 | 53617 | - | - | - |
+| 2025-09-14 | range | clean | 78136 | 0.66 | 0.01 | 50968 | - | - | - |
+| 2025-09-13 | range | clean | 75405 | 0.64 | 0.008 | 48078 | - | - | - |
+| 2025-09-12 | range | clean | 81150 | 0.67 | 0.011 | 53700 | - | - | - |
+| 2025-09-11 | range | clean | 78424 | 0.65 | 0.01 | 50882 | - | - | - |
+| 2025-09-10 | range | clean | 75222 | 0.64 | 0.009 | 48170 | - | - | - |
+| 2025-09-09 | range | clean | 75815 | 0.64 | 0.01 | 48504 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-09-08 | range | clean | 80426 | 0.66 | 0.01 | 52592 | - | - | - |
+| 2025-09-07 | range | clean | 78345 | 0.65 | 0.012 | 50792 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-09-06 | range | clean | 74912 | 0.63 | 0.009 | 47059 | - | - | - |
+| 2025-09-05 | range | clean | 80352 | 0.66 | 0.009 | 52484 | - | - | - |
+| 2025-09-04 | range | clean | 76975 | 0.66 | 0.01 | 50189 | - | - | - |
+| 2025-09-03 | range | clean | 74342 | 0.66 | 0.013 | 48430 | - | - | - |
+| 2025-09-02 | range | clean | 76824 | 0.66 | 0.009 | 50112 | - | - | - |
+| 2025-09-01 | range | clean | 79108 | 0.66 | 0.01 | 51843 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-08-31 | range | clean | 76173 | 0.66 | 0.008 | 49820 | - | - | - |
+| 2025-08-30 | range | clean | 77194 | 0.63 | 0.008 | 48422 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-08-29 | range | clean | 82456 | 0.65 | 0.009 | 52874 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-08-28 | range | clean | 80198 | 0.65 | 0.008 | 51416 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-08-27 | range | clean | 78037 | 0.64 | 0.009 | 49477 | - | - | - |
+| 2025-08-26 | range | clean | 78429 | 0.63 | 0.01 | 49391 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-08-25 | range | clean | 82898 | 0.64 | 0.009 | 53040 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-08-24 | range | clean | 80038 | 0.65 | 0.008 | 51538 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-08-23 | range | clean | 78674 | 0.63 | 0.008 | 48894 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-08-22 | range | clean | 83279 | 0.63 | 0.008 | 52218 | - | - | - |
+| 2025-08-21 | range | clean | 81068 | 0.63 | 0.006 | 50544 | - | - | - |
+| 2025-08-20 | range | clean | 77709 | 0.62 | 0.008 | 47914 | - | - | - |
+| 2025-08-19 | range | clean | 78103 | 0.63 | 0.007 | 48984 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-08-18 | range | clean | 81752 | 0.65 | 0.008 | 52409 | - | - | - |
+| 2025-08-17 | range | clean | 79412 | 0.64 | 0.009 | 50224 | - | - | - |
+| 2025-08-16 | range | clean | 78778 | 0.63 | 0.009 | 49323 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-08-15 | range | clean | 84123 | 0.65 | 0.008 | 54218 | - | - | - |
+| 2025-08-14 | range | clean | 81274 | 0.65 | 0.006 | 52586 | - | - | - |
+| 2025-08-13 | range | clean | 78511 | 0.63 | 0.007 | 49279 | - | - | - |
+| 2025-08-12 | range | clean | 79351 | 0.63 | 0.009 | 49782 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-08-11 | range | clean | 84015 | 0.64 | 0.007 | 53439 | - | - | - |
+| 2025-08-10 | range | clean | 81286 | 0.64 | 0.009 | 51291 | - | - | - |
+| 2025-08-09 | range | clean | 79712 | 0.63 | 0.009 | 49641 | - | - | - |
+| 2025-08-08 | range | clean | 83275 | 0.64 | 0.009 | 53380 | - | - | - |
+| 2025-08-07 | range | clean | 80764 | 0.65 | 0.01 | 51868 | - | - | - |
+| 2025-08-06 | range | clean | 78728 | 0.64 | 0.01 | 49905 | - | - | - |
+| 2025-08-05 | range | clean | 80143 | 0.64 | 0.013 | 51193 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-08-04 | range | clean | 83661 | 0.64 | 0.012 | 53220 | - | - | - |
+| 2025-08-03 | range | clean | 81975 | 0.63 | 0.011 | 51354 | - | - | - |
+| 2025-08-02 | range | clean | 80704 | 0.62 | 0.01 | 49968 | - | - | - |
+| 2025-08-01 | range | clean | 82682 | 0.63 | 0.011 | 52083 | - | - | - |
+| 2025-07-31 | range | clean | 80548 | 0.63 | 0.009 | 50136 | - | - | - |
+| 2025-07-30 | range | clean | 80069 | 0.63 | 0.01 | 49902 | - | - | - |
+| 2025-07-29 | range | clean | 81483 | 0.63 | 0.01 | 51046 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-07-28 | range | clean | 83726 | 0.63 | 0.011 | 52473 | - | - | - |
+| 2025-07-27 | range | clean | 80793 | 0.62 | 0.01 | 49833 | - | - | - |
+| 2025-07-26 | range | clean | 81719 | 0.63 | 0.008 | 50760 | - | - | - |
+| 2025-07-25 | range | clean | 83866 | 0.64 | 0.007 | 53110 | - | - | - |
+| 2025-07-24 | range | clean | 82518 | 0.64 | 0.006 | 52005 | - | - | - |
+| 2025-07-23 | range | clean | 81499 | 0.64 | 0.006 | 51479 | - | - | - |
+| 2025-07-22 | range | clean | 81858 | 0.64 | 0.007 | 51663 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-07-21 | range | clean | 83731 | 0.65 | 0.007 | 54018 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-07-20 | range | clean | 80905 | 0.65 | 0.008 | 52315 | - | - | - |
+| 2025-07-19 | range | clean | 80851 | 0.63 | 0.007 | 50673 | - | - | - |
+| 2025-07-18 | range | clean | 84433 | 0.64 | 0.008 | 53868 | - | - | - |
+| 2025-07-17 | range | clean | 82371 | 0.64 | 0.009 | 52406 | - | - | - |
+| 2025-07-16 | range | clean | 80492 | 0.63 | 0.009 | 50674 | - | - | - |
+| 2025-07-15 | range | clean | 80546 | 0.64 | 0.008 | 51279 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-07-14 | range | clean | 82482 | 0.64 | 0.008 | 52264 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-07-13 | range | clean | 80946 | 0.63 | 0.008 | 50908 | - | - | - |
+| 2025-07-12 | range | clean | 79907 | 0.63 | 0.009 | 49932 | - | - | - |
+| 2025-07-11 | range | clean | 83230 | 0.64 | 0.008 | 53011 | - | - | - |
+| 2025-07-10 | range | clean | 81581 | 0.65 | 0.008 | 52311 | - | - | - |
+| 2025-07-09 | range | clean | 78651 | 0.64 | 0.008 | 49697 | - | - | - |
+| 2025-07-08 | range | clean | 79180 | 0.64 | 0.007 | 50314 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-07-07 | range | clean | 81982 | 0.64 | 0.007 | 52285 | - | - | - |
+| 2025-07-06 | range | clean | 79434 | 0.64 | 0.009 | 50890 | - | - | - |
+| 2025-07-05 | range | clean | 74186 | 0.63 | 0.01 | 46615 | - | - | - |
+| 2025-07-04 | range | clean | 78259 | 0.65 | 0.009 | 50459 | - | - | - |
+| 2025-07-03 | range | clean | 78035 | 0.64 | 0.012 | 49894 | - | - | - |
+| 2025-07-02 | range | clean | 77435 | 0.65 | 0.009 | 49858 | - | - | - |
+| 2025-07-01 | range | clean | 76733 | 0.65 | 0.009 | 49522 | - | I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-06-30 | range | clean | 80117 | 0.66 | 0.008 | 52203 | - | - | - |
+| 2025-06-29 | range | clean | 78474 | 0.66 | 0.008 | 51112 | - | - | - |
+| 2025-06-28 | range | clean | 76140 | 0.65 | 0.008 | 48763 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-06-27 | range | clean | 79564 | 0.66 | 0.01 | 51794 | - | - | - |
+| 2025-06-26 | range | clean | 78124 | 0.65 | 0.011 | 50190 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-06-25 | range | clean | 75642 | 0.65 | 0.011 | 48946 | - | - | - |
+| 2025-06-24 | range | clean | 77028 | 0.66 | 0.011 | 50179 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-06-23 | range | clean | 80239 | 0.66 | 0.012 | 52657 | - | - | - |
+| 2025-06-22 | range | clean | 78365 | 0.65 | 0.011 | 50633 | - | - | - |
+| 2025-06-21 | range | clean | 77589 | 0.65 | 0.01 | 49747 | - | - | - |
+| 2025-06-20 | range | clean | 80544 | 0.66 | 0.011 | 52917 | - | - | - |
+| 2025-06-19 | range | clean | 78856 | 0.66 | 0.009 | 51453 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-06-18 | range | clean | 77767 | 0.65 | 0.01 | 50490 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-06-17 | range | clean | 78100 | 0.66 | 0.009 | 50797 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-06-16 | range | clean | 81489 | 0.66 | 0.011 | 53209 | - | - | - |
+| 2025-06-15 | range | clean | 78991 | 0.65 | 0.012 | 51017 | - | - | - |
+| 2025-06-14 | range | clean | 77904 | 0.65 | 0.013 | 50034 | - | - | - |
+| 2025-06-13 | range | clean | 80629 | 0.66 | 0.014 | 53055 | - | - | - |
+| 2025-06-12 | range | clean | 79822 | 0.65 | 0.011 | 51802 | - | - | - |
+| 2025-06-11 | range | clean | 78423 | 0.65 | 0.016 | 50347 | - | - | - |
+| 2025-06-10 | range | clean | 79044 | 0.65 | 0.017 | 50737 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-06-09 | range | clean | 81597 | 0.65 | 0.019 | 52837 | - | - | - |
+| 2025-06-08 | range | clean | 79015 | 0.64 | 0.02 | 50499 | - | - | - |
+| 2025-06-07 | range | clean | 77626 | 0.64 | 0.02 | 49686 | - | - | - |
+| 2025-06-06 | range | clean | 80606 | 0.65 | 0.017 | 52236 | - | - | - |
+| 2025-06-05 | range | clean | 79228 | 0.65 | 0.015 | 51064 | - | - | - |
+| 2025-06-04 | range | clean | 77249 | 0.64 | 0.015 | 49378 | - | - | - |
+| 2025-06-03 | range | clean | 77851 | 0.64 | 0.014 | 49507 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-06-02 | range | clean | 80846 | 0.65 | 0.013 | 51895 | - | - | - |
+| 2025-06-01 | range | clean | 77646 | 0.65 | 0.016 | 49819 | - | - | - |
+| 2025-05-31 | range | clean | 76435 | 0.64 | 0.015 | 48640 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-05-30 | range | clean | 79185 | 0.65 | 0.009 | 51045 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-05-29 | range | clean | 78719 | 0.65 | 0.01 | 50441 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-05-28 | range | clean | 77001 | 0.65 | 0.01 | 49700 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-05-27 | range | clean | 76637 | 0.65 | 0.014 | 49500 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-05-26 | range | clean | 77788 | 0.65 | 0.008 | 50077 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2025-05-25 | range | clean | 75860 | 0.64 | 0.008 | 48445 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2025-05-24 | range | clean | 75262 | 0.63 | 0.009 | 47311 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2025-05-23 | range | clean | 80186 | 0.64 | 0.008 | 50413 | - | - | - |
+| 2025-05-22 | range | clean | 77898 | 0.63 | 0.008 | 48751 | - | - | - |
+| 2025-05-21 | range | clean | 75651 | 0.62 | 0.007 | 46678 | - | - | - |
+| 2025-05-20 | range | clean | 75789 | 0.63 | 0.008 | 47365 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-05-19 | range | clean | 79090 | 0.64 | 0.008 | 49814 | - | - | - |
+| 2025-05-18 | range | clean | 76576 | 0.63 | 0.007 | 47699 | - | - | - |
+| 2025-05-17 | range | clean | 74673 | 0.62 | 0.008 | 45871 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-05-16 | range | clean | 77384 | 0.64 | 0.008 | 49042 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-05-15 | range | clean | 76769 | 0.64 | 0.008 | 48820 | - | - | - |
+| 2025-05-14 | range | clean | 73845 | 0.63 | 0.008 | 46291 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-05-13 | range | clean | 75010 | 0.63 | 0.008 | 47217 | - | I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-05-12 | range | clean | 77766 | 0.64 | 0.007 | 49431 | - | - | - |
+| 2025-05-11 | range | clean | 74901 | 0.64 | 0.008 | 47421 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2025-05-10 | range | clean | 73566 | 0.63 | 0.008 | 46039 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-05-09 | range | clean | 77073 | 0.65 | 0.007 | 49537 | - | - | - |
+| 2025-05-08 | range | clean | 75419 | 0.65 | 0.008 | 48321 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2025-05-07 | range | clean | 73282 | 0.64 | 0.007 | 46814 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-05-06 | range | clean | 72516 | 0.64 | 0.006 | 45811 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-05-05 | range | clean | 76829 | 0.64 | 0.008 | 48488 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-05-04 | range | clean | 75495 | 0.63 | 0.01 | 47516 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2025-05-03 | range | clean | 73296 | 0.63 | 0.011 | 45504 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-05-02 | range | clean | 76000 | 0.64 | 0.007 | 47959 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-05-01 | range | clean | 75905 | 0.64 | 0.006 | 47842 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2025-04-30 | range | clean | 73155 | 0.63 | 0.007 | 45425 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-04-29 | range | clean | 73410 | 0.63 | 0.006 | 46009 | - | I11 chain continuity 0.981 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-04-28 | range | clean | 76064 | 0.63 | 0.006 | 47869 | - | - | - |
+| 2025-04-27 | range | clean | 74937 | 0.64 | 0.007 | 47664 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-04-26 | range | clean | 72733 | 0.63 | 0.006 | 45370 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-04-25 | range | clean | 77210 | 0.64 | 0.006 | 49353 | - | - | - |
+| 2025-04-24 | range | clean | 74757 | 0.64 | 0.006 | 47505 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-04-23 | range | clean | 72635 | 0.63 | 0.005 | 45600 | - | - | - |
+| 2025-04-22 | range | clean | 73597 | 0.64 | 0.006 | 46833 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-04-21 | range | clean | 76102 | 0.64 | 0.006 | 48538 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-04-20 | range | clean | 73731 | 0.63 | 0.006 | 46050 | - | - | - |
+| 2025-04-19 | range | clean | 72894 | 0.62 | 0.006 | 45050 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-04-18 | range | clean | 76202 | 0.65 | 0.005 | 49144 | - | - | - |
+| 2025-04-17 | range | clean | 75611 | 0.64 | 0.005 | 48176 | - | - | - |
+| 2025-04-16 | range | clean | 73574 | 0.64 | 0.006 | 46656 | - | - | - |
+| 2025-04-15 | range | clean | 73324 | 0.64 | 0.006 | 46339 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
+| 2025-04-14 | range | clean | 75666 | 0.65 | 0.007 | 48570 | - | - | - |
+| 2025-04-13 | range | clean | 73449 | 0.64 | 0.005 | 46836 | - | - | - |
+| 2025-04-12 | range | clean | 72376 | 0.63 | 0.005 | 45216 | - | - | - |
+| 2025-04-11 | range | clean | 76361 | 0.65 | 0.006 | 49209 | - | - | - |
+| 2025-04-10 | range | clean | 74842 | 0.65 | 0.005 | 47969 | - | - | - |
+| 2025-04-09 | range | clean | 72816 | 0.64 | 0.005 | 46194 | - | - | - |
+| 2025-04-08 | range | clean | 73674 | 0.65 | 0.006 | 47502 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-04-07 | range | clean | 76482 | 0.65 | 0.006 | 49609 | - | - | - |
+| 2025-04-06 | range | clean | 74370 | 0.66 | 0.006 | 48441 | - | - | - |
+| 2025-04-05 | range | clean | 72483 | 0.64 | 0.006 | 46171 | - | - | - |
+| 2025-04-04 | range | clean | 76729 | 0.65 | 0.007 | 49208 | - | - | - |
+| 2025-04-03 | range | clean | 75333 | 0.64 | 0.007 | 47764 | - | - | - |
+| 2025-04-02 | range | clean | 73120 | 0.63 | 0.006 | 46057 | - | - | - |
+| 2025-04-01 | range | clean | 74699 | 0.64 | 0.007 | 47762 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-03-31 | range | clean | 74980 | 0.64 | 0.006 | 47840 | - | - | - |
+| 2025-03-30 | range | clean | 73972 | 0.63 | 0.006 | 46573 | - | - | - |
+| 2025-03-29 | range | clean | 72244 | 0.62 | 0.005 | 44690 | - | - | - |
+| 2025-03-28 | range | clean | 76273 | 0.64 | 0.004 | 48210 | - | - | - |
+| 2025-03-27 | range | clean | 73785 | 0.63 | 0.005 | 46460 | - | - | - |
+| 2025-03-26 | range | clean | 71606 | 0.63 | 0.006 | 44837 | - | - | - |
+| 2025-03-25 | range | clean | 71549 | 0.63 | 0.005 | 44893 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-03-24 | range | clean | 75253 | 0.64 | 0.004 | 47790 | - | - | - |
+| 2025-03-23 | range | clean | 74331 | 0.63 | 0.006 | 46813 | - | - | - |
+| 2025-03-22 | range | clean | 72132 | 0.63 | 0.005 | 44847 | - | - | - |
+| 2025-03-21 | range | clean | 74959 | 0.64 | 0.006 | 47617 | - | W12 prefix volume collapse: ['BAW'] | - |
+| 2025-03-20 | range | clean | 72967 | 0.65 | 0.005 | 46926 | - | - | - |
+| 2025-03-19 | range | clean | 69873 | 0.64 | 0.008 | 44253 | - | - | - |
+| 2025-03-18 | range | clean | 70715 | 0.64 | 0.007 | 44952 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2025-03-17 | range | clean | 74952 | 0.65 | 0.007 | 48616 | - | - | - |
+| 2025-03-16 | range | clean | 72036 | 0.64 | 0.007 | 45508 | - | - | - |
+| 2025-03-15 | range | clean | 70321 | 0.63 | 0.008 | 43887 | - | - | - |
+| 2025-03-14 | range | clean | 74801 | 0.64 | 0.006 | 47482 | - | - | - |
+| 2025-03-13 | range | clean | 72600 | 0.64 | 0.005 | 46399 | - | - | - |
+| 2025-03-12 | range | clean | 70282 | 0.65 | 0.006 | 45248 | - | - | - |
+| 2025-03-11 | range | clean | 70719 | 0.65 | 0.007 | 45230 | - | W13 new large excluded prefixes: ['UPS', 'ERU'] | - |
+| 2025-03-10 | range | clean | 72995 | 0.64 | 0.006 | 46283 | - | W12 prefix volume collapse: ['DLH'] | - |
+| 2025-03-09 | range | clean | 73641 | 0.65 | 0.007 | 47645 | - | - | - |
+| 2025-03-08 | range | clean | 69879 | 0.65 | 0.008 | 44684 | - | - | - |
+| 2025-03-07 | range | clean | 73434 | 0.65 | 0.006 | 46965 | - | - | - |
+| 2025-03-06 | range | clean | 70375 | 0.65 | 0.007 | 45106 | - | - | - |
+| 2025-03-05 | range | clean | 66579 | 0.63 | 0.007 | 41733 | - | - | - |
+| 2025-03-04 | range | clean | 67523 | 0.63 | 0.007 | 41885 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-03-03 | range | clean | 73509 | 0.63 | 0.006 | 45956 | - | - | - |
+| 2025-03-02 | range | clean | 73199 | 0.61 | 0.006 | 44652 | - | - | - |
+| 2025-03-01 | range | clean | 71170 | 0.62 | 0.009 | 43624 | - | - | - |
+| 2025-02-28 | range | clean | 73362 | 0.63 | 0.012 | 45732 | - | - | - |
+| 2025-02-27 | range | clean | 69131 | 0.64 | 0.01 | 43944 | - | - | - |
+| 2025-02-26 | range | clean | 66013 | 0.64 | 0.011 | 41900 | - | W13 new large excluded prefixes: ['ERU'] | - |
+| 2025-02-25 | range | clean | 66551 | 0.64 | 0.007 | 42259 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-02-24 | range | clean | 71595 | 0.65 | 0.006 | 45909 | - | - | - |
+| 2025-02-23 | range | clean | 69613 | 0.64 | 0.007 | 44348 | - | - | - |
+| 2025-02-22 | range | clean | 68194 | 0.63 | 0.007 | 42691 | - | - | - |
+| 2025-02-21 | range | clean | 72502 | 0.65 | 0.007 | 46416 | - | - | - |
+| 2025-02-20 | range | clean | 69289 | 0.63 | 0.005 | 43383 | - | - | - |
+| 2025-02-19 | range | clean | 65249 | 0.64 | 0.007 | 41181 | - | - | - |
+| 2025-02-18 | range | clean | 67100 | 0.63 | 0.006 | 42089 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-02-17 | range | clean | 70116 | 0.64 | 0.006 | 44673 | - | - | - |
+| 2025-02-16 | range | clean | 67707 | 0.62 | 0.006 | 41600 | - | - | - |
+| 2025-02-15 | range | clean | 68823 | 0.62 | 0.007 | 42421 | - | - | - |
+| 2025-02-14 | range | clean | 73152 | 0.64 | 0.007 | 46300 | - | - | - |
+| 2025-02-13 | range | clean | 67169 | 0.62 | 0.005 | 41574 | - | - | - |
+| 2025-02-12 | range | clean | 63378 | 0.61 | 0.007 | 38512 | - | - | - |
+| 2025-02-11 | range | clean | 64238 | 0.61 | 0.006 | 38857 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2025-02-10 | range | clean | 70009 | 0.62 | 0.005 | 43390 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-02-09 | range | clean | 67065 | 0.61 | 0.007 | 40521 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-02-08 | range | clean | 65828 | 0.6 | 0.007 | 39495 | - | - | - |
+| 2025-02-07 | range | clean | 70401 | 0.64 | 0.005 | 44539 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-02-06 | range | clean | 65753 | 0.63 | 0.005 | 40763 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-02-05 | range | clean | 63425 | 0.61 | 0.006 | 38193 | - | - | - |
+| 2025-02-04 | range | clean | 63810 | 0.61 | 0.006 | 38780 | - | W13 new large excluded prefixes: ['UPS', 'NDU', 'FDX'] | - |
+| 2025-02-03 | range | clean | 69622 | 0.62 | 0.006 | 43035 | - | - | - |
+| 2025-02-02 | range | clean | 67795 | 0.61 | 0.006 | 40968 | - | - | - |
+| 2025-02-01 | range | clean | 66025 | 0.59 | 0.007 | 38942 | - | - | - |
+| 2025-01-31 | range | clean | 69544 | 0.61 | 0.006 | 42221 | - | - | - |
+| 2025-01-30 | range | clean | 65093 | 0.6 | 0.005 | 38999 | - | - | - |
+| 2025-01-29 | range | clean | 61885 | 0.6 | 0.005 | 36985 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-01-28 | range | clean | 61789 | 0.6 | 0.005 | 36986 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2025-01-27 | range | clean | 68445 | 0.62 | 0.009 | 42015 | - | - | - |
+| 2025-01-26 | range | clean | 67077 | 0.61 | 0.008 | 40645 | - | - | - |
+| 2025-01-25 | range | clean | 65587 | 0.59 | 0.007 | 38373 | - | W13 new large excluded prefixes: ['CAP'] | - |
+| 2025-01-24 | range | clean | 68682 | 0.61 | 0.007 | 41836 | - | - | - |
+| 2025-01-23 | range | clean | 64116 | 0.61 | 0.006 | 38834 | - | - | - |
+| 2025-01-22 | range | clean | 59514 | 0.6 | 0.007 | 35346 | - | - | - |
+| 2025-01-21 | range | clean | 59933 | 0.6 | 0.008 | 35823 | - | - | - |
+| 2025-01-20 | range | clean | 66624 | 0.62 | 0.008 | 40845 | - | - | - |
+| 2025-01-19 | range | clean | 64770 | 0.6 | 0.009 | 38710 | - | - | - |
+| 2025-01-18 | range | clean | 66022 | 0.59 | 0.01 | 38888 | - | - | - |
+| 2025-01-17 | range | clean | 70046 | 0.62 | 0.01 | 42861 | - | - | - |
+| 2025-01-16 | range | clean | 64813 | 0.6 | 0.01 | 38831 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2025-01-15 | range | clean | 61632 | 0.61 | 0.008 | 37339 | - | - | - |
+| 2025-01-14 | range | clean | 61967 | 0.6 | 0.01 | 36943 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2025-01-13 | range | clean | 68491 | 0.62 | 0.008 | 42027 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2025-01-12 | range | clean | 66434 | 0.61 | 0.009 | 40403 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2025-01-11 | range | clean | 62153 | 0.6 | 0.011 | 36895 | - | - | - |
+| 2025-01-10 | range | clean | 64946 | 0.6 | 0.006 | 38949 | - | - | - |
+| 2025-01-09 | range | clean | 63491 | 0.61 | 0.007 | 38341 | - | - | - |
+| 2025-01-08 | range | clean | 63077 | 0.61 | 0.008 | 38220 | - | - | - |
+| 2025-01-07 | range | clean | 66033 | 0.6 | 0.007 | 39561 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2025-01-06 | range | clean | 69722 | 0.6 | 0.011 | 41532 | - | - | - |
+| 2025-01-05 | range | clean | 70755 | 0.61 | 0.013 | 42702 | - | - | - |
+| 2025-01-04 | range | clean | 70406 | 0.61 | 0.008 | 42577 | - | - | - |
+| 2025-01-03 | range | clean | 71914 | 0.62 | 0.008 | 44164 | - | - | - |
+| 2025-01-02 | range | clean | 69402 | 0.6 | 0.007 | 41717 | - | - | - |
+| 2025-01-01 | range | clean | 62577 | 0.6 | 0.007 | 37198 | - | - | - |
+| 2024-12-31 | range | clean | 65189 | 0.61 | 0.007 | 39449 | - | - | - |
+| 2024-12-30 | range | clean | 71579 | 0.62 | 0.01 | 43802 | - | - | - |
+| 2024-12-29 | range | clean | 70774 | 0.6 | 0.008 | 42214 | - | - | - |
+| 2024-12-28 | range | clean | 69020 | 0.6 | 0.009 | 40950 | - | - | - |
+| 2024-12-27 | range | clean | 71322 | 0.61 | 0.007 | 42995 | - | W13 new large excluded prefixes: ['CXK'] | - |
+| 2024-12-26 | range | clean | 66065 | 0.6 | 0.01 | 39384 | - | - | - |
+| 2024-12-25 | range | clean | 56255 | 0.57 | 0.01 | 32025 | - | W15 anchor carriers with zero departures: ['RYR']; W12 prefix volume collapse: ['RYR', 'EZY'] | - |
+| 2024-12-24 | range | clean | 63639 | 0.59 | 0.008 | 37322 | - | - | - |
+| 2024-12-23 | range | clean | 71928 | 0.6 | 0.008 | 42877 | - | - | - |
+| 2024-12-22 | range | clean | 72455 | 0.6 | 0.009 | 43284 | - | - | - |
+| 2024-12-21 | range | clean | 70158 | 0.59 | 0.009 | 41200 | - | - | - |
+| 2024-12-20 | range | clean | 71264 | 0.59 | 0.008 | 41665 | - | - | - |
+| 2024-12-19 | range | clean | 69247 | 0.59 | 0.01 | 40826 | - | - | - |
+| 2024-12-18 | range | clean | 64779 | 0.6 | 0.007 | 38362 | - | - | - |
+| 2024-12-17 | range | clean | 65082 | 0.59 | 0.01 | 38280 | - | - | - |
+| 2024-12-16 | range | clean | 69176 | 0.6 | 0.009 | 41229 | - | - | - |
+| 2024-12-15 | range | clean | 67342 | 0.6 | 0.007 | 39791 | - | - | - |
+| 2024-12-14 | range | clean | 64947 | 0.59 | 0.006 | 37827 | - | - | - |
+| 2024-12-13 | range | clean | 69559 | 0.6 | 0.006 | 41369 | - | - | - |
+| 2024-12-12 | range | clean | 66649 | 0.6 | 0.008 | 39607 | - | - | - |
+| 2024-12-11 | range | clean | 63057 | 0.59 | 0.009 | 36970 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-12-10 | range | clean | 63350 | 0.59 | 0.007 | 36977 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-12-09 | range | clean | 68856 | 0.61 | 0.005 | 41706 | - | - | - |
+| 2024-12-08 | range | clean | 65784 | 0.61 | 0.005 | 39568 | - | - | - |
+| 2024-12-07 | range | clean | 63258 | 0.59 | 0.007 | 37234 | - | - | - |
+| 2024-12-06 | range | clean | 67392 | 0.62 | 0.006 | 41283 | - | - | - |
+| 2024-12-05 | range | clean | 64830 | 0.61 | 0.008 | 39479 | - | - | - |
+| 2024-12-04 | range | clean | 62272 | 0.62 | 0.006 | 38546 | - | - | - |
+| 2024-12-03 | range | clean | 64090 | 0.63 | 0.005 | 40145 | - | - | - |
+| 2024-12-02 | range | clean | 70301 | 0.64 | 0.006 | 44963 | - | - | - |
+| 2024-12-01 | range | clean | 69841 | 0.64 | 0.006 | 44581 | - | - | - |
+| 2024-11-30 | range | clean | 64821 | 0.63 | 0.006 | 40659 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2024-11-29 | range | clean | 60138 | 0.63 | 0.009 | 37472 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-11-28 | range | clean | 61307 | 0.62 | 0.006 | 37977 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-11-27 | range | clean | 64839 | 0.65 | 0.005 | 41638 | - | - | - |
+| 2024-11-26 | range | clean | 65332 | 0.64 | 0.005 | 41443 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-11-25 | range | clean | 68746 | 0.64 | 0.005 | 43731 | - | - | - |
+| 2024-11-24 | range | clean | 68253 | 0.64 | 0.006 | 43432 | - | - | - |
+| 2024-11-23 | range | clean | 65922 | 0.63 | 0.007 | 41490 | - | - | - |
+| 2024-11-22 | range | clean | 69059 | 0.64 | 0.007 | 44151 | - | - | - |
+| 2024-11-21 | range | clean | 64176 | 0.62 | 0.007 | 39647 | - | - | - |
+| 2024-11-20 | range | clean | 61379 | 0.62 | 0.007 | 38041 | - | - | - |
+| 2024-11-19 | range | clean | 63344 | 0.63 | 0.008 | 39432 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-11-18 | range | clean | 69296 | 0.63 | 0.006 | 43645 | - | - | - |
+| 2024-11-17 | range | clean | 66868 | 0.62 | 0.007 | 41326 | - | - | - |
+| 2024-11-16 | range | clean | 64722 | 0.61 | 0.007 | 39419 | - | - | - |
+| 2024-11-15 | range | clean | 70098 | 0.63 | 0.005 | 44041 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-11-14 | range | clean | 66001 | 0.63 | 0.006 | 41464 | - | - | - |
+| 2024-11-13 | range | clean | 62408 | 0.62 | 0.007 | 38403 | - | - | - |
+| 2024-11-12 | range | clean | 64135 | 0.62 | 0.006 | 39757 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-11-11 | range | clean | 69217 | 0.64 | 0.006 | 43977 | - | - | - |
+| 2024-11-10 | range | clean | 66397 | 0.63 | 0.008 | 41284 | - | - | - |
+| 2024-11-09 | range | clean | 63793 | 0.61 | 0.009 | 38629 | - | - | - |
+| 2024-11-08 | range | clean | 68121 | 0.64 | 0.008 | 43035 | - | - | - |
+| 2024-11-07 | range | clean | 64722 | 0.63 | 0.008 | 40848 | - | - | - |
+| 2024-11-06 | range | clean | 60602 | 0.63 | 0.007 | 37830 | - | - | - |
+| 2024-11-05 | range | clean | 61144 | 0.63 | 0.009 | 38037 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-11-04 | range | clean | 67883 | 0.64 | 0.008 | 43053 | - | - | - |
+| 2024-11-03 | range | clean | 66088 | 0.62 | 0.01 | 41000 | - | - | - |
+| 2024-11-02 | range | clean | 65742 | 0.62 | 0.008 | 40249 | - | - | - |
+| 2024-11-01 | range | clean | 67305 | 0.63 | 0.007 | 42394 | - | - | - |
+| 2024-10-31 | range | clean | 65370 | 0.62 | 0.007 | 40554 | - | - | - |
+| 2024-10-30 | range | clean | 64537 | 0.62 | 0.009 | 39909 | - | - | - |
+| 2024-10-29 | range | clean | 65565 | 0.62 | 0.031 | 40331 | - | I5 sus 0.031 (heavy GPS interference day?); W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-10-28 | range | clean | 70019 | 0.61 | 0.009 | 42365 | - | - | - |
+| 2024-10-27 | range | clean | 68212 | 0.62 | 0.011 | 42332 | - | - | - |
+| 2024-10-26 | range | clean | 68515 | 0.61 | 0.01 | 41797 | - | - | - |
+| 2024-10-25 | range | clean | 72689 | 0.63 | 0.01 | 45693 | - | - | - |
+| 2024-10-24 | range | clean | 69661 | 0.64 | 0.006 | 44298 | - | - | - |
+| 2024-10-23 | range | clean | 67856 | 0.63 | 0.012 | 42558 | - | - | - |
+| 2024-10-22 | range | clean | 69186 | 0.63 | 0.012 | 43426 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2024-10-21 | range | clean | 72523 | 0.64 | 0.013 | 46083 | - | - | - |
+| 2024-10-20 | range | clean | 69975 | 0.63 | 0.012 | 43877 | - | - | - |
+| 2024-10-19 | range | clean | 68578 | 0.61 | 0.01 | 41540 | - | - | - |
+| 2024-10-18 | range | clean | 71947 | 0.62 | 0.01 | 44515 | - | - | - |
+| 2024-10-17 | range | clean | 70081 | 0.62 | 0.009 | 43298 | - | - | - |
+| 2024-10-16 | range | clean | 68426 | 0.63 | 0.01 | 42702 | - | - | - |
+| 2024-10-15 | range | clean | 69434 | 0.63 | 0.009 | 43694 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2024-10-14 | range | clean | 72081 | 0.63 | 0.014 | 45160 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-10-13 | range | clean | 69765 | 0.62 | 0.011 | 43296 | - | - | - |
+| 2024-10-12 | range | clean | 67557 | 0.61 | 0.014 | 41190 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-10-11 | range | clean | 70277 | 0.63 | 0.011 | 43994 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2024-10-10 | range | clean | 65878 | 0.62 | 0.011 | 40474 | - | - | - |
+| 2024-10-09 | range | clean | 64159 | 0.6 | 0.019 | 38418 | - | - | - |
+| 2024-10-08 | range | clean | 66722 | 0.62 | 0.014 | 40995 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2024-10-07 | range | clean | 69882 | 0.64 | 0.011 | 44106 | - | - | - |
+| 2024-10-06 | range | clean | 66892 | 0.63 | 0.01 | 41624 | - | - | - |
+| 2024-10-05 | range | clean | 66240 | 0.61 | 0.008 | 40424 | - | - | - |
+| 2024-10-04 | range | clean | 70474 | 0.63 | 0.007 | 43882 | - | - | - |
+| 2024-10-03 | range | clean | 67209 | 0.61 | 0.006 | 40853 | - | - | - |
+| 2024-10-02 | range | clean | 64787 | 0.6 | 0.008 | 38688 | - | - | - |
+| 2024-10-01 | range | clean | 65952 | 0.6 | 0.008 | 39343 | - | W13 new large excluded prefixes: ['UPS', 'FDX'] | - |
+| 2024-09-30 | range | clean | 70289 | 0.61 | 0.008 | 42726 | - | - | - |
+| 2024-09-29 | range | clean | 67761 | 0.59 | 0.009 | 39684 | - | - | - |
+| 2024-09-28 | range | clean | 66042 | 0.58 | 0.009 | 38084 | - | - | - |
+| 2024-09-27 | range | clean | 69752 | 0.59 | 0.01 | 40701 | - | - | - |
+| 2024-09-26 | range | clean | 68019 | 0.59 | 0.007 | 40062 | - | - | - |
+| 2024-09-25 | range | clean | 65567 | 0.59 | 0.008 | 38647 | - | - | - |
+| 2024-09-24 | range | clean | 66624 | 0.6 | 0.006 | 39681 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-09-23 | range | clean | 70452 | 0.6 | 0.008 | 42348 | - | - | - |
+| 2024-09-22 | range | clean | 68055 | 0.59 | 0.008 | 40202 | - | - | - |
+| 2024-09-21 | range | clean | 66098 | 0.59 | 0.005 | 38558 | - | - | - |
+| 2024-09-20 | range | clean | 71000 | 0.6 | 0.008 | 42635 | - | - | - |
+| 2024-09-19 | range | clean | 68592 | 0.6 | 0.009 | 40935 | - | - | - |
+| 2024-09-18 | range | clean | 66228 | 0.59 | 0.01 | 38809 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-09-17 | range | clean | 67437 | 0.61 | 0.008 | 41063 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS', 'ERU'] | - |
+| 2024-09-16 | range | clean | 70299 | 0.61 | 0.008 | 42870 | - | - | - |
+| 2024-09-15 | range | clean | 67972 | 0.61 | 0.009 | 41276 | - | - | - |
+| 2024-09-14 | range | clean | 66332 | 0.59 | 0.008 | 38899 | - | - | - |
+| 2024-09-13 | range | clean | 70856 | 0.61 | 0.009 | 42846 | - | - | - |
+| 2024-09-12 | range | clean | 68516 | 0.61 | 0.018 | 41686 | - | - | - |
+| 2024-09-11 | range | clean | 66127 | 0.6 | 0.007 | 39399 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-09-10 | range | clean | 67250 | 0.61 | 0.007 | 40601 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-09-09 | range | clean | 71156 | 0.61 | 0.008 | 42998 | - | - | - |
+| 2024-09-08 | range | clean | 68021 | 0.61 | 0.009 | 41450 | - | - | - |
+| 2024-09-07 | range | clean | 65750 | 0.6 | 0.013 | 38950 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-09-06 | range | clean | 70115 | 0.61 | 0.009 | 42448 | - | - | - |
+| 2024-09-05 | range | clean | 68353 | 0.61 | 0.011 | 41356 | - | - | - |
+| 2024-09-04 | range | clean | 66741 | 0.6 | 0.011 | 39579 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-09-03 | range | clean | 69047 | 0.6 | 0.013 | 41180 | - | - | - |
+| 2024-09-02 | range | clean | 70221 | 0.61 | 0.011 | 42258 | - | - | - |
+| 2024-09-01 | range | clean | 66263 | 0.6 | 0.01 | 39138 | - | - | - |
+| 2024-08-31 | range | clean | 67916 | 0.59 | 0.009 | 40011 | - | - | - |
+| 2024-08-30 | range | clean | 71626 | 0.6 | 0.008 | 42998 | - | - | - |
+| 2024-08-29 | range | clean | 68585 | 0.61 | 0.008 | 41294 | - | - | - |
+| 2024-08-28 | range | clean | 67340 | 0.6 | 0.009 | 39858 | - | - | - |
+| 2024-08-27 | range | clean | 68268 | 0.59 | 0.016 | 40367 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-08-26 | range | clean | 71743 | 0.61 | 0.011 | 43335 | - | - | - |
+| 2024-08-25 | range | clean | 70225 | 0.6 | 0.009 | 41803 | - | - | - |
+| 2024-08-24 | range | clean | 69174 | 0.6 | 0.01 | 41004 | - | - | - |
+| 2024-08-23 | range | clean | 72698 | 0.61 | 0.008 | 44325 | - | - | - |
+| 2024-08-22 | range | clean | 70830 | 0.61 | 0.008 | 42875 | - | - | - |
+| 2024-08-21 | range | clean | 68873 | 0.61 | 0.01 | 41730 | - | - | - |
+| 2024-08-20 | range | clean | 69991 | 0.6 | 0.01 | 41900 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-08-19 | range | clean | 71698 | 0.6 | 0.008 | 42983 | - | - | - |
+| 2024-08-18 | range | clean | 69414 | 0.6 | 0.009 | 41087 | - | - | - |
+| 2024-08-17 | range | clean | 68057 | 0.6 | 0.008 | 40624 | - | - | - |
+| 2024-08-16 | range | clean | 70163 | 0.62 | 0.009 | 42936 | - | - | - |
+| 2024-08-15 | range | clean | 69859 | 0.62 | 0.007 | 42789 | - | - | - |
+| 2024-08-14 | range | clean | 68118 | 0.61 | 0.009 | 41352 | - | - | - |
+| 2024-08-13 | range | clean | 68719 | 0.61 | 0.008 | 41555 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-08-12 | range | clean | 70921 | 0.61 | 0.008 | 43202 | - | - | - |
+| 2024-08-11 | range | clean | 69063 | 0.6 | 0.007 | 41341 | - | - | - |
+| 2024-08-10 | range | clean | 68519 | 0.6 | 0.008 | 41207 | - | - | - |
+| 2024-08-09 | range | clean | 70246 | 0.62 | 0.008 | 43311 | - | - | - |
+| 2024-08-08 | range | clean | 69039 | 0.62 | 0.007 | 42811 | - | - | - |
+| 2024-08-07 | range | clean | 66797 | 0.62 | 0.007 | 41177 | - | - | - |
+| 2024-08-06 | range | clean | 67131 | 0.61 | 0.007 | 40883 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-08-05 | range | clean | 69312 | 0.61 | 0.007 | 41716 | - | - | - |
+| 2024-08-04 | range | clean | 67685 | 0.6 | 0.01 | 40247 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-08-03 | range | clean | 67296 | 0.59 | 0.009 | 39255 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-08-02 | range | clean | 70973 | 0.6 | 0.009 | 42197 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-08-01 | range | clean | 70400 | 0.62 | 0.01 | 43024 | - | - | - |
+| 2024-07-31 | range | clean | 69136 | 0.61 | 0.009 | 42238 | - | - | - |
+| 2024-07-30 | range | clean | 69824 | 0.61 | 0.01 | 42019 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-07-29 | range | clean | 71457 | 0.61 | 0.014 | 43622 | - | - | - |
+| 2024-07-28 | range | clean | 69945 | 0.6 | 0.01 | 41874 | - | - | - |
+| 2024-07-27 | range | clean | 69299 | 0.6 | 0.01 | 41168 | - | - | - |
+| 2024-07-26 | range | clean | 71308 | 0.61 | 0.008 | 43375 | - | - | - |
+| 2024-07-25 | range | clean | 70184 | 0.61 | 0.009 | 42301 | - | - | - |
+| 2024-07-24 | range | clean | 68362 | 0.61 | 0.01 | 41234 | - | I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-07-23 | range | clean | 68960 | 0.6 | 0.01 | 41403 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-07-22 | range | clean | 69345 | 0.6 | 0.01 | 41550 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-07-21 | range | clean | 67771 | 0.58 | 0.01 | 39346 | - | - | - |
+| 2024-07-20 | range | clean | 67014 | 0.58 | 0.01 | 38806 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-07-19 | range | clean | 65886 | 0.59 | 0.01 | 38526 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-07-18 | range | clean | 70757 | 0.6 | 0.01 | 42238 | - | - | - |
+| 2024-07-17 | range | clean | 69304 | 0.59 | 0.008 | 40792 | - | - | - |
+| 2024-07-16 | range | clean | 69907 | 0.6 | 0.009 | 41656 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-07-15 | range | clean | 71030 | 0.61 | 0.009 | 43144 | - | - | - |
+| 2024-07-14 | range | clean | 70118 | 0.6 | 0.01 | 41665 | - | - | - |
+| 2024-07-13 | range | clean | 69731 | 0.59 | 0.012 | 40551 | - | - | - |
+| 2024-07-12 | range | clean | 71333 | 0.6 | 0.01 | 42418 | - | - | - |
+| 2024-07-11 | range | clean | 71042 | 0.6 | 0.01 | 42406 | - | - | - |
+| 2024-07-10 | range | clean | 69547 | 0.6 | 0.008 | 41330 | - | - | - |
+| 2024-07-09 | range | clean | 68912 | 0.6 | 0.01 | 40970 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-07-08 | range | clean | 69948 | 0.6 | 0.009 | 41508 | - | - | - |
+| 2024-07-07 | range | clean | 69638 | 0.58 | 0.009 | 40255 | - | - | - |
+| 2024-07-06 | range | clean | 66765 | 0.58 | 0.008 | 38619 | - | - | - |
+| 2024-07-05 | range | clean | 66324 | 0.59 | 0.009 | 39147 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-07-04 | range | clean | 67766 | 0.61 | 0.008 | 40802 | - | - | - |
+| 2024-07-03 | range | clean | 68686 | 0.61 | 0.007 | 41822 | - | - | - |
+| 2024-07-02 | range | clean | 68351 | 0.6 | 0.012 | 40728 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-07-01 | range | clean | 69170 | 0.6 | 0.008 | 41440 | - | - | - |
+| 2024-06-30 | range | clean | 67296 | 0.59 | 0.011 | 39528 | - | - | - |
+| 2024-06-29 | range | clean | 66980 | 0.59 | 0.01 | 39032 | - | - | - |
+| 2024-06-28 | range | clean | 70451 | 0.6 | 0.009 | 42252 | - | - | - |
+| 2024-06-27 | range | clean | 68773 | 0.61 | 0.01 | 41641 | - | - | - |
+| 2024-06-26 | range | clean | 68007 | 0.6 | 0.007 | 40604 | - | - | - |
+| 2024-06-25 | range | clean | 67921 | 0.6 | 0.007 | 40684 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-06-24 | range | clean | 69942 | 0.61 | 0.007 | 42156 | - | - | - |
+| 2024-06-23 | range | clean | 68285 | 0.6 | 0.012 | 40432 | - | - | - |
+| 2024-06-22 | range | clean | 67149 | 0.59 | 0.011 | 39380 | - | - | - |
+| 2024-06-21 | range | clean | 70048 | 0.61 | 0.007 | 42199 | - | - | - |
+| 2024-06-20 | range | clean | 68684 | 0.6 | 0.008 | 40953 | - | - | - |
+| 2024-06-19 | range | clean | 68207 | 0.6 | 0.007 | 40596 | - | - | - |
+| 2024-06-18 | range | clean | 68325 | 0.61 | 0.007 | 41120 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-06-17 | range | clean | 69965 | 0.61 | 0.006 | 42656 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-06-16 | range | clean | 68146 | 0.6 | 0.01 | 40437 | - | - | - |
+| 2024-06-15 | range | clean | 66911 | 0.61 | 0.007 | 40446 | - | - | - |
+| 2024-06-14 | range | clean | 69089 | 0.61 | 0.009 | 41706 | - | - | - |
+| 2024-06-13 | range | clean | 67171 | 0.6 | 0.009 | 40337 | - | - | - |
+| 2024-06-12 | range | clean | 67029 | 0.6 | 0.008 | 40173 | - | - | - |
+| 2024-06-11 | range | clean | 67133 | 0.61 | 0.01 | 40482 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-06-10 | range | clean | 69502 | 0.61 | 0.01 | 42304 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-06-09 | range | clean | 67995 | 0.61 | 0.008 | 41024 | - | - | - |
+| 2024-06-08 | range | clean | 67564 | 0.6 | 0.01 | 40182 | - | - | - |
+| 2024-06-07 | range | clean | 71052 | 0.62 | 0.008 | 43407 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-06-06 | range | clean | 68547 | 0.62 | 0.01 | 42105 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-06-05 | range | clean | 65891 | 0.62 | 0.011 | 40410 | - | - | - |
+| 2024-06-04 | range | clean | 66372 | 0.61 | 0.014 | 39970 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-06-03 | range | clean | 68535 | 0.6 | 0.013 | 40758 | - | - | - |
+| 2024-06-02 | range | clean | 66546 | 0.59 | 0.012 | 38964 | - | - | - |
+| 2024-06-01 | range | clean | 65507 | 0.58 | 0.008 | 37924 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-05-31 | range | clean | 68326 | 0.6 | 0.006 | 40564 | - | - | - |
+| 2024-05-30 | range | clean | 67139 | 0.61 | 0.016 | 40383 | - | - | - |
+| 2024-05-29 | range | clean | 65886 | 0.61 | 0.007 | 39637 | - | - | - |
+| 2024-05-28 | range | clean | 65501 | 0.62 | 0.006 | 39992 | - | - | - |
+| 2024-05-27 | range | clean | 66609 | 0.63 | 0.007 | 41516 | - | - | - |
+| 2024-05-26 | range | clean | 64440 | 0.61 | 0.008 | 38914 | - | - | - |
+| 2024-05-25 | range | clean | 64437 | 0.6 | 0.008 | 38379 | - | - | - |
+| 2024-05-24 | range | clean | 68231 | 0.62 | 0.007 | 42172 | - | - | - |
+| 2024-05-23 | range | clean | 66651 | 0.63 | 0.007 | 41484 | - | - | - |
+| 2024-05-22 | range | clean | 64997 | 0.62 | 0.007 | 39860 | - | - | - |
+| 2024-05-21 | range | clean | 65079 | 0.62 | 0.008 | 39810 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-05-20 | range | clean | 67102 | 0.61 | 0.007 | 40551 | - | - | - |
+| 2024-05-19 | range | clean | 65681 | 0.61 | 0.009 | 39537 | - | - | - |
+| 2024-05-18 | range | clean | 63959 | 0.6 | 0.01 | 38214 | - | - | - |
+| 2024-05-17 | range | clean | 67335 | 0.62 | 0.008 | 41415 | - | - | - |
+| 2024-05-16 | range | clean | 65406 | 0.61 | 0.009 | 39728 | - | - | - |
+| 2024-05-15 | range | clean | 63831 | 0.6 | 0.007 | 38294 | - | - | - |
+| 2024-05-14 | range | clean | 65172 | 0.6 | 0.007 | 39010 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-05-13 | range | clean | 66781 | 0.62 | 0.007 | 41320 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-05-12 | range | clean | 65206 | 0.62 | 0.008 | 39852 | - | - | - |
+| 2024-05-11 | range | clean | 63924 | 0.61 | 0.006 | 38632 | - | W13 new large excluded prefixes: ['CAP'] | - |
+| 2024-05-10 | range | clean | 66628 | 0.62 | 0.008 | 41156 | - | - | - |
+| 2024-05-09 | range | clean | 64812 | 0.62 | 0.006 | 40017 | - | - | - |
+| 2024-05-08 | range | clean | 63826 | 0.61 | 0.007 | 38889 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-05-07 | range | clean | 64078 | 0.61 | 0.007 | 39017 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-05-06 | range | clean | 66581 | 0.62 | 0.013 | 41221 | - | - | - |
+| 2024-05-05 | range | clean | 63892 | 0.61 | 0.012 | 38995 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-05-04 | range | clean | 61530 | 0.58 | 0.005 | 35475 | - | - | - |
+| 2024-05-03 | range | clean | 64984 | 0.61 | 0.005 | 39204 | - | - | - |
+| 2024-05-02 | range | clean | 62958 | 0.6 | 0.008 | 37255 | - | - | - |
+| 2024-05-01 | range | clean | 61705 | 0.59 | 0.007 | 36066 | - | - | - |
+| 2024-04-30 | range | clean | 61865 | 0.59 | 0.007 | 36287 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-04-29 | range | clean | 64180 | 0.59 | 0.005 | 37894 | - | - | - |
+| 2024-04-28 | range | clean | 61924 | 0.6 | 0.006 | 36859 | - | - | - |
+| 2024-04-27 | range | clean | 60799 | 0.59 | 0.006 | 35729 | - | - | - |
+| 2024-04-26 | range | clean | 63446 | 0.6 | 0.006 | 38021 | - | - | - |
+| 2024-04-25 | range | clean | 60823 | 0.62 | 0.006 | 37284 | - | - | - |
+| 2024-04-24 | range | clean | 60754 | 0.6 | 0.007 | 36284 | - | - | - |
+| 2024-04-23 | range | clean | 60834 | 0.59 | 0.008 | 35895 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2024-04-22 | range | RED | 125733 | 0.6 | 0.007 | 37711 | I6 62483 duplicate (hex, t0); I10 departures/legs 0.30; I11 chain continuity 0.538 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 2 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there); W13 new large excluded prefixes: ['LTA', 'VAR', 'CHX'] | - |
+| 2024-04-21 | range | clean | 61214 | 0.59 | 0.007 | 35936 | - | - | - |
+| 2024-04-20 | range | clean | 58627 | 0.6 | 0.009 | 35089 | - | - | - |
+| 2024-04-19 | range | clean | 63335 | 0.61 | 0.009 | 38322 | - | - | - |
+| 2024-04-18 | range | clean | 61386 | 0.61 | 0.009 | 37124 | - | - | - |
+| 2024-04-17 | range | clean | 59081 | 0.62 | 0.006 | 36548 | - | - | - |
+| 2024-04-16 | range | clean | 60074 | 0.62 | 0.01 | 36844 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-04-15 | range | clean | 62333 | 0.61 | 0.008 | 37894 | - | - | - |
+| 2024-04-14 | range | clean | 60738 | 0.61 | 0.008 | 37001 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-04-13 | range | clean | 59576 | 0.6 | 0.009 | 35723 | - | - | - |
+| 2024-04-12 | range | clean | 62287 | 0.61 | 0.009 | 37834 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-04-11 | range | clean | 60626 | 0.61 | 0.008 | 36802 | - | - | - |
+| 2024-04-10 | range | clean | 59267 | 0.61 | 0.01 | 35822 | - | - | - |
+| 2024-04-09 | range | clean | 59873 | 0.62 | 0.006 | 36440 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-04-08 | range | clean | 61806 | 0.62 | 0.007 | 37778 | - | - | - |
+| 2024-04-07 | range | clean | 61040 | 0.62 | 0.008 | 37574 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-04-06 | range | clean | 59202 | 0.6 | 0.006 | 34831 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2024-04-05 | range | clean | 61734 | 0.62 | 0.005 | 37799 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-04-04 | range | clean | 60306 | 0.61 | 0.006 | 36251 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-04-03 | range | clean | 56805 | 0.55 | 0.005 | 31211 | - | I11 chain continuity 0.958 (era warning line 0.985) | - |
+| 2024-04-02 | range | clean | 59419 | 0.61 | 0.005 | 36173 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-04-01 | range | clean | 61591 | 0.61 | 0.006 | 37096 | - | - | - |
+| 2024-03-31 | range | clean | 59660 | 0.6 | 0.011 | 35370 | - | - | - |
+| 2024-03-30 | range | clean | 56961 | 0.59 | 0.005 | 33511 | - | - | - |
+| 2024-03-29 | range | clean | 60134 | 0.61 | 0.003 | 36506 | - | - | - |
+| 2024-03-28 | range | clean | 59061 | 0.6 | 0.004 | 35341 | - | - | - |
+| 2024-03-27 | range | clean | 56468 | 0.59 | 0.004 | 33075 | - | - | - |
+| 2024-03-26 | range | clean | 56641 | 0.6 | 0.004 | 33577 | - | - | - |
+| 2024-03-25 | range | clean | 61884 | 0.61 | 0.005 | 37337 | - | - | - |
+| 2024-03-24 | range | clean | 60818 | 0.62 | 0.007 | 37709 | - | - | - |
+| 2024-03-23 | range | clean | 59036 | 0.62 | 0.006 | 36202 | - | - | - |
+| 2024-03-22 | range | RED | 72530 | 0.61 | 0.006 | 39588 | I6 3344 duplicate (hex, t0); I11 chain continuity 0.942 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 6 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there) | - |
+| 2024-03-21 | range | clean | 59583 | 0.64 | 0.009 | 37962 | - | - | - |
+| 2024-03-20 | range | clean | 58917 | 0.61 | 0.008 | 35912 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-03-19 | range | clean | 59303 | 0.62 | 0.006 | 36404 | - | I11 chain continuity 0.977 (era warning line 0.985) | - |
+| 2024-03-18 | range | clean | 63471 | 0.61 | 0.035 | 38694 | - | I5 sus 0.035 (heavy GPS interference day?); I11 chain continuity 0.980 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-03-17 | range | clean | 62001 | 0.62 | 0.012 | 38257 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-03-16 | range | clean | 59420 | 0.61 | 0.003 | 36019 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['CAP'] | - |
+| 2024-03-15 | range | clean | 62826 | 0.63 | 0.002 | 39106 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2024-03-14 | range | clean | 58988 | 0.62 | 0.007 | 36461 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-03-13 | range | clean | 57489 | 0.62 | 0.008 | 35616 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-03-12 | range | clean | 57248 | 0.63 | 0.005 | 35716 | - | I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-03-11 | range | clean | 61648 | 0.63 | 0.011 | 38362 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['ERU'] | - |
+| 2024-03-10 | range | clean | 61580 | 0.61 | 0.01 | 37638 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-03-09 | range | clean | 57640 | 0.59 | 0.005 | 34012 | - | I11 chain continuity 0.981 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-03-08 | range | clean | 60834 | 0.62 | 0.004 | 37244 | - | I11 chain continuity 0.985 (era warning line 0.985) | - |
+| 2024-03-07 | range | clean | 57780 | 0.62 | 0.003 | 35305 | - | I11 chain continuity 0.982 (era warning line 0.985); W12 prefix volume collapse: ['DLH'] | - |
+| 2024-03-06 | range | clean | 56652 | 0.62 | 0.005 | 34826 | - | - | - |
+| 2024-03-05 | range | clean | 56834 | 0.6 | 0.003 | 33718 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-03-04 | range | clean | 61446 | 0.62 | 0.003 | 38022 | - | I11 chain continuity 0.984 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-03-03 | range | clean | 59250 | 0.61 | 0.005 | 35758 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-03-02 | range | clean | 57649 | 0.6 | 0.005 | 34629 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-03-01 | range | clean | 61442 | 0.62 | 0.004 | 37774 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-02-29 | range | clean | 58618 | 0.63 | 0.005 | 36562 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-02-28 | range | clean | 56429 | 0.61 | 0.005 | 34347 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-02-27 | range | clean | 56430 | 0.6 | 0.004 | 33804 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-02-26 | range | clean | 60968 | 0.61 | 0.004 | 36824 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-02-25 | range | clean | 59474 | 0.6 | 0.005 | 35449 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-02-24 | range | clean | 58137 | 0.59 | 0.003 | 34281 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-02-23 | range | clean | 61395 | 0.6 | 0.003 | 36804 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-02-22 | range | clean | 58553 | 0.61 | 0.002 | 35481 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2024-02-21 | range | clean | 56576 | 0.62 | 0.004 | 34693 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-02-20 | range | clean | 55858 | 0.61 | 0.005 | 34083 | - | I11 chain continuity 0.985 (era warning line 0.985); W12 prefix volume collapse: ['DLH']; W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-02-19 | range | clean | 60581 | 0.62 | 0.004 | 37645 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-02-18 | range | clean | 59400 | 0.61 | 0.002 | 35873 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-02-17 | range | clean | 58543 | 0.6 | 0.006 | 35078 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2024-02-16 | range | clean | 61686 | 0.6 | 0.006 | 36942 | - | I11 chain continuity 0.975 (era warning line 0.985) | - |
+| 2024-02-15 | range | clean | 57816 | 0.6 | 0.005 | 34283 | - | I11 chain continuity 0.977 (era warning line 0.985) | - |
+| 2024-02-14 | range | clean | 54970 | 0.59 | 0.003 | 32075 | - | I11 chain continuity 0.977 (era warning line 0.985) | - |
+| 2024-02-13 | range | clean | 53892 | 0.59 | 0.003 | 31517 | - | I11 chain continuity 0.978 (era warning line 0.985); W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-02-12 | range | clean | 36376 | 0.61 | 0.002 | 22231 | - | W18 partial day: 36376 legs, 63% of the surrounding median (57304); its counts understate real traffic; I11 chain continuity 0.985 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-02-11 | range | clean | 42312 | 0.54 | 0.002 | 22751 | - | W18 partial day: 42312 legs, 75% of the surrounding median (56781); its counts understate real traffic; I11 chain continuity 0.977 (era warning line 0.985) | - |
+| 2024-02-10 | range | clean | 56792 | 0.58 | 0.004 | 32587 | - | I11 chain continuity 0.978 (era warning line 0.985) | - |
+| 2024-02-09 | range | clean | 59891 | 0.59 | 0.002 | 35186 | - | I11 chain continuity 0.974 (era warning line 0.985) | - |
+| 2024-02-08 | range | clean | 56770 | 0.59 | 0.004 | 33468 | - | I11 chain continuity 0.978 (era warning line 0.985) | - |
+| 2024-02-07 | range | clean | 53209 | 0.58 | 0.002 | 30650 | - | I11 chain continuity 0.974 (era warning line 0.985); W12 prefix volume collapse: ['DLH'] | - |
+| 2024-02-06 | range | clean | 54409 | 0.59 | 0.002 | 31796 | - | I11 chain continuity 0.976 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-02-05 | range | clean | 58617 | 0.6 | 0.003 | 35188 | - | - | - |
+| 2024-02-04 | range | clean | 56112 | 0.6 | 0.002 | 33551 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2024-02-03 | range | clean | 54935 | 0.6 | 0.003 | 32573 | - | I11 chain continuity 0.976 (era warning line 0.985) | - |
+| 2024-02-02 | range | clean | 58687 | 0.61 | 0.002 | 35612 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-02-01 | range | clean | 54328 | 0.61 | 0.004 | 33146 | - | - | - |
+| 2024-01-31 | range | clean | 52673 | 0.61 | 0.003 | 31836 | - | I11 chain continuity 0.979 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-01-30 | range | clean | 52993 | 0.6 | 0.005 | 31373 | - | I11 chain continuity 0.983 (era warning line 0.985); W13 new large excluded prefixes: ['UPS'] | - |
+| 2024-01-29 | range | clean | 58162 | 0.6 | 0.004 | 34920 | - | I11 chain continuity 0.980 (era warning line 0.985); W13 new large excluded prefixes: ['ERU'] | - |
+| 2024-01-28 | range | clean | 56453 | 0.6 | 0.003 | 33425 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2024-01-27 | range | clean | 55388 | 0.58 | 0.004 | 31966 | - | I11 chain continuity 0.975 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
+| 2024-01-26 | range | clean | 58780 | 0.59 | 0.002 | 34333 | - | I11 chain continuity 0.975 (era warning line 0.985) | - |
+| 2024-01-25 | range | clean | 54787 | 0.58 | 0.003 | 31815 | - | I11 chain continuity 0.974 (era warning line 0.985) | - |
+| 2024-01-24 | range | clean | 52719 | 0.57 | 0.002 | 30046 | - | I11 chain continuity 0.978 (era warning line 0.985) | - |
+| 2024-01-23 | range | clean | 53199 | 0.58 | 0.003 | 30391 | - | I11 chain continuity 0.980 (era warning line 0.985) | - |
+| 2024-01-22 | range | clean | 57767 | 0.58 | 0.003 | 33456 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['ERU'] | - |
+| 2024-01-21 | range | clean | 56447 | 0.58 | 0.003 | 32256 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2024-01-20 | range | clean | 55888 | 0.56 | 0.003 | 31183 | - | - | - |
+| 2024-01-19 | range | clean | 57865 | 0.57 | 0.004 | 32578 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-01-18 | range | clean | 55184 | 0.56 | 0.002 | 30831 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-01-17 | range | clean | 51508 | 0.56 | 0.002 | 28916 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2024-01-16 | range | clean | 50693 | 0.57 | 0.004 | 28585 | - | I11 chain continuity 0.981 (era warning line 0.985); W13 new large excluded prefixes: ['UPS', 'NDU'] | - |
+| 2024-01-15 | range | clean | 54660 | 0.56 | 0.006 | 30638 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-01-14 | range | clean | 54677 | 0.57 | 0.005 | 30734 | - | I11 chain continuity 0.982 (era warning line 0.985) | - |
+| 2024-01-13 | range | clean | 53962 | 0.56 | 0.004 | 29987 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2024-01-12 | range | clean | 57106 | 0.56 | 0.003 | 31783 | - | I11 chain continuity 0.981 (era warning line 0.985) | - |
+| 2024-01-11 | range | clean | 55801 | 0.56 | 0.006 | 30984 | - | I11 chain continuity 0.979 (era warning line 0.985) | - |
+| 2024-01-10 | range | clean | 54181 | 0.55 | 0.003 | 29772 | - | I11 chain continuity 0.977 (era warning line 0.985) | - |
+| 2024-01-09 | range | clean | 53825 | 0.55 | 0.005 | 29588 | - | I11 chain continuity 0.976 (era warning line 0.985) | - |
+| 2024-01-08 | range | clean | 60096 | 0.57 | 0.005 | 33994 | - | I11 chain continuity 0.978 (era warning line 0.985) | - |
+| 2024-01-07 | range | clean | 59737 | 0.57 | 0.004 | 33581 | - | I11 chain continuity 0.984 (era warning line 0.985) | - |
+| 2024-01-06 | range | clean | 57950 | 0.55 | 0.003 | 31557 | - | - | - |
+| 2024-01-05 | range | clean | 60568 | 0.56 | 0.003 | 33882 | - | - | - |
+| 2024-01-04 | range | clean | 59919 | 0.58 | 0.002 | 34343 | - | - | - |
+| 2024-01-03 | range | clean | 59972 | 0.57 | 0.002 | 34109 | - | I11 chain continuity 0.983 (era warning line 0.985) | - |
+| 2024-01-02 | range | clean | 59299 | 0.58 | 0.006 | 34182 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['CXK'] | - |
+| 2024-01-01 | range | clean | 56711 | 0.57 | 0.003 | 32065 | - | - | - |
+| 2023-12-31 | range | clean | 58080 | 0.56 | 0.003 | 32146 | - | - | - |
+| 2023-12-30 | range | clean | 60737 | 0.56 | 0.003 | 33858 | - | - | - |
+| 2023-12-29 | range | clean | 62588 | 0.58 | 0.002 | 35884 | - | - | - |
+| 2023-12-28 | range | clean | 61517 | 0.58 | 0.005 | 35203 | - | - | - |
+| 2023-12-27 | range | clean | 60775 | 0.58 | 0.003 | 35038 | - | - | - |
+| 2023-12-26 | range | clean | 57444 | 0.57 | 0.003 | 32724 | - | - | - |
+| 2023-12-25 | range | clean | 49435 | 0.56 | 0.005 | 27276 | - | W15 anchor carriers with zero departures: ['RYR']; W12 prefix volume collapse: ['RYR', 'EZY'] | - |
+| 2023-12-24 | range | clean | 56864 | 0.56 | 0.006 | 31636 | - | - | - |
+| 2023-12-23 | range | clean | 61201 | 0.57 | 0.003 | 34934 | - | - | - |
+| 2023-12-22 | range | clean | 63287 | 0.58 | 0.004 | 36275 | - | - | - |
+| 2023-12-21 | range | clean | 61408 | 0.58 | 0.005 | 35291 | - | - | - |
+| 2023-12-20 | range | clean | 59772 | 0.57 | 0.006 | 33952 | - | - | - |
+| 2023-12-19 | range | clean | 58621 | 0.58 | 0.005 | 33684 | - | - | - |
+| 2023-12-18 | range | clean | 60133 | 0.58 | 0.006 | 34460 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2023-12-17 | range | clean | 58897 | 0.57 | 0.004 | 33523 | - | - | - |
+| 2023-12-16 | range | clean | 58390 | 0.57 | 0.006 | 32870 | - | - | - |
+| 2023-12-15 | range | clean | 62053 | 0.58 | 0.004 | 35897 | - | - | - |
+| 2023-12-14 | range | clean | 58764 | 0.59 | 0.004 | 34170 | - | - | - |
+| 2023-12-13 | range | clean | 56430 | 0.58 | 0.004 | 32431 | - | - | - |
+| 2023-12-12 | range | clean | 56468 | 0.58 | 0.003 | 32450 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2023-12-11 | range | RED |  |  |  |  | published but not fetchable | - | - |
+| 2023-12-10 | range | clean | 57524 | 0.55 | 0.002 | 31500 | - | - | - |
+| 2023-12-09 | range | clean | 55817 | 0.55 | 0.004 | 30265 | - | - | - |
+| 2023-12-08 | range | clean | 59824 | 0.58 | 0.006 | 34380 | - | - | - |
+| 2023-12-07 | range | clean | 57055 | 0.58 | 0.005 | 32944 | - | - | - |
+| 2023-12-06 | range | clean | 54353 | 0.57 | 0.004 | 30885 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2023-12-05 | range | clean | 54317 | 0.57 | 0.003 | 30579 | - | - | - |
+| 2023-12-04 | range | clean | 58448 | 0.57 | 0.002 | 33215 | - | - | - |
+| 2023-12-03 | range | clean | 56443 | 0.56 | 0.005 | 31359 | - | - | - |
+| 2023-12-02 | range | clean | 54566 | 0.55 | 0.003 | 29716 | - | - | - |
+| 2023-12-01 | range | clean | 59149 | 0.56 | 0.002 | 32645 | - | - | - |
+| 2023-11-30 | range | clean | 56157 | 0.57 | 0.002 | 31764 | - | - | - |
+| 2023-11-29 | range | clean | 54219 | 0.58 | 0.002 | 31119 | - | - | - |
+| 2023-11-28 | range | clean | 54258 | 0.59 | 0.002 | 31614 | - | W13 new large excluded prefixes: ['ERU', 'NDU'] | - |
+| 2023-11-27 | range | clean | 59531 | 0.59 | 0.004 | 35113 | - | - | - |
+| 2023-11-26 | range | clean | 58753 | 0.58 | 0.006 | 33836 | - | - | - |
+| 2023-11-25 | range | clean | 55322 | 0.55 | 0.009 | 30125 | - | - | - |
+| 2023-11-24 | range | clean | 50438 | 0.53 | 0.006 | 26211 | - | I11 chain continuity 0.965 (era warning line 0.97); W13 new large excluded prefixes: ['CXK'] | - |
+| 2023-11-23 | range | clean | 52981 | 0.56 | 0.005 | 29450 | - | - | - |
+| 2023-11-22 | range | clean | 56792 | 0.58 | 0.003 | 32815 | - | - | - |
+| 2023-11-21 | range | clean | 55611 | 0.58 | 0.004 | 31901 | - | - | - |
+| 2023-11-20 | range | clean | 58700 | 0.59 | 0.003 | 34162 | - | - | - |
+| 2023-11-19 | range | clean | 57430 | 0.57 | 0.002 | 32672 | - | - | - |
+| 2023-11-18 | range | clean | 55128 | 0.57 | 0.002 | 31467 | - | - | - |
+| 2023-11-17 | range | clean | 59493 | 0.58 | 0.002 | 34344 | - | - | - |
+| 2023-11-16 | range | clean | 56590 | 0.59 | 0.002 | 32994 | - | - | - |
+| 2023-11-15 | range | clean | 54378 | 0.58 | 0.002 | 31253 | - | - | - |
+| 2023-11-14 | range | clean | 54625 | 0.57 | 0.002 | 31207 | - | - | - |
+| 2023-11-13 | range | clean | 58781 | 0.58 | 0.002 | 33718 | - | - | - |
+| 2023-11-12 | range | clean | 57407 | 0.56 | 0.002 | 31752 | - | - | - |
+| 2023-11-11 | range | clean | 55941 | 0.56 | 0.002 | 30900 | - | - | - |
+| 2023-11-10 | range | clean | 61084 | 0.56 | 0.003 | 34125 | - | - | - |
+| 2023-11-09 | range | clean | 57811 | 0.57 | 0.001 | 32583 | - | - | - |
+| 2023-11-08 | range | clean | 55753 | 0.57 | 0.001 | 31389 | - | - | - |
+| 2023-11-07 | range | clean | 55672 | 0.57 | 0.001 | 31647 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-11-06 | range | clean | 60107 | 0.57 | 0.002 | 33990 | - | - | - |
+| 2023-11-05 | range | clean | 57131 | 0.55 | 0.002 | 31107 | - | - | - |
+| 2023-11-04 | range | clean | 56180 | 0.55 | 0.002 | 30476 | - | W13 new large excluded prefixes: ['CAP'] | - |
+| 2023-11-03 | range | clean | 60056 | 0.56 | 0.002 | 33349 | - | - | - |
+| 2023-11-02 | range | clean | 57832 | 0.56 | 0.002 | 32270 | - | - | - |
+| 2023-11-01 | range | clean | 55765 | 0.57 | 0.002 | 31429 | - | - | - |
+| 2023-10-31 | range | clean | 55379 | 0.57 | 0.002 | 31536 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-10-30 | range | clean | 59656 | 0.58 | 0.001 | 34483 | - | - | - |
+| 2023-10-29 | range | clean | 57388 | 0.57 | 0.002 | 32711 | - | - | - |
+| 2023-10-28 | range | clean | 58211 | 0.56 | 0.001 | 32602 | - | - | - |
+| 2023-10-27 | range | clean | 63365 | 0.57 | 0.002 | 36082 | - | - | - |
+| 2023-10-26 | range | clean | 60982 | 0.58 | 0.003 | 35279 | - | - | - |
+| 2023-10-25 | range | clean | 59445 | 0.58 | 0.002 | 34460 | - | - | - |
+| 2023-10-24 | range | clean | 59400 | 0.58 | 0.005 | 34105 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-10-23 | range | clean | 62158 | 0.58 | 0.004 | 36054 | - | - | - |
+| 2023-10-22 | range | clean | 60138 | 0.56 | 0.003 | 33530 | - | - | - |
+| 2023-10-21 | range | clean | 58409 | 0.55 | 0.001 | 31632 | - | - | - |
+| 2023-10-20 | range | clean | 61747 | 0.55 | 0.001 | 33798 | - | - | - |
+| 2023-10-19 | range | clean | 60737 | 0.56 | 0.002 | 33869 | - | - | - |
+| 2023-10-18 | range | clean | 59372 | 0.57 | 0.001 | 33652 | - | - | - |
+| 2023-10-17 | range | clean | 59323 | 0.58 | 0.003 | 34272 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-10-16 | range | clean | 62136 | 0.58 | 0.002 | 35933 | - | - | - |
+| 2023-10-15 | range | clean | 60073 | 0.57 | 0.004 | 33840 | - | - | - |
+| 2023-10-14 | range | clean | 58506 | 0.55 | 0.002 | 32095 | - | - | - |
+| 2023-10-13 | range | clean | 61980 | 0.58 | 0.003 | 35385 | - | - | - |
+| 2023-10-12 | range | clean | 61262 | 0.57 | 0.002 | 34596 | - | - | - |
+| 2023-10-11 | range | clean | 59678 | 0.55 | 0.002 | 32834 | - | - | - |
+| 2023-10-10 | range | clean | 60303 | 0.56 | 0.001 | 33542 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-10-09 | range | clean | 62705 | 0.56 | 0.002 | 34789 | - | - | - |
+| 2023-10-08 | range | clean | 60162 | 0.55 | 0.002 | 32853 | - | - | - |
+| 2023-10-07 | range | clean | 59704 | 0.54 | 0.005 | 31786 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2023-10-06 | range | clean | 63642 | 0.56 | 0.007 | 35008 | - | - | - |
+| 2023-10-05 | range | clean | 61647 | 0.56 | 0.002 | 33925 | - | - | - |
+| 2023-10-04 | range | clean | 59740 | 0.55 | 0.004 | 32395 | - | - | - |
+| 2023-10-03 | range | clean | 60339 | 0.54 | 0.002 | 32516 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-10-02 | range | clean | 62812 | 0.56 | 0.003 | 34554 | - | - | - |
+| 2023-10-01 | range | clean | 60207 | 0.54 | 0.004 | 32137 | - | - | - |
+| 2023-09-30 | range | clean | 59603 | 0.54 | 0.003 | 31673 | - | - | - |
+| 2023-09-29 | range | clean | 62149 | 0.55 | 0.002 | 34099 | - | - | - |
+| 2023-09-28 | range | clean | 62678 | 0.56 | 0.003 | 34447 | - | - | - |
+| 2023-09-27 | range | clean | 60577 | 0.55 | 0.003 | 33277 | - | - | - |
+| 2023-09-26 | range | clean | 60984 | 0.56 | 0.004 | 33604 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-09-25 | range | clean | 62446 | 0.56 | 0.003 | 34726 | - | - | - |
+| 2023-09-24 | range | clean | 60170 | 0.55 | 0.003 | 32626 | - | - | - |
+| 2023-09-23 | range | clean | 59369 | 0.54 | 0.003 | 31635 | - | - | - |
+| 2023-09-22 | range | clean | 63516 | 0.54 | 0.003 | 33674 | - | - | - |
+| 2023-09-21 | range | clean | 61670 | 0.54 | 0.003 | 33199 | - | - | - |
+| 2023-09-20 | range | clean | 59951 | 0.54 | 0.003 | 32374 | - | - | - |
+| 2023-09-19 | range | clean | 60351 | 0.55 | 0.002 | 32650 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-09-18 | range | clean | 63183 | 0.56 | 0.003 | 35156 | - | - | - |
+| 2023-09-17 | range | clean | 60429 | 0.54 | 0.002 | 32537 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-09-16 | range | clean | 58748 | 0.54 | 0.002 | 31144 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-09-15 | range | clean | 63034 | 0.55 | 0.002 | 34258 | - | - | - |
+| 2023-09-14 | range | clean | 61415 | 0.55 | 0.003 | 33359 | - | - | - |
+| 2023-09-13 | range | clean | 59395 | 0.55 | 0.004 | 32170 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-09-12 | range | clean | 60559 | 0.55 | 0.003 | 32776 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-09-11 | range | clean | 62039 | 0.54 | 0.003 | 32981 | - | I11 chain continuity 0.969 (era warning line 0.97) | - |
+| 2023-09-10 | range | clean | 59166 | 0.54 | 0.004 | 31783 | - | I11 chain continuity 0.967 (era warning line 0.97) | - |
+| 2023-09-09 | range | clean | 57487 | 0.54 | 0.002 | 30518 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-09-08 | range | clean | 60571 | 0.56 | 0.003 | 33630 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-09-07 | range | clean | 59819 | 0.55 | 0.002 | 32543 | - | - | - |
+| 2023-09-06 | range | clean | 58947 | 0.54 | 0.006 | 31607 | - | W13 new large excluded prefixes: ['NDU'] | - |
+| 2023-09-05 | range | clean | 60251 | 0.55 | 0.004 | 32742 | - | - | - |
+| 2023-09-04 | range | clean | 61222 | 0.54 | 0.002 | 32769 | - | - | - |
+| 2023-09-03 | range | clean | 58418 | 0.53 | 0.002 | 30686 | - | - | - |
+| 2023-09-02 | range | clean | 58440 | 0.54 | 0.002 | 31081 | - | - | - |
+| 2023-09-01 | range | clean | 61426 | 0.56 | 0.002 | 33996 | - | - | - |
+| 2023-08-31 | range | clean | 61929 | 0.53 | 0.002 | 32666 | - | - | - |
+| 2023-08-30 | range | clean | 60649 | 0.52 | 0.003 | 31405 | - | - | - |
+| 2023-08-29 | range | clean | 60969 | 0.52 | 0.003 | 31554 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-08-28 | range | clean | 61796 | 0.53 | 0.003 | 32528 | - | - | - |
+| 2023-08-27 | range | clean | 61034 | 0.53 | 0.021 | 31715 | - | - | - |
+| 2023-08-26 | range | clean | 60451 | 0.52 | 0.002 | 31344 | - | - | - |
+| 2023-08-25 | range | clean | 63339 | 0.55 | 0.005 | 34686 | - | - | - |
+| 2023-08-24 | range | clean | 61510 | 0.56 | 0.006 | 33927 | - | - | - |
+| 2023-08-23 | range | clean | 61029 | 0.56 | 0.006 | 33729 | - | - | - |
+| 2023-08-22 | range | clean | 61284 | 0.56 | 0.018 | 34023 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-08-21 | range | clean | 62368 | 0.56 | 0.005 | 34443 | - | - | - |
+| 2023-08-20 | range | clean | 60743 | 0.54 | 0.007 | 32566 | - | - | - |
+| 2023-08-19 | range | clean | 60169 | 0.53 | 0.009 | 31805 | - | W12 prefix volume collapse: ['ANA']; W13 new large excluded prefixes: ['CAP'] | - |
+| 2023-08-18 | range | clean | 64959 | 0.54 | 0.008 | 34556 | - | - | - |
+| 2023-08-17 | range | clean | 63035 | 0.53 | 0.007 | 33263 | - | - | - |
+| 2023-08-16 | range | clean | 62785 | 0.53 | 0.004 | 33150 | - | - | - |
+| 2023-08-15 | range | clean | 61884 | 0.54 | 0.002 | 33161 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-08-14 | range | clean | 63375 | 0.54 | 0.003 | 34010 | - | - | - |
+| 2023-08-13 | range | clean | 62511 | 0.54 | 0.002 | 33450 | - | - | - |
+| 2023-08-12 | range | clean | 62242 | 0.52 | 0.002 | 32012 | - | - | - |
+| 2023-08-11 | range | clean | 65735 | 0.54 | 0.004 | 35163 | - | - | - |
+| 2023-08-10 | range | clean | 63885 | 0.54 | 0.004 | 34173 | - | - | - |
+| 2023-08-09 | range | clean | 63231 | 0.54 | 0.003 | 33782 | - | - | - |
+| 2023-08-08 | range | clean | 62784 | 0.54 | 0.003 | 33429 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-08-07 | range | clean | 62928 | 0.52 | 0.002 | 32723 | - | - | - |
+| 2023-08-06 | range | clean | 62274 | 0.52 | 0.002 | 31902 | - | - | - |
+| 2023-08-05 | range | clean | 61671 | 0.5 | 0.002 | 30755 | - | - | - |
+| 2023-08-04 | range | clean | 64624 | 0.51 | 0.002 | 32885 | - | - | - |
+| 2023-08-03 | range | clean | 63505 | 0.5 | 0.002 | 31724 | - | - | - |
+| 2023-08-02 | range | clean | 61911 | 0.53 | 0.002 | 32395 | - | - | - |
+| 2023-08-01 | range | clean | 61522 | 0.53 | 0.004 | 32536 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-07-31 | range | clean | 62926 | 0.54 | 0.006 | 33872 | - | - | - |
+| 2023-07-30 | range | clean | 61141 | 0.53 | 0.006 | 32165 | - | - | - |
+| 2023-07-29 | range | clean | 59100 | 0.52 | 0.006 | 30653 | - | - | - |
+| 2023-07-28 | range | clean | 62138 | 0.53 | 0.024 | 32568 | - | - | - |
+| 2023-07-27 | range | clean | 61872 | 0.49 | 0.004 | 29927 | - | I11 chain continuity 0.961 (era warning line 0.97) | - |
+| 2023-07-26 | range | clean | 60574 | 0.47 | 0.003 | 27989 | - | - | - |
+| 2023-07-25 | range | clean | 58824 | 0.47 | 0.003 | 27206 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-07-24 | range | clean | 60862 | 0.49 | 0.003 | 29569 | - | - | - |
+| 2023-07-23 | range | clean | 59343 | 0.48 | 0.003 | 27987 | - | - | - |
+| 2023-07-22 | range | clean | 59371 | 0.46 | 0.002 | 26780 | - | - | - |
+| 2023-07-21 | range | clean | 61681 | 0.46 | 0.003 | 27962 | - | I11 chain continuity 0.969 (era warning line 0.97) | - |
+| 2023-07-20 | range | clean | 60573 | 0.47 | 0.003 | 27923 | - | - | - |
+| 2023-07-19 | range | clean | 59933 | 0.48 | 0.005 | 28158 | - | - | - |
+| 2023-07-18 | range | clean | 59307 | 0.49 | 0.004 | 28471 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-07-17 | range | clean | 61278 | 0.48 | 0.003 | 29174 | - | - | - |
+| 2023-07-16 | range | clean | 58354 | 0.47 | 0.003 | 26928 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-07-15 | range | clean | 56470 | 0.46 | 0.005 | 25707 | - | - | - |
+| 2023-07-14 | range | clean | 57266 | 0.49 | 0.006 | 27731 | - | - | - |
+| 2023-07-13 | range | clean | 57470 | 0.49 | 0.004 | 27989 | - | - | - |
+| 2023-07-12 | range | clean | 56043 | 0.48 | 0.005 | 26835 | - | - | - |
+| 2023-07-11 | range | clean | 56496 | 0.49 | 0.003 | 27701 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-07-10 | range | clean | 56520 | 0.5 | 0.003 | 27789 | - | - | - |
+| 2023-07-09 | range | clean | 54563 | 0.48 | 0.005 | 26051 | - | - | - |
+| 2023-07-08 | range | clean | 53820 | 0.48 | 0.006 | 25831 | - | - | - |
+| 2023-07-07 | range | clean | 56058 | 0.49 | 0.007 | 27133 | - | - | - |
+| 2023-07-06 | range | clean | 55779 | 0.49 | 0.006 | 27205 | - | - | - |
+| 2023-07-05 | range | clean | 53023 | 0.49 | 0.005 | 25421 | - | - | - |
+| 2023-07-04 | range | clean | 51257 | 0.49 | 0.011 | 24810 | - | - | - |
+| 2023-07-03 | range | clean | 54498 | 0.49 | 0.019 | 26703 | - | - | - |
+| 2023-07-02 | range | clean | 54782 | 0.48 | 0.011 | 25879 | - | - | - |
+| 2023-07-01 | range | clean | 54124 | 0.47 | 0.008 | 25040 | - | - | - |
+| 2023-06-30 | range | clean | 56423 | 0.5 | 0.006 | 28015 | - | - | - |
+| 2023-06-29 | range | clean | 55581 | 0.5 | 0.005 | 27647 | - | - | - |
+| 2023-06-28 | range | clean | 53567 | 0.5 | 0.008 | 26484 | - | - | - |
+| 2023-06-27 | range | clean | 53011 | 0.5 | 0.013 | 26140 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-06-26 | range | clean | 55064 | 0.51 | 0.008 | 27613 | - | - | - |
+| 2023-06-25 | range | clean | 53716 | 0.5 | 0.007 | 26423 | - | - | - |
+| 2023-06-24 | range | clean | 53171 | 0.5 | 0.015 | 26173 | - | - | - |
+| 2023-06-23 | range | clean | 55652 | 0.5 | 0.012 | 27806 | - | - | - |
+| 2023-06-22 | range | clean | 53876 | 0.5 | 0.002 | 26874 | - | - | - |
+| 2023-06-21 | range | clean | 53095 | 0.49 | 0.003 | 26081 | - | - | - |
+| 2023-06-20 | range | clean | 52540 | 0.5 | 0.002 | 26132 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-06-19 | range | clean | 55107 | 0.5 | 0.006 | 27342 | - | - | - |
+| 2023-06-18 | range | clean | 53215 | 0.5 | 0.005 | 26211 | - | - | - |
+| 2023-06-17 | range | clean | 53570 | 0.49 | 0.003 | 25898 | - | - | - |
+| 2023-06-16 | range | clean | 56421 | 0.49 | 0.003 | 27715 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-06-15 | range | clean | 55282 | 0.51 | 0.002 | 27951 | - | - | - |
+| 2023-06-14 | range | clean | 53644 | 0.5 | 0.002 | 26599 | - | I11 chain continuity 0.969 (era warning line 0.97) | - |
+| 2023-06-13 | range | clean | 54553 | 0.49 | 0.002 | 26612 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-06-12 | range | clean | 55468 | 0.5 | 0.004 | 27307 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-06-11 | range | clean | 53688 | 0.5 | 0.004 | 26625 | - | I11 chain continuity 0.965 (era warning line 0.97) | - |
+| 2023-06-10 | range | clean | 52099 | 0.49 | 0.002 | 25518 | - | - | - |
+| 2023-06-09 | range | clean | 55485 | 0.5 | 0.002 | 27564 | - | - | - |
+| 2023-06-08 | range | clean | 54164 | 0.5 | 0.001 | 26874 | - | - | - |
+| 2023-06-07 | range | clean | 52890 | 0.5 | 0.003 | 26450 | - | - | - |
+| 2023-06-06 | range | clean | 52281 | 0.5 | 0.004 | 26101 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-06-05 | range | clean | 55075 | 0.5 | 0.003 | 27500 | - | - | - |
+| 2023-06-04 | range | clean | 52752 | 0.49 | 0.004 | 25811 | - | - | - |
+| 2023-06-03 | range | clean | 51830 | 0.49 | 0.004 | 25117 | - | - | - |
+| 2023-06-02 | range | clean | 55097 | 0.5 | 0.004 | 27504 | - | - | - |
+| 2023-06-01 | range | clean | 53480 | 0.5 | 0.002 | 26750 | - | - | - |
+| 2023-05-31 | range | clean | 51780 | 0.51 | 0.002 | 26473 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-05-30 | range | clean | 52195 | 0.51 | 0.003 | 26248 | - | - | - |
+| 2023-05-29 | range | clean | 53846 | 0.49 | 0.001 | 26347 | - | - | - |
+| 2023-05-28 | range | clean | 51476 | 0.49 | 0.005 | 24895 | - | - | - |
+| 2023-05-27 | range | clean | 51417 | 0.49 | 0.003 | 25089 | - | - | - |
+| 2023-05-26 | range | clean | 54701 | 0.49 | 0.005 | 26896 | - | - | - |
+| 2023-05-25 | range | clean | 53595 | 0.49 | 0.006 | 26285 | - | - | - |
+| 2023-05-24 | range | clean | 51908 | 0.51 | 0.006 | 26115 | - | - | - |
+| 2023-05-23 | range | clean | 52251 | 0.51 | 0.006 | 26308 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-05-22 | range | clean | 54049 | 0.5 | 0.005 | 26842 | - | - | - |
+| 2023-05-21 | range | clean | 51973 | 0.5 | 0.002 | 25624 | - | - | - |
+| 2023-05-20 | range | clean | 50670 | 0.5 | 0.004 | 25168 | - | - | - |
+| 2023-05-19 | range | clean | 52528 | 0.51 | 0.006 | 26503 | - | - | - |
+| 2023-05-18 | range | clean | 52063 | 0.51 | 0.013 | 26169 | - | - | - |
+| 2023-05-17 | range | clean | 51002 | 0.51 | 0.001 | 25730 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-05-16 | range | clean | 51068 | 0.51 | 0.004 | 25938 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-05-15 | range | clean | 52778 | 0.52 | 0.007 | 27035 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-05-14 | range | clean | 50368 | 0.51 | 0.004 | 25315 | - | - | - |
+| 2023-05-13 | range | clean | 49178 | 0.51 | 0.011 | 24733 | - | I11 chain continuity 0.965 (era warning line 0.97) | - |
+| 2023-05-12 | range | clean | 53769 | 0.51 | 0.005 | 27346 | - | I11 chain continuity 0.969 (era warning line 0.97) | - |
+| 2023-05-11 | range | clean | 52812 | 0.52 | 0.007 | 27068 | - | I11 chain continuity 0.966 (era warning line 0.97) | - |
+| 2023-05-10 | range | clean | 51060 | 0.51 | 0.005 | 26075 | - | - | - |
+| 2023-05-09 | range | clean | 51547 | 0.51 | 0.007 | 26262 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-05-08 | range | clean | 53277 | 0.52 | 0.011 | 27468 | - | - | - |
+| 2023-05-07 | range | clean | 50555 | 0.51 | 0.012 | 25437 | - | - | - |
+| 2023-05-06 | range | clean | 49314 | 0.52 | 0.005 | 25302 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-05-05 | range | clean | 52492 | 0.5 | 0.004 | 26287 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-05-04 | range | clean | 51333 | 0.51 | 0.002 | 25896 | - | - | - |
+| 2023-05-03 | range | clean | 50723 | 0.52 | 0.003 | 26185 | - | I11 chain continuity 0.967 (era warning line 0.97) | - |
+| 2023-05-02 | range | clean | 51062 | 0.52 | 0.002 | 26335 | - | I11 chain continuity 0.968 (era warning line 0.97); W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-05-01 | range | clean | 51419 | 0.52 | 0.002 | 26433 | - | - | - |
+| 2023-04-30 | range | clean | 49446 | 0.5 | 0.003 | 24524 | - | - | - |
+| 2023-04-29 | range | clean | 48571 | 0.51 | 0.001 | 24489 | - | I11 chain continuity 0.964 (era warning line 0.97) | - |
+| 2023-04-28 | range | clean | 51691 | 0.52 | 0.003 | 26810 | - | - | - |
+| 2023-04-27 | range | clean | 51382 | 0.52 | 0.003 | 26382 | - | - | - |
+| 2023-04-26 | range | clean | 49860 | 0.51 | 0.003 | 25356 | - | - | - |
+| 2023-04-25 | range | clean | 50751 | 0.51 | 0.003 | 25538 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-04-24 | range | clean | 52791 | 0.5 | 0.001 | 26152 | - | - | - |
+| 2023-04-23 | range | clean | 50626 | 0.48 | 0.004 | 24299 | - | - | - |
+| 2023-04-22 | range | clean | 48471 | 0.48 | 0.004 | 23060 | - | I11 chain continuity 0.969 (era warning line 0.97) | - |
+| 2023-04-21 | range | clean | 51647 | 0.5 | 0.004 | 25735 | - | I11 chain continuity 0.966 (era warning line 0.97) | - |
+| 2023-04-20 | range | clean | 50530 | 0.49 | 0.004 | 24455 | - | I11 chain continuity 0.962 (era warning line 0.97) | - |
+| 2023-04-19 | range | clean | 49188 | 0.51 | 0.003 | 25078 | - | - | - |
+| 2023-04-18 | range | clean | 49457 | 0.5 | 0.002 | 24561 | - | I11 chain continuity 0.968 (era warning line 0.97); W13 new large excluded prefixes: ['FDX', 'ERU'] | - |
+| 2023-04-17 | range | clean | 51555 | 0.5 | 0.002 | 25734 | - | I11 chain continuity 0.966 (era warning line 0.97) | - |
+| 2023-04-16 | range | clean | 49479 | 0.51 | 0.002 | 24853 | - | I11 chain continuity 0.962 (era warning line 0.97) | - |
+| 2023-04-15 | range | clean | 48153 | 0.47 | 0.004 | 22654 | - | - | - |
+| 2023-04-14 | range | clean | 51659 | 0.49 | 0.028 | 25276 | - | - | - |
+| 2023-04-13 | range | clean | 50225 | 0.49 | 0.004 | 24290 | - | - | - |
+| 2023-04-12 | range | clean | 49397 | 0.49 | 0.008 | 24347 | - | - | - |
+| 2023-04-11 | range | clean | 49991 | 0.5 | 0.003 | 24960 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2023-04-10 | range | clean | 51499 | 0.5 | 0.004 | 25723 | - | - | - |
+| 2023-04-09 | range | clean | 48973 | 0.49 | 0.003 | 23804 | - | - | - |
+| 2023-04-08 | range | clean | 48100 | 0.48 | 0.003 | 23032 | - | - | - |
+| 2023-04-07 | range | clean | 51124 | 0.5 | 0.003 | 25520 | - | - | - |
+| 2023-04-06 | range | clean | 50353 | 0.49 | 0.002 | 24710 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-04-05 | range | clean | 36323 | 0.47 | 0.002 | 16915 | - | W18 partial day: 36323 legs, 76% of the surrounding median (47938); its counts understate real traffic; I11 chain continuity 0.952 (era warning line 0.97) | - |
+| 2023-04-04 | range | clean | 46767 | 0.47 | 0.018 | 21910 | - | W13 new large excluded prefixes: ['FDX', 'ERU'] | - |
+| 2023-04-03 | range | RED | 14781 | 0.4 | 0.002 | 5837 | I10 departures/legs 0.39 | W18 partial day: 14781 legs, 31% of the surrounding median (47556); its counts understate real traffic; I11 chain continuity 0.966 (era warning line 0.97); W12 prefix volume collapse: ['DLH', 'AFR', 'KLM', 'SAS', 'THY', 'IGO', 'EJU', 'EWG', 'SWR'] | - |
+| 2023-04-02 | range | clean | 36742 | 0.45 | 0.011 | 16470 | - | W18 partial day: 36742 legs, 78% of the surrounding median (47362); its counts understate real traffic | - |
+| 2023-04-01 | range | clean | 44784 | 0.45 | 0.002 | 20035 | - | I11 chain continuity 0.970 (era warning line 0.97); W13 new large excluded prefixes: ['LXJ'] | - |
+| 2023-03-31 | range | RED | 14052 | 0.37 | 0.004 | 5107 | I8 first-5-min departures 89 vs mid-day avg 14; I10 departures/legs 0.36 | W18 partial day: 14052 legs, 30% of the surrounding median (47008); its counts understate real traffic; W12 prefix volume collapse: ['DAL', 'AAL', 'RYR', 'SKW', 'DLH', 'JBU', 'RPA', 'NKS', 'AFR', 'EZY', 'KLM', 'ENY', 'EDV', 'SAS', 'BAW', 'JIA', 'VLG', 'JZA', 'EJU', 'WZZ'] | - |
+| 2023-03-30 | range | clean | 47775 | 0.45 | 0.003 | 21604 | - | - | - |
+| 2023-03-29 | range | clean | 46211 | 0.46 | 0.001 | 21263 | - | - | - |
+| 2023-03-28 | range | clean | 47638 | 0.47 | 0.004 | 22238 | - | I11 chain continuity 0.970 (era warning line 0.97); W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-03-27 | range | clean | 47475 | 0.46 | 0.002 | 21855 | - | I11 chain continuity 0.969 (era warning line 0.97); W12 prefix volume collapse: ['DLH']; W13 new large excluded prefixes: ['ERU'] | - |
+| 2023-03-26 | range | clean | 47250 | 0.47 | 0.005 | 22177 | - | - | - |
+| 2023-03-25 | range | clean | 45391 | 0.47 | 0.002 | 21096 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-03-24 | range | clean | 48515 | 0.46 | 0.003 | 22147 | - | - | - |
+| 2023-03-23 | range | clean | 46185 | 0.47 | 0.034 | 21547 | - | I5 sus 0.034 (heavy GPS interference day?) | - |
+| 2023-03-22 | range | clean | 44646 | 0.46 | 0.015 | 20593 | - | I11 chain continuity 0.965 (era warning line 0.97) | - |
+| 2023-03-21 | range | clean | 45240 | 0.49 | 0.026 | 21951 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-03-20 | range | clean | 47872 | 0.5 | 0.004 | 23710 | - | - | - |
+| 2023-03-19 | range | clean | 46502 | 0.49 | 0.005 | 22864 | - | - | - |
+| 2023-03-18 | range | clean | 44493 | 0.48 | 0.004 | 21273 | - | I11 chain continuity 0.968 (era warning line 0.97) | - |
+| 2023-03-17 | range | clean | 48052 | 0.48 | 0.031 | 23005 | - | I5 sus 0.031 (heavy GPS interference day?) | - |
+| 2023-03-16 | range | clean | 45629 | 0.5 | 0.006 | 22923 | - | I11 chain continuity 0.969 (era warning line 0.97) | - |
+| 2023-03-15 | range | clean | 43683 | 0.5 | 0.006 | 21576 | - | - | - |
+| 2023-03-14 | range | clean | 44552 | 0.48 | 0.006 | 21147 | - | W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-03-13 | range | clean | 46676 | 0.46 | 0.008 | 21564 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
+| 2023-03-12 | range | clean | 45783 | 0.46 | 0.005 | 20693 | - | I11 chain continuity 0.963 (era warning line 0.97) | - |
+| 2023-03-11 | range | clean | 43249 | 0.45 | 0.008 | 19361 | - | - | - |
+| 2023-03-10 | range | clean | 42853 | 0.45 | 0.003 | 19075 | - | I11 chain continuity 0.958 (era warning line 0.97) | - |
+| 2023-03-09 | range | clean | 18233 | 0.42 | 0.008 | 7555 | - | W18 partial day: 18233 legs, 41% of the surrounding median (44118); its counts understate real traffic; I11 chain continuity 0.968 (era warning line 0.97); W12 prefix volume collapse: ['IGO'] | - |
+| 2023-03-08 | range | RED | 40047 | 0.4 | 0.003 | 15921 | I10 departures/legs 0.40; I11 chain continuity 0.911 | - | - |
+| 2023-03-07 | range | clean | 42862 | 0.45 | 0.003 | 19146 | - | I11 chain continuity 0.951 (era warning line 0.97); W13 new large excluded prefixes: ['FDX'] | - |
+| 2023-03-06 | range | RED | 46234 | 0.44 | 0.041 | 20311 | I11 chain continuity 0.945 | I5 sus 0.041 (heavy GPS interference day?) | - |
+| 2023-03-05 | range | clean | 44840 | 0.46 | 0.001 | 20510 | - | I11 chain continuity 0.950 (era warning line 0.97) | - |
+| 2023-03-04 | range | RED | 42201 | 0.46 | 0.004 | 19416 | I11 chain continuity 0.947 | - | - |
+| 2023-03-03 | range | RED | 44882 | 0.44 | 0.004 | 19650 | I11 chain continuity 0.938 | - | - |
+| 2023-03-02 | range | RED | 41982 | 0.46 | 0.002 | 19303 | I11 chain continuity 0.939 | - | - |
+| 2023-03-01 | range | RED | 41126 | 0.48 | 0.006 | 19731 | I11 chain continuity 0.939 | - | - |
+| 2023-02-28 | range | RED | 41450 | 0.46 | 0.005 | 19086 | I11 chain continuity 0.940 | - | - |
+| 2023-02-27 | range | RED | 44170 | 0.46 | 0.004 | 20241 | I11 chain continuity 0.942 | - | - |
+| 2023-02-26 | range | RED | 43875 | 0.46 | 0.004 | 19824 | I11 chain continuity 0.931 | - | - |
+| 2023-02-25 | range | RED | 41889 | 0.44 | 0.002 | 18071 | I11 chain continuity 0.932 | - | - |
+| 2023-02-24 | range | RED | 45081 | 0.47 | 0.002 | 20869 | I11 chain continuity 0.941 | - | - |
+| 2023-02-23 | range | RED | 33097 | 0.34 | 0.01 | 10940 | I3 tk 0.34 ld 0.33; I10 departures/legs 0.33; I11 chain continuity 0.855 | - | - |
+| 2023-02-22 | range | RED | 32056 | 0.28 | 0.005 | 8507 | I3 tk 0.28 ld 0.29; I8 first-5-min departures 70 vs mid-day avg 26; I10 departures/legs 0.27; I11 chain continuity 0.841 | - | - |
+| 2023-02-21 | range | RED | 25840 | 0.36 | 0.003 | 8970 | I3 tk 0.36 ld 0.30; I10 departures/legs 0.35; I11 chain continuity 0.910 | W18 partial day: 25840 legs, 79% of the surrounding median (32576); its counts understate real traffic | - |
+| 2023-02-20 | range | RED | 25493 | 0.37 | 0.002 | 9221 | I10 departures/legs 0.36; I11 chain continuity 0.948 | W18 partial day: 25493 legs, 80% of the surrounding median (32056); its counts understate real traffic | - |
+| 2023-02-19 | range | RED | 23448 | 0.31 | 0.016 | 6920 | I3 tk 0.31 ld 0.29; I10 departures/legs 0.30; I11 chain continuity 0.913 | W18 partial day: 23448 legs, 77% of the surrounding median (30339); its counts understate real traffic | - |
+| 2023-02-18 | range | RED | 27229 | 0.24 | 0.001 | 6306 | I3 tk 0.24 ld 0.26; I10 departures/legs 0.23; I11 chain continuity 0.850 | - | - |
+| 2023-02-17 | range | RED | 28622 | 0.28 | 0.007 | 7483 | I3 tk 0.28 ld 0.26; I10 departures/legs 0.26; I11 chain continuity 0.795 | W12 prefix volume collapse: ['DLH'] | - |
+| 2023-02-16 | range | RED | 7356 | 0.19 | 0.001 | 1335 | I3 tk 0.19 ld 0.20; I4 both-ends-null 0.41; I10 departures/legs 0.18; I11 chain continuity 0.850 | W18 partial day: 7356 legs, 27% of the surrounding median (27229); its counts understate real traffic; W8 midnight guard disarmed (previous day unpublished) | - |

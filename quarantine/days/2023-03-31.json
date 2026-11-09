@@ -1,0 +1,54 @@
+{
+ "day": "2023-03-31",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2023-03-31",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I8 first-5-min departures 89 vs mid-day avg 14",
+    "I10 departures/legs 0.36"
+   ],
+   "stats": {
+    "chain": 0.976,
+    "deps": 5107,
+    "deps_legs": 0.36,
+    "ld": 0.42,
+    "legs": 14052,
+    "ratio": 0.79,
+    "sus": 0.004,
+    "tk": 0.37
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:18:30+00:00",
+   "warnings": [
+    "W18 partial day: 14052 legs, 30% of the surrounding median (47008); its counts understate real traffic",
+    "W12 prefix volume collapse: ['DAL', 'AAL', 'RYR', 'SKW', 'DLH', 'JBU', 'RPA', 'NKS', 'AFR', 'EZY', 'KLM', 'ENY', 'EDV', 'SAS', 'BAW', 'JIA', 'VLG', 'JZA', 'EJU', 'WZZ']"
+   ]
+  }
+ ],
+ "problems": [
+  "I8 first-5-min departures 89 vs mid-day avg 14",
+  "I10 departures/legs 0.36"
+ ],
+ "stats": {
+  "chain": 0.976,
+  "deps": 5107,
+  "deps_legs": 0.36,
+  "ld": 0.42,
+  "legs": 14052,
+  "ratio": 0.79,
+  "sus": 0.004,
+  "tk": 0.37
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:18:30+00:00",
+ "warnings": [
+  "W18 partial day: 14052 legs, 30% of the surrounding median (47008); its counts understate real traffic",
+  "W12 prefix volume collapse: ['DAL', 'AAL', 'RYR', 'SKW', 'DLH', 'JBU', 'RPA', 'NKS', 'AFR', 'EZY', 'KLM', 'ENY', 'EDV', 'SAS', 'BAW', 'JIA', 'VLG', 'JZA', 'EJU', 'WZZ']"
+ ]
+}

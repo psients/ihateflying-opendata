@@ -2,7 +2,7 @@
  "day": "2026-10-22",
  "explanation": null,
  "extractor_v": 5,
- "mode": "daily",
+ "mode": "range",
  "problems": [],
  "stats": {
   "chain": 0.994,
@@ -15,6 +15,6 @@
   "tk": 0.67
  },
  "verdict": "clean",
- "verified_at": "2026-11-08T16:16:09+00:00",
+ "verified_at": "2026-11-09T04:30:29+00:00",
  "warnings": []
 }

@@ -15,9 +15,8 @@
   "tk": 0.5
  },
  "verdict": "clean",
- "verified_at": "2026-11-08T14:21:44+00:00",
+ "verified_at": "2026-11-09T03:21:46+00:00",
  "warnings": [
-  "I11 chain continuity 0.972 (baseline 0.993)",
-  "W13 new large excluded prefixes: ['FDX', 'UPS', 'ERU']"
+  "W13 new large excluded prefixes: ['FDX', 'UPS']"
  ]
 }

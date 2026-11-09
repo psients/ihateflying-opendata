@@ -15,8 +15,6 @@
   "tk": 0.5
  },
  "verdict": "clean",
- "verified_at": "2026-11-08T14:21:31+00:00",
- "warnings": [
-  "I11 chain continuity 0.977 (baseline 0.993)"
- ]
+ "verified_at": "2026-11-09T03:21:34+00:00",
+ "warnings": []
 }

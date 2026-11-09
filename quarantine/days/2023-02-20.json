@@ -1,0 +1,52 @@
+{
+ "day": "2023-02-20",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2023-02-20",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I10 departures/legs 0.36",
+    "I11 chain continuity 0.948"
+   ],
+   "stats": {
+    "chain": 0.948,
+    "deps": 9221,
+    "deps_legs": 0.36,
+    "ld": 0.36,
+    "legs": 25493,
+    "ratio": 0.98,
+    "sus": 0.002,
+    "tk": 0.37
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:16:45+00:00",
+   "warnings": [
+    "W18 partial day: 25493 legs, 80% of the surrounding median (32056); its counts understate real traffic"
+   ]
+  }
+ ],
+ "problems": [
+  "I10 departures/legs 0.36",
+  "I11 chain continuity 0.948"
+ ],
+ "stats": {
+  "chain": 0.948,
+  "deps": 9221,
+  "deps_legs": 0.36,
+  "ld": 0.36,
+  "legs": 25493,
+  "ratio": 0.98,
+  "sus": 0.002,
+  "tk": 0.37
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:16:45+00:00",
+ "warnings": [
+  "W18 partial day: 25493 legs, 80% of the surrounding median (32056); its counts understate real traffic"
+ ]
+}

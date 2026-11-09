@@ -1,0 +1,13 @@
+{
+ "day": "2023-12-11",
+ "explanation": null,
+ "extractor_v": null,
+ "mode": "range",
+ "problems": [
+  "published but not fetchable"
+ ],
+ "stats": {},
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:31:24+00:00",
+ "warnings": []
+}

@@ -1,0 +1,23 @@
+{
+ "day": "2024-03-04",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.984,
+  "deps": 38022,
+  "deps_legs": 0.62,
+  "ld": 0.6,
+  "legs": 61446,
+  "ratio": 1.39,
+  "sus": 0.003,
+  "tk": 0.62
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:35:45+00:00",
+ "warnings": [
+  "I11 chain continuity 0.984 (era warning line 0.985)",
+  "W13 new large excluded prefixes: ['NDU']"
+ ]
+}

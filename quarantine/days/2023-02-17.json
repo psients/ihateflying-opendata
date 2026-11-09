@@ -1,0 +1,54 @@
+{
+ "day": "2023-02-17",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "previous": [
+  {
+   "day": "2023-02-17",
+   "explanation": null,
+   "extractor_v": 5,
+   "mode": "daily",
+   "problems": [
+    "I3 tk 0.28 ld 0.26",
+    "I10 departures/legs 0.26",
+    "I11 chain continuity 0.795"
+   ],
+   "stats": {
+    "chain": 0.795,
+    "deps": 7483,
+    "deps_legs": 0.26,
+    "ld": 0.26,
+    "legs": 28622,
+    "ratio": 0.92,
+    "sus": 0.007,
+    "tk": 0.28
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:16:39+00:00",
+   "warnings": [
+    "W12 prefix volume collapse: ['DLH']"
+   ]
+  }
+ ],
+ "problems": [
+  "I3 tk 0.28 ld 0.26",
+  "I10 departures/legs 0.26",
+  "I11 chain continuity 0.795"
+ ],
+ "stats": {
+  "chain": 0.795,
+  "deps": 7483,
+  "deps_legs": 0.26,
+  "ld": 0.26,
+  "legs": 28622,
+  "ratio": 0.92,
+  "sus": 0.007,
+  "tk": 0.28
+ },
+ "verdict": "RED",
+ "verified_at": "2026-11-09T03:16:39+00:00",
+ "warnings": [
+  "W12 prefix volume collapse: ['DLH']"
+ ]
+}

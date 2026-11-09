@@ -1,0 +1,24 @@
+{
+ "day": "2024-03-18",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.98,
+  "deps": 38694,
+  "deps_legs": 0.61,
+  "ld": 0.6,
+  "legs": 63471,
+  "ratio": 1.36,
+  "sus": 0.035,
+  "tk": 0.61
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:36:29+00:00",
+ "warnings": [
+  "I5 sus 0.035 (heavy GPS interference day?)",
+  "I11 chain continuity 0.980 (era warning line 0.985)",
+  "W13 new large excluded prefixes: ['NDU']"
+ ]
+}

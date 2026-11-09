@@ -1,0 +1,20 @@
+{
+ "day": "2026-09-04",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.992,
+  "deps": 57289,
+  "deps_legs": 0.66,
+  "ld": 0.66,
+  "legs": 86578,
+  "ratio": 1.23,
+  "sus": 0.018,
+  "tk": 0.67
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:27:32+00:00",
+ "warnings": []
+}

@@ -1,0 +1,23 @@
+{
+ "day": "2024-01-30",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.983,
+  "deps": 31373,
+  "deps_legs": 0.59,
+  "ld": 0.57,
+  "legs": 52993,
+  "ratio": 1.12,
+  "sus": 0.005,
+  "tk": 0.6
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:34:00+00:00",
+ "warnings": [
+  "I11 chain continuity 0.983 (era warning line 0.985)",
+  "W13 new large excluded prefixes: ['UPS']"
+ ]
+}

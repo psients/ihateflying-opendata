@@ -1,0 +1,23 @@
+{
+ "day": "2023-11-24",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.965,
+  "deps": 26211,
+  "deps_legs": 0.52,
+  "ld": 0.49,
+  "legs": 50438,
+  "ratio": 1.26,
+  "sus": 0.006,
+  "tk": 0.53
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:30:33+00:00",
+ "warnings": [
+  "I11 chain continuity 0.965 (era warning line 0.97)",
+  "W13 new large excluded prefixes: ['CXK']"
+ ]
+}

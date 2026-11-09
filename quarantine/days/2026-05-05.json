@@ -1,0 +1,11 @@
+{
+ "day": "2026-05-05",
+ "explanation": "upstream hole (scripts/upstream_holes.txt): prod-0 holds heatmap files only and staging-0 holds 1 aircraft trace (checked 2026-11-08; adsb.lol outage window)",
+ "extractor_v": null,
+ "mode": "range",
+ "problems": [],
+ "stats": {},
+ "verdict": "SKIPPED",
+ "verified_at": "2026-11-09T04:20:14+00:00",
+ "warnings": []
+}

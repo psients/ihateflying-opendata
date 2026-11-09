@@ -1,0 +1,22 @@
+{
+ "day": "2026-02-25",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.992,
+  "deps": 45996,
+  "deps_legs": 0.63,
+  "ld": 0.63,
+  "legs": 72830,
+  "ratio": 1.17,
+  "sus": 0.01,
+  "tk": 0.64
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:16:19+00:00",
+ "warnings": [
+  "W13 new large excluded prefixes: ['NDU']"
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "day": "2023-06-27",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.979,
+  "deps": 26140,
+  "deps_legs": 0.49,
+  "ld": 0.47,
+  "legs": 53011,
+  "ratio": 1.31,
+  "sus": 0.013,
+  "tk": 0.5
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:22:48+00:00",
+ "warnings": [
+  "W13 new large excluded prefixes: ['FDX', 'UPS']"
+ ]
+}

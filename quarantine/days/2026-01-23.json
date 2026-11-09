@@ -1,0 +1,24 @@
+{
+ "day": "2026-01-23",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.977,
+  "deps": 22986,
+  "deps_legs": 0.54,
+  "ld": 0.56,
+  "legs": 42449,
+  "ratio": 1.0,
+  "sus": 0.014,
+  "tk": 0.54
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:14:29+00:00",
+ "warnings": [
+  "W18 partial day: 42449 legs, 59% of the surrounding median (71441); its counts understate real traffic",
+  "I11 chain continuity 0.977 (era warning line 0.985)",
+  "W12 prefix volume collapse: ['SWA', 'DAL', 'AAL', 'UAL', 'SKW', 'RPA', 'ASA', 'ENY', 'JBU', 'EDV', 'JIA']"
+ ]
+}

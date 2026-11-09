@@ -1,0 +1,11 @@
+{
+ "day": "2026-05-06",
+ "explanation": "upstream hole (scripts/upstream_holes.txt): no archive on any usable instance (only mlatonly-0 exists; adsb.lol outage)",
+ "extractor_v": null,
+ "mode": "range",
+ "problems": [],
+ "stats": {},
+ "verdict": "SKIPPED",
+ "verified_at": "2026-11-09T04:20:14+00:00",
+ "warnings": []
+}

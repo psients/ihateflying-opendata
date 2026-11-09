@@ -1,0 +1,23 @@
+{
+ "day": "2026-01-26",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.984,
+  "deps": 40156,
+  "deps_legs": 0.61,
+  "ld": 0.58,
+  "legs": 66282,
+  "ratio": 1.42,
+  "sus": 0.009,
+  "tk": 0.61
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:14:38+00:00",
+ "warnings": [
+  "I11 chain continuity 0.984 (era warning line 0.985)",
+  "W13 new large excluded prefixes: ['ERU']"
+ ]
+}

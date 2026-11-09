@@ -1,0 +1,22 @@
+{
+ "day": "2025-01-25",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.988,
+  "deps": 38373,
+  "deps_legs": 0.59,
+  "ld": 0.57,
+  "legs": 65587,
+  "ratio": 1.25,
+  "sus": 0.007,
+  "tk": 0.59
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:53:23+00:00",
+ "warnings": [
+  "W13 new large excluded prefixes: ['CAP']"
+ ]
+}

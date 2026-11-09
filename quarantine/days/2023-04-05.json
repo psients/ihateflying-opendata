@@ -1,0 +1,23 @@
+{
+ "day": "2023-04-05",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.952,
+  "deps": 16915,
+  "deps_legs": 0.47,
+  "ld": 0.42,
+  "legs": 36323,
+  "ratio": 1.07,
+  "sus": 0.002,
+  "tk": 0.47
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:18:44+00:00",
+ "warnings": [
+  "W18 partial day: 36323 legs, 76% of the surrounding median (47938); its counts understate real traffic",
+  "I11 chain continuity 0.952 (era warning line 0.97)"
+ ]
+}

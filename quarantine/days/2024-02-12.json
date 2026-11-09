@@ -1,0 +1,24 @@
+{
+ "day": "2024-02-12",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "range",
+ "problems": [],
+ "stats": {
+  "chain": 0.985,
+  "deps": 22231,
+  "deps_legs": 0.61,
+  "ld": 0.59,
+  "legs": 36376,
+  "ratio": 0.97,
+  "sus": 0.002,
+  "tk": 0.61
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-09T03:34:39+00:00",
+ "warnings": [
+  "W18 partial day: 36376 legs, 63% of the surrounding median (57304); its counts understate real traffic",
+  "I11 chain continuity 0.985 (era warning line 0.985)",
+  "W13 new large excluded prefixes: ['NDU']"
+ ]
+}
