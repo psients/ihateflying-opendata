@@ -3,6 +3,7 @@
  "date": "2026-11-09",
  "days": 1346,
  "exemplar_rows": 95086,
+ "explanation": "RED re-run after the 2026-11-09 republish of five days (two-form and non-joining archives). 295 airframe floors fell by 1-10 (190 by 1) while 6,059 rose (+18,860 total). Attributed: the dropped airframes are short of departures only on the two days whose SOURCE changed to staging-0 (2025-10-15: 0.52 of their neighbouring-day level vs 0.97 for all airframes; 2026-04-30: 0.83 vs 1.01); on the three same-instance days (2024-03-22, 2024-04-22, 2026-05-04) there is no deficit. So staging-0, fuller overall, lacks some flights of 295 aircraft that prod-0's receivers saw: a legitimate trade from a source change, not double counting. The duplicates never inflated floors (a repeated leg starts inside its twin, so countable() skips it; 2024-04-22's old 125,733 legs minus 62,483 duplicates = the new 63,250 exactly). This summary is the baseline from now on.",
  "extractor_v": 5,
  "flag_counts": {
   "daily-cap": 5,
