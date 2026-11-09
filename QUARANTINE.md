@@ -14,7 +14,7 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 27.
+**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 26.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
@@ -933,8 +933,8 @@ streak. Exit needs 30, with every RED explained.
 | 2024-04-26 | range | clean | 63446 | 0.6 | 0.006 | 38021 | - | - | - |
 | 2024-04-25 | range | clean | 60823 | 0.62 | 0.006 | 37284 | - | - | - |
 | 2024-04-24 | range | clean | 60754 | 0.6 | 0.007 | 36284 | - | - | - |
-| 2024-04-23 | range | clean | 60834 | 0.59 | 0.008 | 35895 | - | W13 new large excluded prefixes: ['FDX'] | - |
-| 2024-04-22 | range | RED | 125733 | 0.6 | 0.007 | 37711 | I6 62483 duplicate (hex, t0); I10 departures/legs 0.30; I11 chain continuity 0.538 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 2 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there); W13 new large excluded prefixes: ['LTA', 'VAR', 'CHX'] | - |
+| 2024-04-23 | range | clean | 60834 | 0.59 | 0.008 | 35895 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2024-04-22 | range | clean | 63250 | 0.6 | 0.007 | 37711 | - | - | - |
 | 2024-04-21 | range | clean | 61214 | 0.59 | 0.007 | 35936 | - | - | - |
 | 2024-04-20 | range | clean | 58627 | 0.6 | 0.009 | 35089 | - | - | - |
 | 2024-04-19 | range | clean | 63335 | 0.61 | 0.009 | 38322 | - | - | - |

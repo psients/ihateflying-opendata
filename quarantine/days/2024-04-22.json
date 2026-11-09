@@ -8,6 +8,33 @@
    "day": "2024-04-22",
    "explanation": null,
    "extractor_v": 5,
+   "mode": "range",
+   "problems": [
+    "I6 62483 duplicate (hex, t0)",
+    "I10 departures/legs 0.30",
+    "I11 chain continuity 0.538"
+   ],
+   "stats": {
+    "chain": 0.538,
+    "deps": 37711,
+    "deps_legs": 0.3,
+    "ld": 0.59,
+    "legs": 125733,
+    "ratio": 1.27,
+    "sus": 0.007,
+    "tk": 0.6
+   },
+   "verdict": "RED",
+   "verified_at": "2026-11-09T03:38:22+00:00",
+   "warnings": [
+    "W16 upstream archive irregular: 1 region(s) unreadable as tar records, 2 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there)",
+    "W13 new large excluded prefixes: ['LTA', 'VAR', 'CHX']"
+   ]
+  },
+  {
+   "day": "2024-04-22",
+   "explanation": null,
+   "extractor_v": 5,
    "mode": "daily",
    "problems": [
     "I6 62483 duplicate (hex, t0)",
@@ -32,25 +59,18 @@
    ]
   }
  ],
- "problems": [
-  "I6 62483 duplicate (hex, t0)",
-  "I10 departures/legs 0.30",
-  "I11 chain continuity 0.538"
- ],
+ "problems": [],
  "stats": {
-  "chain": 0.538,
+  "chain": 0.99,
   "deps": 37711,
-  "deps_legs": 0.3,
+  "deps_legs": 0.6,
   "ld": 0.59,
-  "legs": 125733,
+  "legs": 63250,
   "ratio": 1.27,
   "sus": 0.007,
   "tk": 0.6
  },
- "verdict": "RED",
- "verified_at": "2026-11-09T03:38:22+00:00",
- "warnings": [
-  "W16 upstream archive irregular: 1 region(s) unreadable as tar records, 2 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there)",
-  "W13 new large excluded prefixes: ['LTA', 'VAR', 'CHX']"
- ]
+ "verdict": "clean",
+ "verified_at": "2026-11-09T04:57:59+00:00",
+ "warnings": []
 }

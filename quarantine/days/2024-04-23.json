@@ -15,8 +15,8 @@
   "tk": 0.59
  },
  "verdict": "clean",
- "verified_at": "2026-11-09T03:38:25+00:00",
+ "verified_at": "2026-11-09T04:58:02+00:00",
  "warnings": [
-  "W13 new large excluded prefixes: ['FDX']"
+  "W13 new large excluded prefixes: ['FDX', 'UPS']"
  ]
 }
