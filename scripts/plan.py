@@ -127,20 +127,29 @@ def urls_of(release):
     return ' '.join(urls)
 
 
+def instance_urls(day, inst):
+    """One instance's release URLs for a day, or None (ignores holes and
+    overrides: measure.yml uses it to compare instances)."""
+    y = str(day.year)
+    repos = [r for r in SOURCES if r.endswith(y)] + [r for r in SOURCES if not r.endswith(y)]
+    tag_day = day.isoformat().replace('-', '.')
+    for repo in repos:
+        urls = urls_of(api(f'repos/{repo}/releases/tags/v{tag_day}-planes-readsb-{inst}'))
+        if urls:
+            return urls
+    return None
+
+
 def find_day(day, instances=PREFERENCE):
     """The day's best available release URLs, or None (listed holes too)."""
     if day.isoformat() in HOLES:
         return None
     if day.isoformat() in OVERRIDES:
         instances = [OVERRIDES[day.isoformat()]]
-    y = str(day.year)
-    repos = [r for r in SOURCES if r.endswith(y)] + [r for r in SOURCES if not r.endswith(y)]
-    tag_day = day.isoformat().replace('-', '.')
     for inst in instances:
-        for repo in repos:
-            urls = urls_of(api(f'repos/{repo}/releases/tags/v{tag_day}-planes-readsb-{inst}'))
-            if urls:
-                return urls
+        urls = instance_urls(day, inst)
+        if urls:
+            return urls
     return None
 
 
@@ -166,17 +175,23 @@ def published_here():
     return done
 
 
-def manifest_versions():
-    """Extractor version per published day, from the LIVE MANIFEST.json on
-    main - never this checkout's copy. A dispatched run checks out the
-    commit of its dispatch moment, so a batch queued behind another read a
-    manifest missing everything the first published, took those days as
-    version 0, and redid all 250 (2026-11-08, two pairs). An unreadable
-    manifest stops the plan rather than silently redoing published days."""
+def live_manifest():
+    """The per-day entries of the LIVE MANIFEST.json on main - never this
+    checkout's copy. A dispatched run checks out the commit of its dispatch
+    moment, so a batch queued behind another read a manifest missing
+    everything the first published, took those days as version 0, and
+    redid all 250 (2026-11-08, two pairs). An unreadable manifest stops the
+    plan rather than silently redoing published days."""
     man = api(f'repos/{OWN}/contents/MANIFEST.json?ref=main', accept='application/vnd.github.raw')
-    if man is None:
-        return {}
-    return {d: e.get('v', 0) for d, e in man.get('days', {}).items()}
+    return (man or {}).get('days', {})
+
+
+def manifest_versions():
+    return {d: e.get('v', 0) for d, e in live_manifest().items()}
+
+
+def source_instance(entry):
+    return (entry.get('source') or '').split('-planes-readsb-')[-1]
 
 
 def out(line):
@@ -244,7 +259,8 @@ def main():
         # today-1); ending at today-16 keeps the two day sets disjoint,
         # so daily and backfill can never claim the same day.
         end = min(end, today - dt.timedelta(days=16))
-        done, vers = published_here(), manifest_versions()
+        done, man = published_here(), live_manifest()
+        vers = {d: e.get('v', 0) for d, e in man.items()}
         best = {}
         for repo in SOURCES:
             for rel in paged(f'repos/{repo}/releases'):
@@ -260,14 +276,34 @@ def main():
                 rank = PREFERENCE.index(m.group(4))
                 if urls and (day not in best or rank < best[day][0]):
                     best[day] = (rank, urls)
+        # Overrides are declarative: a published day whose source differs
+        # from its source_overrides.txt instance is republished from it
+        # (verify's I12 holds it red until then).
         todo = [{'day': d2, 'urls': u} for d2, (_, u) in sorted(best.items(), reverse=True)
-                if d2 not in done or vers.get(d2, 0) < EXTRACTOR_VERSION]
+                if d2 not in done or vers.get(d2, 0) < EXTRACTOR_VERSION
+                or (d2 in OVERRIDES and source_instance(man.get(d2, {})) != OVERRIDES[d2])]
         todo = todo[:MAX_MATRIX]
         out(f'count={len(todo)}')
         out('matrix=' + json.dumps({'include': todo}, separators=(',', ':')))
         sys.stderr.write(f'{len(todo)} days to process in {start}..{end}\n')
         return
-    sys.exit('usage: plan.py one [YYYY-MM-DD] | range START END')
+    if mode == 'pairs':
+        # measure.yml: "DAY:INSTANCE DAY:INSTANCE ..." -> one job per pair,
+        # holes and overrides ignored (it exists to compare instances).
+        todo = []
+        for pair in sys.argv[2].split():
+            day_s, _, inst = pair.partition(':')
+            if inst not in PREFERENCE:
+                sys.exit(f'unknown instance in {pair!r}')
+            urls = instance_urls(parse_day(day_s), inst)
+            if urls:
+                todo.append({'day': day_s, 'inst': inst, 'urls': urls})
+            else:
+                print(f'::warning::no {inst} archive for {day_s}')
+        out(f'count={len(todo)}')
+        out('matrix=' + json.dumps({'include': todo[:MAX_MATRIX]}, separators=(',', ':')))
+        return
+    sys.exit('usage: plan.py one [YYYY-MM-DD] | range START END | pairs "DAY:INST ..."')
 
 
 if __name__ == '__main__':

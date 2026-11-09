@@ -68,6 +68,16 @@ chain continuity 0.993.
       flights from sparser receivers, not a new error class. A systemic
       relabel measured 0.883 (red); a single-hub relabel moves it ~0.008
       (warning).
+  I12 source completeness: no other adsb.lol instance's archive for the day
+      is >= 1.4x the bytes of the published one, unless a
+      scripts/source_overrides.txt line confirms the published instance (a
+      measured, human choice); an override naming a DIFFERENT instance than
+      the published one is red until the day is republished. Measured
+      2026-11-09 over 1,344 days: exactly four days at >= 1.4x, three of them
+      thin (2025-06-11 prod-0 held 33,705 aircraft against ~60k around it)
+      and one an empty stub; at 1.3-1.4x, 2024-09-16's bigger staging-0 was
+      NOT fuller (prod-0 normal), so size flags for a decision, never
+      switches by itself. An unreadable upstream listing is a warning.
   W12 any top-30 prefix collapsing >70% day over day
   W13 an excluded prefix (meta excluded_top) with >= 300 legs that was not
       in yesterday's top 10 AND at least doubled (yesterday's 10th count is
@@ -116,6 +126,49 @@ BOUNDS = {
     'now': {'ratio': (0.4, 3.5), 'tk': 0.35, 'ld': 0.35, 'null2': 0.35, 'chain_warn': 0.985},
 }
 CHAIN_RED = 0.95
+SOURCE_RATIO_RED = 1.4
+_SIZES = None
+
+
+def instance_sizes():
+    """{day: {instance: archive bytes}} over every adsb.lol release, listed
+    once per process (plan.py's sources and instance ladder)."""
+    global _SIZES
+    if _SIZES is None:
+        from plan import PREFERENCE, SOURCES, TAG, paged
+        sizes = collections.defaultdict(dict)
+        for repo in SOURCES:
+            for rel in paged(f'repos/{repo}/releases'):
+                m = TAG.match(rel.get('tag_name', ''))
+                if m and m.group(4) in PREFERENCE:
+                    day = f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
+                    sizes[day][m.group(4)] = sum(a.get('size', 0) for a in rel.get('assets') or [])
+        _SIZES = sizes
+    return _SIZES
+
+
+def source_check(day, source_tag):
+    """I12. Returns None, ('warn', text) or ('red', text)."""
+    inst = (source_tag or '').split('-planes-readsb-')[-1]
+    try:
+        from plan import OVERRIDES
+        sizes = instance_sizes().get(day, {})
+    except Exception as e:
+        return ('warn', f'I12 not checked: upstream listing unavailable ({type(e).__name__})')
+    if day in OVERRIDES:
+        if OVERRIDES[day] != inst:
+            return ('red', f'I12 published {inst} but source_overrides.txt names {OVERRIDES[day]}: '
+                           f'republish pending')
+        return None
+    if inst not in sizes:
+        return ('warn', f'I12 published instance {inst or "?"} is no longer listed upstream')
+    big = max(sizes, key=sizes.get)
+    ratio = sizes[big] / max(1, sizes[inst])
+    if big != inst and ratio >= SOURCE_RATIO_RED:
+        return ('red', f'I12 {big} archive is {ratio:.1f}x the published {inst} '
+                       f'({sizes[big] / 1e6:.0f} MB vs {sizes[inst] / 1e6:.0f} MB): measure both, '
+                       f'record the choice in source_overrides.txt')
+    return None
 
 
 def era(day):
@@ -222,6 +275,9 @@ def check_day(day, files, prev_legs, prev_meta, history):
         warnings.append(f"W16 upstream archive irregular: {meta['tar_gaps']} region(s) unreadable as tar "
                         f"records, {meta.get('tar_gap_bytes', 0) / 1024:.0f} KB skipped (padding between joined "
                         f"archive pieces loses nothing; damage would lose any aircraft stored there)")
+    src = source_check(day, meta.get('source'))
+    if src:
+        (problems if src[0] == 'red' else warnings).append(src[1])
 
     # I2-I5
     b = BOUNDS[era(day)]
