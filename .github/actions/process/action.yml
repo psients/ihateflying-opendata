@@ -26,7 +26,11 @@ runs:
           [[ "$url" =~ ^https://github\.com/adsblol/globe_history_[0-9]{4}/releases/download/[A-Za-z0-9._+-]+/[A-Za-z0-9._%+-]+$ ]] \
             || { echo "unexpected source url: $url"; exit 1; }
           i=$((i+1))
-          curl -sSfL --retry 5 --retry-delay 15 --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
+          # --retry-all-errors: plain --retry skips curl's exit 92 (HTTP/2
+          # stream reset) and odd statuses; a 30 s GitHub download incident
+          # (2026-11-09 01:01 UTC: eight exit-92 and one HTTP 618) failed
+          # nine days at once. Each retry restarts the file from byte 0.
+          curl -sSfL --retry 5 --retry-all-errors --retry-delay 15 --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
         done
         # Which archive release produced this day (staging runs ~15% smaller
         # than prod; a consumer deserves to know which it is reading).
