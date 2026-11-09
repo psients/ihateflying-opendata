@@ -27,7 +27,7 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from aggregate import AIRLINE_PLAIN, aggregate, iter_days  # noqa: E402
+from aggregate import AIRLINE_PLAIN, DAILY_CAP, aggregate, countable, iter_days  # noqa: E402
 from dryrun import OUT_DIR, REPO, download_all, majority_reg  # noqa: E402
 
 
@@ -98,10 +98,31 @@ def main():
         if f['ref'] in hexes:
             flags[f['ref']][f['kind']] += 1
 
-    # Second pass: leg-level context for the selected airframes and numbers.
+    # Second pass: leg-level context for the selected airframes and numbers,
+    # and each selected airframe's departures PER DAY by the same rule as
+    # aggregate() (registration gate, cross-midnight carry, daily cap), so a
+    # floor can be compared with an exact count over any window (the FAA's
+    # cycles between two reports). Their sum must equal the airframe row.
     hx_legs = collections.defaultdict(list)
     num_legs = collections.defaultdict(list)
+    deps_by_day = collections.defaultdict(dict)
+    carry = {}
     for day, legs in iter_days(patterns):
+        mine = collections.defaultdict(list)
+        for r in legs:
+            if r['hex'] in hexes:
+                mine[r['hex']].append(r)
+        for hx, ls in mine.items():
+            expected = reg_map.get(hx)
+            if expected:
+                ls = [r for r in ls if not ((r.get('reg') or '').replace('-', '')
+                                            and (r.get('reg') or '').replace('-', '') != expected.replace('-', ''))]
+            deps = countable(ls, carry.get(hx))
+            if ls:
+                carry[hx] = max(r['t1'] for r in ls)
+            deps = deps[:DAILY_CAP]
+            if deps and hx in reg_map:
+                deps_by_day[hx][day] = len(deps)
         for r in legs:
             if r['hex'] in hexes:
                 hx_legs[r['hex']].append({'day': day, 'cs': r['cs'], 'reg': r.get('reg'), 'type': r.get('type'),
@@ -127,6 +148,8 @@ def main():
             'flags': dict(flags.get(hx, {})), 'legs': len(ls), 'days_seen': len({x['day'] for x in ls}),
             'top_routes': collections.Counter(f"{x['org']}-{x['dst']}" for x in ls).most_common(10),
             'last_legs': sorted(ls, key=lambda x: x['t0'])[-8:],
+            'deps_by_day': deps_by_day.get(hx, {}),
+            'deps_sum_matches_row': sum(deps_by_day.get(hx, {}).values()) == (rows.get(hx) or {}).get('departures', 0),
         }
     for num, org in sel['flightnums']:
         ls = num_legs.get((num, org), [])
