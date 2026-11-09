@@ -14,7 +14,7 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 25.
+**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 24.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
@@ -196,7 +196,7 @@ streak. Exit needs 30, with every RED explained.
 | 2026-05-03 | range | clean | 78283 | 0.66 | 0.006 | 51228 | - | - | - |
 | 2026-05-02 | range | clean | 75345 | 0.65 | 0.007 | 48302 | - | - | - |
 | 2026-05-01 | range | clean | 81494 | 0.66 | 0.006 | 53576 | - | - | - |
-| 2026-04-30 | range | RED | 79373 | 0.65 | 0.007 | 46595 | I6 7644 duplicate (hex, t0); I11 chain continuity 0.900 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 64 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there) | - |
+| 2026-04-30 | range | clean | 79753 | 0.65 | 0.007 | 51818 | - | - | - |
 | 2026-04-29 | range | clean | 75465 | 0.65 | 0.009 | 49013 | - | - | - |
 | 2026-04-28 | range | clean | 75392 | 0.66 | 0.007 | 49159 | - | W13 new large excluded prefixes: ['UPS', 'FDX', 'NDU'] | - |
 | 2026-04-27 | range | clean | 79711 | 0.67 | 0.006 | 52947 | - | - | - |
