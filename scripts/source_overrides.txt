@@ -1,2 +1,21 @@
 # Days whose preferred adsb.lol instance is unusable: use the named instance.
 # Format: YYYY-MM-DD instance reason. Adding a line is an owner-visible commit.
+# Declarative: the backfill republishes a day whose published source differs
+# from its line here, and verify I12 holds it red until it does. A line naming
+# the preferred instance confirms it against a bigger rival (I12).
+#
+# 2026-11-09 measurements (measure.yml run 42552615633; every instance of 27
+# thin-looking days, extracted on runners, never published). Rule: the most
+# observed departures (tk) wins when it beats the ladder's choice by >= 3%;
+# switches were checked for no worse suspect-motion share. tk shown old -> new.
+2023-02-19 test-1 tk 5,888 (test-0) -> 7,161; legs 22,789 -> 23,448; sus 1.6% (normal)
+2023-03-03 test-1 tk 13,931 (staging-0, 13 h covered) -> 19,832 (24 h); test-0 19,618
+2023-03-08 test-1 tk 14,700 (staging-0) -> 16,085; legs 34,258 -> 40,047
+2023-03-09 test-0 tk 2,324 (staging-0) -> 7,616; STILL PARTIAL: best instance covers 7 h (no instance holds the whole day)
+2023-03-10 test-0 prod-0 and prod-1 are 174 KB stubs (0 traces); test-0 tk 19,274, 22 h (staging-0 15,406, test-1 11,617)
+2023-04-05 staging-0 tk 16,160 (prod-0) -> 17,060; legs 34,996 -> 36,323
+2025-06-11 prod-0tmp prod-0 held 5 h of the day (tk 8,641); prod-0tmp tk 50,664, 24 h (staging-0tmp 49,578)
+2026-03-24 staging-0 tk 22,692 (prod-0) -> 44,183; 12,849 -> 18,382 aircraft with legs, both 24 h: prod-0 lost feeders
+2026-04-01 staging-0 tk 28,972 (prod-0) -> 47,055; 13,285 -> 18,967 aircraft with legs
+2026-04-02 staging-0 tk 35,438 (prod-0) -> 44,998; legs 65,752 -> 75,194
+2026-06-11 staging-0 tk 23,233 (prod-0) -> 25,686; legs 53,020 -> 57,435

@@ -89,6 +89,11 @@ chain continuity 0.993.
   W17 a thin day: fewer than 25,000 aircraft scanned (2023 era: 12,000) -
       a partial upstream archive, published because what it holds is real,
       labelled so its low counts are never mistaken for low traffic
+  W18 legs below 80% of the median of the +-7 surrounding days (MANIFEST.json,
+      at least 4 neighbours): a partial day by comparison, which W17's fixed
+      floor misses (2026-01-23 held 59% with its only rival archive
+      truncated; 2023-03-09's best instance covers 7 h). Christmas dips
+      (81-82%) stay under it: they are real traffic
   W16 the upstream archive was irregular (meta tar_gaps > 0): the day was
       read past regions that are not valid tar records - end-marker padding
       between joined archive pieces (nothing lost) or damage (aircraft stored
@@ -127,7 +132,28 @@ BOUNDS = {
 }
 CHAIN_RED = 0.95
 SOURCE_RATIO_RED = 1.4
+THIN_RELATIVE = 0.80
 _SIZES = None
+_LEGS = None
+
+
+def neighbour_median_legs(day):
+    """Median legs of the published days within +-7 of DAY (itself
+    excluded), from MANIFEST.json; None with fewer than 4 neighbours."""
+    global _LEGS
+    if _LEGS is None:
+        try:
+            _LEGS = {d: e.get('legs') for d, e in json.load(open(MANIFEST)).get('days', {}).items()}
+        except Exception:
+            _LEGS = {}
+    d0 = dt.date.fromisoformat(day)
+    near = [_LEGS[x] for k in range(-7, 8) if k
+            and (x := (d0 + dt.timedelta(days=k)).isoformat()) in _LEGS and _LEGS[x]]
+    if len(near) < 4:
+        return None
+    near.sort()
+    mid = len(near) // 2
+    return near[mid] if len(near) % 2 else (near[mid - 1] + near[mid]) / 2
 
 
 def instance_sizes():
@@ -275,6 +301,10 @@ def check_day(day, files, prev_legs, prev_meta, history):
         warnings.append(f"W16 upstream archive irregular: {meta['tar_gaps']} region(s) unreadable as tar "
                         f"records, {meta.get('tar_gap_bytes', 0) / 1024:.0f} KB skipped (padding between joined "
                         f"archive pieces loses nothing; damage would lose any aircraft stored there)")
+    med = neighbour_median_legs(day)
+    if med and n < THIN_RELATIVE * med:
+        warnings.append(f'W18 partial day: {n} legs, {n / med:.0%} of the surrounding median ({med:.0f}); '
+                        f'its counts understate real traffic')
     src = source_check(day, meta.get('source'))
     if src:
         (problems if src[0] == 'red' else warnings).append(src[1])
