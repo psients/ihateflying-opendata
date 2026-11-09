@@ -1,6 +1,6 @@
 {
  "day": "2023-02-22",
- "explanation": null,
+ "explanation": "Early archive era (adsb.lol's first weeks, far fewer receivers than from mid-2023). Investigated 2026-11-09: chain breaks are unseen flights, not airport relabels (on 2023-02-17 and 02-22 breaks sat a median 3.9-4.0 h on the ground against 1.6 h for continuous pairs, and breaks under 45 min occur at the continuous rate, about 1%); takeoffs are observed at about half the June 2023 rate. Effect: this day undercounts real traffic; nothing inflates. The 2023 bounds (calibrated on June 2023) are deliberately not loosened for it. I8: the first hour's 5-minute departure counts run 72, 74, 67, 48, the US evening bank in a US-heavy network, not a midnight spike; none of the 72 follows a same-airframe leg ending within 15 min before midnight, so nothing is counted twice.",
  "extractor_v": 5,
  "mode": "range",
  "previous": [
@@ -47,6 +47,6 @@
   "tk": 0.28
  },
  "verdict": "RED",
- "verified_at": "2026-11-09T03:16:50+00:00",
+ "verified_at": "2026-11-09T05:01:57+00:00",
  "warnings": []
 }

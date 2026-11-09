@@ -1,6 +1,6 @@
 {
  "day": "2025-12-04",
- "explanation": null,
+ "explanation": "adsb.lol-wide timestamp lag 15:00-20:00 UTC (scripts/gate_exceptions.txt): stale positions re-stamped up to about 60 s late make the next fix look like a 10-23 km jump, on every continent at once; staging-0 identical. In that window legs, takeoffs, landings, airports, coverage and duration match 12-03 and 12-05. Flagged legs carry sus > 0, so route exemplars exclude them and their km is low.",
  "extractor_v": 5,
  "mode": "range",
  "previous": [
@@ -43,7 +43,7 @@
   "tk": 0.64
  },
  "verdict": "RED",
- "verified_at": "2026-11-09T04:11:29+00:00",
+ "verified_at": "2026-11-09T05:01:58+00:00",
  "warnings": [
   "I11 chain continuity 0.985 (era warning line 0.985)"
  ]

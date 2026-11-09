@@ -1,6 +1,6 @@
 {
  "day": "2023-04-03",
- "explanation": null,
+ "explanation": "Early archive era (adsb.lol's first weeks, far fewer receivers than from mid-2023). Investigated 2026-11-09: chain breaks are unseen flights, not airport relabels (on 2023-02-17 and 02-22 breaks sat a median 3.9-4.0 h on the ground against 1.6 h for continuous pairs, and breaks under 45 min occur at the continuous rate, about 1%); takeoffs are observed at about half the June 2023 rate. Effect: this day undercounts real traffic; nothing inflates. The 2023 bounds (calibrated on June 2023) are deliberately not loosened for it. Partial day (31% of the surrounding median); staging-0 identical.",
  "extractor_v": 5,
  "mode": "range",
  "previous": [
@@ -45,7 +45,7 @@
   "tk": 0.4
  },
  "verdict": "RED",
- "verified_at": "2026-11-09T03:18:38+00:00",
+ "verified_at": "2026-11-09T05:01:58+00:00",
  "warnings": [
   "W18 partial day: 14781 legs, 31% of the surrounding median (47556); its counts understate real traffic",
   "I11 chain continuity 0.966 (era warning line 0.97)",

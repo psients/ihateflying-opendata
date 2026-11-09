@@ -1,6 +1,6 @@
 {
  "day": "2026-08-09",
- "explanation": null,
+ "explanation": "Partial day from an upstream feed outage: the quietest UTC hour holds 274 legs (2,857 on 08-07) and chain breaks sit a median 8.1 h on the ground (2.1 h on 08-07): flights inside the outage were never seen. Breaks under 45 min: 0%, so no relabels. staging-0 measured the same (tk 35,984 vs 35,752). Undercounts; nothing inflates.",
  "extractor_v": 5,
  "mode": "range",
  "previous": [
@@ -43,7 +43,7 @@
   "tk": 0.55
  },
  "verdict": "RED",
- "verified_at": "2026-11-09T04:25:53+00:00",
+ "verified_at": "2026-11-09T05:01:58+00:00",
  "warnings": [
   "W18 partial day: 64684 legs, 75% of the surrounding median (85951); its counts understate real traffic"
  ]
