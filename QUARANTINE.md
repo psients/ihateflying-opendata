@@ -14,7 +14,7 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 29.
+**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 28.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
@@ -1067,7 +1067,7 @@ streak. Exit needs 30, with every RED explained.
 | 2023-12-14 | range | clean | 58764 | 0.59 | 0.004 | 34170 | - | - | - |
 | 2023-12-13 | range | clean | 56430 | 0.58 | 0.004 | 32431 | - | - | - |
 | 2023-12-12 | range | clean | 56468 | 0.58 | 0.003 | 32450 | - | W13 new large excluded prefixes: ['NDU'] | - |
-| 2023-12-11 | range | RED |  |  |  |  | published but not fetchable | - | - |
+| 2023-12-11 | range | clean | 60016 | 0.55 | 0.003 | 32687 | - | I11 chain continuity 0.970 (era warning line 0.97) | - |
 | 2023-12-10 | range | clean | 57524 | 0.55 | 0.002 | 31500 | - | - | - |
 | 2023-12-09 | range | clean | 55817 | 0.55 | 0.004 | 30265 | - | - | - |
 | 2023-12-08 | range | clean | 59824 | 0.58 | 0.006 | 34380 | - | - | - |
