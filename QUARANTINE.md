@@ -14,7 +14,7 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 28.
+**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 27.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
@@ -964,8 +964,8 @@ streak. Exit needs 30, with every RED explained.
 | 2024-03-26 | range | clean | 56641 | 0.6 | 0.004 | 33577 | - | - | - |
 | 2024-03-25 | range | clean | 61884 | 0.61 | 0.005 | 37337 | - | - | - |
 | 2024-03-24 | range | clean | 60818 | 0.62 | 0.007 | 37709 | - | - | - |
-| 2024-03-23 | range | clean | 59036 | 0.62 | 0.006 | 36202 | - | - | - |
-| 2024-03-22 | range | RED | 72530 | 0.61 | 0.006 | 39588 | I6 3344 duplicate (hex, t0); I11 chain continuity 0.942 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 6 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there) | - |
+| 2024-03-23 | range | clean | 59036 | 0.62 | 0.006 | 36202 | - | W14 ratio 1.45 vs 1.26 a week earlier | - |
+| 2024-03-22 | range | clean | 62314 | 0.64 | 0.006 | 39588 | - | - | - |
 | 2024-03-21 | range | clean | 59583 | 0.64 | 0.009 | 37962 | - | - | - |
 | 2024-03-20 | range | clean | 58917 | 0.61 | 0.008 | 35912 | - | I11 chain continuity 0.982 (era warning line 0.985); W13 new large excluded prefixes: ['NDU'] | - |
 | 2024-03-19 | range | clean | 59303 | 0.62 | 0.006 | 36404 | - | I11 chain continuity 0.977 (era warning line 0.985) | - |

@@ -15,6 +15,8 @@
   "tk": 0.62
  },
  "verdict": "clean",
- "verified_at": "2026-11-09T03:36:45+00:00",
- "warnings": []
+ "verified_at": "2026-11-09T04:57:18+00:00",
+ "warnings": [
+  "W14 ratio 1.45 vs 1.26 a week earlier"
+ ]
 }
