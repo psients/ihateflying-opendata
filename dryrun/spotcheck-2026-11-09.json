@@ -21,7 +21,69 @@
    "CGK"
   ]
  ],
- "results": null,
+ "results": {
+  "airframes": {
+   "7812d5": {
+    "floor": "2-58/yr: adsb.lol has almost no receivers in China",
+    "identity": "B-1358, Shandong Airlines 737-85N: flightera lists hex 7812D5 = B-1358; JetPhotos 2026 photos at Chinese airports",
+    "verdict": "pass"
+   },
+   "888060": {
+    "floor": "27 in total, last seen 2024-08-15",
+    "identity": "VN-B221, ATR 72-500 MSN 892, VASCO since 2017 (airfleets.net, airhistory.net), photographed at SGN to Oct 2024; adsb type AT75, HVN callsigns from SGN",
+    "verdict": "pass"
+   },
+   "a06e0b": {
+    "floor": "1,356 (2024) and 1,374 (2025) against Delta A321s in FAA cycle reports (median 1,400/yr; sister N128DN 1,469/yr between its 2024 and 2025 reports): below, consistent with dense US coverage",
+    "identity": "N127DN, Delta A321 built 2021: site register (FAA releasable 2026-11-08) agrees on registration, type, operator; adsb majority registration N127DN on all 5,770 legs",
+    "verdict": "pass"
+   },
+   "a6f581": {
+    "floor": "258 departures 2025-12-30..2026-09-28 against the FAA exact 275 for the same window (cycles 41,023 -> 41,298): floor below exact, 94% observed; both show no flying Apr-Jul 2026",
+    "identity": "N5479A, Boeing 737-83N(BCF) freighter MSN 32578, Amazon Prime Air operated by Sun Country as SCX (airfleets.net, airhistory.net); not in the site register",
+    "verdict": "pass (exact)"
+   },
+   "e48e94": {
+    "floor": "393-790/yr against a 737-800 typical 1,229/yr (thin Brazil coverage)",
+    "identity": "PR-GXL, GOL 737-800 built 2013: site register (ANAC RAB) agrees",
+    "verdict": "pass"
+   }
+  },
+  "checked_at": "2026-11-09",
+  "evidence": "dryrun/spotcheck-detail-2026-11-09.json (per-day departures sum to every floor), dryrun/spotcheck-2026-11-09-routes/",
+  "findings": [
+   "Allowlisted passenger callsigns also carry cargo: N5479A is an Amazon Prime Air 737-800 freighter flown by Sun Country as SCX3xxx. SCX is not in the flight-number map, so no unbookable numbers appear, but such flights feed airframe floors and route exemplars; site integration (B2) must pass airframes and exemplars through the registry cargo rules.",
+   "Site bug, separate task: the exact-aircraft FAA card shows the HIGHEST cycle total ever reported, not the latest; 74 planes show impossible totals (N777AN 116,111 vs latest 12,858; N5479A 59,276 vs 41,298)."
+  ],
+  "flightnums": {
+   "AA3180 CLT": {
+    "independent": "public schedules: CLT->DFW 05:45 EDT (09:45 UTC), A321",
+    "observed": "AAL3180 CLT->DFW on 59 of 59 legs, takeoff in the 09 UTC hour on 48, A321/A21N, 48 different aircraft (correctly no usual-aircraft entry)",
+    "verdict": "pass"
+   },
+   "AS73 JNU": {
+    "independent": "public schedules: JNU->ANC 07:31-07:41 Alaska time (15:31 UTC), 737-700",
+    "observed": "ASA73 JNU->ANC on 53 of 56, 15 UTC hour on 48, 737-700 core (N6xxAS)",
+    "verdict": "pass"
+   },
+   "GA104 CGK": {
+    "independent": "public schedules: CGK->PLM 10:25 WIB (03:25 UTC). PLM is in airports.json: the blanks are missing receiver coverage at Palembang; the 6 CGK legs are the out-and-back merged when the PLM turnaround went unseen (one departure counted for two: an undercount)",
+    "observed": "GIA104 from CGK, 03-04 UTC, 737-800; destination blank on 49 of 55, CGK on 6",
+    "verdict": "pass (origin, time, type); destination mostly unobserved"
+   }
+  },
+  "routes": {
+   "EDI-GDN 2024W": {
+    "detail": "8 tracks 1,481-1,514 km (1.04-1.07x great circle), every first and last fix within 2 km of EDI and GDN; North Sea crossing to Denmark (BLL, CPH) then GDN; medoid 2025-03-12, mean 32.8 km from the others",
+    "verdict": "pass"
+   },
+   "ZRH-CUN 2026S": {
+    "detail": "8 tracks 8,778-9,118 km (1.02-1.06x), first fixes within 2 km of ZRH, last fixes 7-9 km from CUN (inside the 10 km rule); northern Atlantic crossing then down the US east coast, ocean unobserved (cov 0.26-0.57); daily tracks spread 436-716 km, so the medoid (2026-06-06) is a typical flown day, never an average",
+    "verdict": "pass"
+   }
+  },
+  "summary": "PASS 10 of 10 (5 airframes, 3 flight numbers, 2 routes); 2 findings, both outside the counting chain"
+ },
  "routes": [
   [
    "EDI-GDN",
