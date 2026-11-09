@@ -15,8 +15,6 @@
   "tk": 0.66
  },
  "verdict": "clean",
- "verified_at": "2026-11-09T11:33:30+00:00",
- "warnings": [
-  "I12 not checked: upstream listing unavailable (RemoteDisconnected)"
- ]
+ "verified_at": "2026-11-09T11:44:26+00:00",
+ "warnings": []
 }
