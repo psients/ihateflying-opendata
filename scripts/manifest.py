@@ -35,13 +35,22 @@ def save(man):
         f.write('\n')
 
 
+# Bump when merge() starts carrying new meta keys: reindex re-fetches every
+# entry written under an older schema once, so old days gain the keys too.
+# 2 (2026-11-09): tar_gaps, tar_gap_bytes, dup_members - a consumer must see
+# which days were read past an unreadable region or lost aircraft at a joint.
+MERGE_SCHEMA = 2
+
+
 def merge(man, meta):
     day = meta.get('day')
     if not day or not re.match(r'^\d{4}-\d{2}-\d{2}$', day):
         return False
     entry = {k: meta[k] for k in
              ('v', 'airports_rev', 'allowlist', 'source', 'scanned', 'legs', 'errors',
-              'bad_meta', 'oversize', 'sus_legs', 'sha256') if k in meta}
+              'bad_meta', 'oversize', 'sus_legs', 'sha256', 'tar_gaps', 'tar_gap_bytes',
+              'dup_members') if k in meta}
+    entry['schema'] = MERGE_SCHEMA
     for k in ('asset_id', 'asset_updated'):
         if k in meta:
             entry[k] = meta[k]
@@ -80,7 +89,8 @@ def reindex(man):
             # the old version forever and every backfill run would redo the
             # same newest 250 days).
             if have.get('v') and have.get('asset_id') == a.get('id') \
-                    and have.get('asset_updated') == a.get('updated_at'):
+                    and have.get('asset_updated') == a.get('updated_at') \
+                    and have.get('schema') == MERGE_SCHEMA:
                 continue
             meta = fetch_json(a['browser_download_url'])
             meta['asset_id'] = a.get('id')
