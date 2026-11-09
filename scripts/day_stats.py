@@ -26,6 +26,7 @@ def main():
         'hexes': len({r['hex'] for r in legs}),
         'air_h': round(sum(r['t1'] - r['t0'] for r in legs) / 3600),
         'hours_covered': sum(1 for h in range(24) if by_hour[h] >= 100),
+        'dup_members': meta.get('dup_members', 0), 'tar_gap_bytes': meta.get('tar_gap_bytes', 0),
     }, sort_keys=True))
 
 

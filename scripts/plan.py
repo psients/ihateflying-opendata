@@ -116,12 +116,36 @@ def parse_day(s):
     return dt.date.fromisoformat(s)
 
 
-def urls_of(release):
+def archive_assets(release):
+    """The release's archive as ONE form: the split parts (NAME.tar.aa,
+    .ab, ...) or the single NAME.tar - never both. Five upstream releases
+    hold both forms (2024-03-22 and 2024-04-22 prod-0, 2024-09-16/17 and
+    2026-06-06 staging-0); joining every '.tar' asset fed the extractor the
+    day twice (2024-04-22: 62,483 duplicate legs). When both exist, the
+    form with more bytes wins (2024-03-22: the split original 2,008 MB vs a
+    252 MB re-upload). Any other '.tar' name = no archive (fail closed)."""
     if not release:
-        return None
-    assets = sorted(release.get('assets', []), key=lambda a: a['name'])
-    urls = [a['browser_download_url'] for a in assets
-            if '.tar' in a['name'] and a.get('state') == 'uploaded' and a.get('size', 0) > 0]
+        return []
+    tag = release.get('tag_name', '')
+    ok = [a for a in release.get('assets', [])
+          if a.get('state') == 'uploaded' and a.get('size', 0) > 0 and '.tar' in a['name']]
+    split = sorted((a for a in ok if re.fullmatch(re.escape(tag) + r'\.tar\.[a-z]{2}', a['name'])),
+                   key=lambda a: a['name'])
+    plain = [a for a in ok if a['name'] == tag + '.tar']
+    if len(split) + len(plain) != len(ok):
+        return []
+    # Split parts are exactly .aa, .ab, .ac ... in sequence (a .tar.gz
+    # or a gap in the sequence is not a split archive).
+    want = [f'{tag}.tar.a{chr(ord("a") + i)}' for i in range(len(split))]
+    if [a['name'] for a in split] != want:
+        return []
+    if split and plain:
+        return split if sum(a['size'] for a in split) >= plain[0]['size'] else plain
+    return split or plain
+
+
+def urls_of(release):
+    urls = [a['browser_download_url'] for a in archive_assets(release)]
     if not urls or not all(ASSET_URL.match(u) for u in urls):
         return None
     return ' '.join(urls)
@@ -255,6 +279,11 @@ def main():
         return
     if mode == 'range':
         start, end = parse_day(sys.argv[2]), parse_day(sys.argv[3])
+        # FORCE: published days to reprocess anyway (a defect fixed in the
+        # extraction path, e.g. the 2026-11-09 duplicate-member days).
+        force = set(sys.argv[4].split()) if len(sys.argv) > 4 else set()
+        for f in force:
+            parse_day(f)
         # The daily job's self-heal reaches back 15 days (today-15 ..
         # today-1); ending at today-16 keeps the two day sets disjoint,
         # so daily and backfill can never claim the same day.
@@ -280,7 +309,7 @@ def main():
         # from its source_overrides.txt instance is republished from it
         # (verify's I12 holds it red until then).
         todo = [{'day': d2, 'urls': u} for d2, (_, u) in sorted(best.items(), reverse=True)
-                if d2 not in done or vers.get(d2, 0) < EXTRACTOR_VERSION
+                if d2 not in done or vers.get(d2, 0) < EXTRACTOR_VERSION or d2 in force
                 or (d2 in OVERRIDES and source_instance(man.get(d2, {})) != OVERRIDES[d2])]
         todo = todo[:MAX_MATRIX]
         out(f'count={len(todo)}')

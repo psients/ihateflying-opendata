@@ -75,9 +75,12 @@ chain continuity 0.993.
       the published one is red until the day is republished. Measured
       2026-11-09 over 1,344 days: exactly four days at >= 1.4x, three of them
       thin (2025-06-11 prod-0 held 33,705 aircraft against ~60k around it)
-      and one an empty stub; at 1.3-1.4x, 2024-09-16's bigger staging-0 was
-      NOT fuller (prod-0 normal), so size flags for a decision, never
-      switches by itself. An unreadable upstream listing is a warning.
+      and one an empty stub. Size flags for a decision and never switches
+      by itself: bytes are a proxy (2023-03-03's better test-1 sat under
+      1.4x), so measure.yml decides. Sizes count ONE archive form per
+      release (plan.archive_assets); summing both forms of a two-form
+      release once made 2024-09-16's staging-0 look 1.3-1.4x bigger. An
+      unreadable upstream listing is a warning.
   W12 any top-30 prefix collapsing >70% day over day
   W13 an excluded prefix (meta excluded_top) with >= 300 legs that was not
       in yesterday's top 10 AND at least doubled (yesterday's 10th count is
@@ -162,14 +165,16 @@ def instance_sizes():
     once per process (plan.py's sources and instance ladder)."""
     global _SIZES
     if _SIZES is None:
-        from plan import PREFERENCE, SOURCES, TAG, paged
+        from plan import PREFERENCE, SOURCES, TAG, archive_assets, paged
         sizes = collections.defaultdict(dict)
         for repo in SOURCES:
             for rel in paged(f'repos/{repo}/releases'):
                 m = TAG.match(rel.get('tag_name', ''))
                 if m and m.group(4) in PREFERENCE:
                     day = f'{m.group(1)}-{m.group(2)}-{m.group(3)}'
-                    sizes[day][m.group(4)] = sum(a.get('size', 0) for a in rel.get('assets') or [])
+                    # One archive form only: summing both forms of a
+                    # two-form release doubled its apparent size.
+                    sizes[day][m.group(4)] = sum(a['size'] for a in archive_assets(rel))
         _SIZES = sizes
     return _SIZES
 
@@ -306,7 +311,12 @@ def check_day(day, files, prev_legs, prev_meta, history):
     if meta.get('scanned', 0) < thin:
         warnings.append(f"W17 thin day: {meta.get('scanned')} aircraft scanned (normal: ~42k in 2023, "
                         f"~60-76k in 2026); counts for this day are far below its real traffic")
-    if meta.get('tar_gaps'):
+    if meta.get('dup_members'):
+        warnings.append(f"W16 upstream archive parts do not join: {meta['dup_members']} airframe(s) repeated "
+                        f"after a {meta.get('tar_gap_bytes', 0) / 1024:.0f} KB unreadable region (skipped, one "
+                        f"trace each); the parts were cut from different packings, so aircraft that sat at "
+                        f"the joint are missing from this day")
+    elif meta.get('tar_gaps'):
         warnings.append(f"W16 upstream archive irregular: {meta['tar_gaps']} region(s) unreadable as tar "
                         f"records, {meta.get('tar_gap_bytes', 0) / 1024:.0f} KB skipped (padding between joined "
                         f"archive pieces loses nothing; damage would lose any aircraft stored there)")

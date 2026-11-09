@@ -16,6 +16,10 @@ on:
       end:
         description: 'Last day, YYYY-MM-DD (capped at today-2)'
         required: true
+      force:
+        description: 'Optional: space-separated published days in the range to reprocess anyway'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -40,7 +44,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           START: ${{ inputs.start }}
           END: ${{ inputs.end }}
-        run: python3 scripts/plan.py range "$START" "$END"
+          FORCE: ${{ inputs.force }}
+        run: python3 scripts/plan.py range "$START" "$END" "$FORCE"
       # Month releases are created HERE, one at a time, before any day job
       # starts: parallel day jobs racing to create the same new month made
       # two releases under one tag (data-2025-12, 2026-11-08).

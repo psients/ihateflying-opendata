@@ -405,8 +405,18 @@ def members(day, stream, stats):
     as the end of the archive and silently truncates the day. Damaged
     regions are skipped and ACCOUNTED: tar_gaps / tar_gap_bytes in meta say
     how much of the archive was unreadable, so a recovered day is never
-    presented as a complete one. An intact archive reads identically."""
+    presented as a complete one. An intact archive reads identically.
+
+    One trace per airframe: a repeated airframe is skipped and counted in
+    meta dup_members (written only when non-zero, so a clean day's meta is
+    unchanged). Measured 2026-11-09: on 2025-10-15, 2026-04-30 and
+    2026-05-04 the skipped region sits at byte 2,000,000,000, the .aa/.ab
+    joint, and .ab then repeats 7,191-42,367 members of .aa byte for byte
+    (the two parts were cut from different packings of the day, so some
+    members are also missing); before this rule each repeat became a
+    duplicate leg (verify I6)."""
     expected = None
+    seen = set()
     with tarfile.open(fileobj=stream, mode='r|', ignore_zeros=True) as tar:
         for m in tar:
             if expected is not None and m.offset > expected:
@@ -418,6 +428,11 @@ def members(day, stream, stats):
             if m.size > MAX_RAW_MEMBER:
                 stats['oversize'] += 1
                 continue
+            airframe = m.name.rsplit('trace_full_', 1)[1].split('.', 1)[0].lower()
+            if airframe in seen:
+                stats['dup_members'] = stats.get('dup_members', 0) + 1
+                continue
+            seen.add(airframe)
             stats['scanned'] += 1
             yield (day, tar.extractfile(m).read())
 
