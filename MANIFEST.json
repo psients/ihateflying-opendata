@@ -27722,6 +27722,90 @@
    "tar_gaps": 0,
    "v": 5
   },
+  "2026-10-25": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726787639,
+   "asset_updated": "2026-11-09T08:41:29Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 80251,
+   "oversize": 0,
+   "scanned": 59710,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-10-25.jsonl.gz": "fe66d7623cea737de5a45db7756c72850643d1220fc6c4561ae4cb69cd7b2edf",
+    "paths-2026-10-25.jsonl.gz": "219744c54b26380163b70dcc4f66b832e35cc48f0e14d7686054732855d2cf4e"
+   },
+   "source": "v2026.10.25-planes-readsb-prod-0",
+   "sus_legs": 1422,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-10-26": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726799483,
+   "asset_updated": "2026-11-09T08:46:09Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 82775,
+   "oversize": 0,
+   "scanned": 63377,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-10-26.jsonl.gz": "1e467ce3b5d745abf25d0f4cc16803a2b2ab6abc872860bddab2a04787745135",
+    "paths-2026-10-26.jsonl.gz": "93cc931250e43872b5954507b2ce3753da0b9f2c34365c196f5e263098efcbe4"
+   },
+   "source": "v2026.10.26-planes-readsb-prod-0",
+   "sus_legs": 1208,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-10-27": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726810714,
+   "asset_updated": "2026-11-09T08:50:05Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 77245,
+   "oversize": 0,
+   "scanned": 66554,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-10-27.jsonl.gz": "fc9d3d816137ed27d4d55a4f3a358212fc0a4d6d9021776b07be6f4f011c127c",
+    "paths-2026-10-27.jsonl.gz": "311a56df1656bf7b1fc64321754cd03eda5d62b86aba101bfd2e258888666be5"
+   },
+   "source": "v2026.10.27-planes-readsb-prod-0",
+   "sus_legs": 1188,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-10-28": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726818348,
+   "asset_updated": "2026-11-09T08:53:07Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 76461,
+   "oversize": 0,
+   "scanned": 68009,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-10-28.jsonl.gz": "a80f687ca3a925b146800486aa0ca33f8ec18161c7f0a4fcab1e0a0a4f8507e4",
+    "paths-2026-10-28.jsonl.gz": "35addeaedbb5fce3bf38a579948c80ea6370ec10c779b0698c97b6b00e3bbc5e"
+   },
+   "source": "v2026.10.28-planes-readsb-prod-0",
+   "sus_legs": 702,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
   "2026-10-29": {
    "airports_rev": "d864bb45",
    "allowlist": true,
@@ -27743,6 +27827,48 @@
    "tar_gaps": 0,
    "v": 5
   },
+  "2026-10-30": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726830401,
+   "asset_updated": "2026-11-09T08:57:35Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 83179,
+   "oversize": 0,
+   "scanned": 65607,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-10-30.jsonl.gz": "bd6c50dcffebc678bb8832bf6a5172fbc37698c0a2cb1d98035b49a5545dc3f8",
+    "paths-2026-10-30.jsonl.gz": "76e19986c4996ac89d8b3c77c5eafe24cf6245eb735fa37bd55ab6bffae75fb1"
+   },
+   "source": "v2026.10.30-planes-readsb-prod-0",
+   "sus_legs": 661,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-10-31": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726843736,
+   "asset_updated": "2026-11-09T09:02:06Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 77683,
+   "oversize": 0,
+   "scanned": 56427,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-10-31.jsonl.gz": "ac6eb046ae26fd87a2af51fb9f8ecf9472d3f8487f5c39a296a2f896723173ef",
+    "paths-2026-10-31.jsonl.gz": "46ea8a88f11dbcefcc451ce1cf343a04cfe466368dff0b8da60b5c00157e5616"
+   },
+   "source": "v2026.10.31-planes-readsb-prod-0",
+   "sus_legs": 793,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
   "2026-11-01": {
    "airports_rev": "d864bb45",
    "allowlist": true,
@@ -27760,6 +27886,48 @@
    },
    "source": "v2026.11.01-planes-readsb-prod-0",
    "sus_legs": 739,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-11-02": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726851307,
+   "asset_updated": "2026-11-09T09:05:00Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 80335,
+   "oversize": 2,
+   "scanned": 57245,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-11-02.jsonl.gz": "6eff0ce41692f3d77716b8cf85159f4eeb8fd5bc61d5655296e352aa4cfc9e4f",
+    "paths-2026-11-02.jsonl.gz": "46cd8d11a81d56533e4debc0433a213d3b15a1bf172e1531d363bcf82b848a45"
+   },
+   "source": "v2026.11.02-planes-readsb-prod-0",
+   "sus_legs": 698,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-11-03": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726863153,
+   "asset_updated": "2026-11-09T09:09:45Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 74271,
+   "oversize": 0,
+   "scanned": 60253,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-11-03.jsonl.gz": "8e9821fb799d3fb1003fbb50d6d65892db9698e8fbf75c46ca450f8a49ca379c",
+    "paths-2026-11-03.jsonl.gz": "8157d4c7738e22de6f6bde6ae7304332a8f7ac161e0f46d76efc421c745e39a7"
+   },
+   "source": "v2026.11.03-planes-readsb-prod-0",
+   "sus_legs": 682,
    "tar_gap_bytes": 0,
    "tar_gaps": 0,
    "v": 5
@@ -27802,6 +27970,27 @@
    },
    "source": "v2026.11.05-planes-readsb-prod-0",
    "sus_legs": 558,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-11-06": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726874219,
+   "asset_updated": "2026-11-09T09:13:43Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 81096,
+   "oversize": 0,
+   "scanned": 66424,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-11-06.jsonl.gz": "92f3fac5ddf12ba1f7cf5228c3976537c31e015b6aaa171440259f6f85ac514b",
+    "paths-2026-11-06.jsonl.gz": "f589c712b5ed7db5896c80646a122df6321f9b437db40f2be924c44a98e55324"
+   },
+   "source": "v2026.11.06-planes-readsb-prod-0",
+   "sus_legs": 899,
    "tar_gap_bytes": 0,
    "tar_gaps": 0,
    "v": 5

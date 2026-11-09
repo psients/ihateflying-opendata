@@ -15,8 +15,6 @@
   "tk": 0.67
  },
  "verdict": "clean",
- "verified_at": "2026-11-09T08:19:43+00:00",
- "warnings": [
-  "W8 midnight guard disarmed (previous day unpublished)"
- ]
+ "verified_at": "2026-11-09T09:14:46+00:00",
+ "warnings": []
 }

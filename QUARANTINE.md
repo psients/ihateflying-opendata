@@ -20,10 +20,19 @@ streak. Exit needs 30, with every RED explained.
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-08 | daily | clean | 79330 | 0.67 | 0.009 | 52268 | - | - | - |
 | 2026-11-07 | daily | clean | 76737 | 0.66 | 0.01 | 50229 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-11-06 | daily | clean | 81096 | 0.67 | 0.011 | 53772 | - | - | - |
 | 2026-11-05 | daily | clean | 77623 | 0.67 | 0.007 | 51765 | - | - | - |
-| 2026-11-04 | daily | clean | 73413 | 0.66 | 0.011 | 48455 | - | W8 midnight guard disarmed (previous day unpublished) | - |
-| 2026-11-01 | daily | clean | 76311 | 0.66 | 0.01 | 49659 | - | W8 midnight guard disarmed (previous day unpublished) | - |
-| 2026-10-29 | daily | clean | 79802 | 0.67 | 0.007 | 53383 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-11-04 | daily | clean | 73413 | 0.66 | 0.011 | 48453 | - | - | - |
+| 2026-11-03 | daily | clean | 74271 | 0.66 | 0.009 | 49052 | - | W13 new large excluded prefixes: ['UPS'] | - |
+| 2026-11-02 | daily | clean | 80335 | 0.68 | 0.009 | 53952 | - | W13 new large excluded prefixes: ['FLY'] | - |
+| 2026-11-01 | daily | clean | 76311 | 0.66 | 0.01 | 49656 | - | - | - |
+| 2026-10-31 | daily | clean | 77683 | 0.66 | 0.01 | 50645 | - | - | - |
+| 2026-10-30 | daily | clean | 83179 | 0.68 | 0.008 | 56124 | - | - | - |
+| 2026-10-29 | daily | clean | 79802 | 0.67 | 0.007 | 53383 | - | - | - |
+| 2026-10-28 | daily | clean | 76461 | 0.67 | 0.009 | 51127 | - | - | - |
+| 2026-10-27 | daily | clean | 77245 | 0.68 | 0.015 | 52031 | - | W13 new large excluded prefixes: ['FDX', 'UPS'] | - |
+| 2026-10-26 | daily | clean | 82775 | 0.68 | 0.015 | 56175 | - | - | - |
+| 2026-10-25 | daily | clean | 80251 | 0.68 | 0.018 | 54104 | - | - | - |
 | 2026-10-24 | range | clean | 80366 | 0.67 | 0.02 | 53195 | - | - | - |
 | 2026-10-23 | range | clean | 83650 | 0.68 | 0.019 | 56236 | - | - | - |
 | 2026-10-22 | range | clean | 81654 | 0.67 | 0.017 | 54256 | - | - | - |

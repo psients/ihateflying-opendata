@@ -6,7 +6,7 @@
  "problems": [],
  "stats": {
   "chain": 0.992,
-  "deps": 49659,
+  "deps": 49656,
   "deps_legs": 0.65,
   "ld": 0.65,
   "legs": 76311,
@@ -15,8 +15,6 @@
   "tk": 0.66
  },
  "verdict": "clean",
- "verified_at": "2026-11-09T08:21:29+00:00",
- "warnings": [
-  "W8 midnight guard disarmed (previous day unpublished)"
- ]
+ "verified_at": "2026-11-09T09:14:56+00:00",
+ "warnings": []
 }
