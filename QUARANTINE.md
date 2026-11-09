@@ -14,11 +14,16 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 0.
+**Current streak: 2 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 0.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-08 | daily | clean | 79330 | 0.67 | 0.009 | 52268 | - | - | - |
 | 2026-11-07 | daily | clean | 76737 | 0.66 | 0.01 | 50229 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-11-05 | daily | clean | 77623 | 0.67 | 0.007 | 51765 | - | - | - |
+| 2026-11-04 | daily | clean | 73413 | 0.66 | 0.011 | 48455 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-11-01 | daily | clean | 76311 | 0.66 | 0.01 | 49659 | - | W8 midnight guard disarmed (previous day unpublished) | - |
+| 2026-10-29 | daily | clean | 79802 | 0.67 | 0.007 | 53383 | - | W8 midnight guard disarmed (previous day unpublished) | - |
 | 2026-10-24 | range | clean | 80366 | 0.67 | 0.02 | 53195 | - | - | - |
 | 2026-10-23 | range | clean | 83650 | 0.68 | 0.019 | 56236 | - | - | - |
 | 2026-10-22 | range | clean | 81654 | 0.67 | 0.017 | 54256 | - | - | - |
