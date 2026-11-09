@@ -530,7 +530,14 @@ def mode_daily():
         # by a newer extractor (MANIFEST says so); otherwise its record stands.
         rebuilt = (have and have.get('extractor_v') and versions.get(day)
                    and versions[day] > have['extractor_v'])
-        if have and not rebuilt:
+        # Re-arm: a day verified while its previous day was unpublished ran
+        # without the midnight checks (W8). Once that previous day exists,
+        # verify again so I7/I8 actually run (2026-11-09: four days, one of
+        # them a streak day, were recorded clean with the guard disarmed).
+        prev = (dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat()
+        rearm = (have and prev in published
+                 and any(w.startswith('W8') for w in have.get('warnings', [])))
+        if have and not rebuilt and not rearm:
             continue
         if day in published:
             rec = verify_one(day, dest, history)
