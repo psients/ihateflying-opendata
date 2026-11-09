@@ -19,3 +19,9 @@
 2026-04-01 staging-0 tk 28,972 (prod-0) -> 47,055; 13,285 -> 18,967 aircraft with legs
 2026-04-02 staging-0 tk 35,438 (prod-0) -> 44,998; legs 65,752 -> 75,194
 2026-06-11 staging-0 tk 23,233 (prod-0) -> 25,686; legs 53,020 -> 57,435
+#
+# 2026-11-09, measure.yml run 42563315142 (extractor with one trace per
+# airframe): prod-0's .aa/.ab parts do not join on these days (repeats skipped,
+# aircraft at the joint lost); staging-0 is clean and fuller.
+2025-10-15 staging-0 tk 36,623 (prod-0, 36,606 repeated airframes skipped) -> 49,854; 63,903 aircraft, no gap
+2026-04-30 staging-0 tk 46,857 (prod-0, 6,623 repeats skipped) -> 52,097; 66,657 aircraft, no gap
