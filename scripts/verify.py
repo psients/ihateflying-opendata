@@ -111,6 +111,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -256,12 +257,20 @@ def fetch(day, dest):
                       ('paths', f'paths-{day}.jsonl.gz'),
                       ('meta', f'meta-{day}.json')):
         path = os.path.join(dest, name)
-        if not os.path.exists(path):
+        # Retried (10-40 s apart): a single HTTP 500 must not record a
+        # published day as "not fetchable". A truly missing asset still
+        # returns None after ~100 s.
+        for attempt in range(1, 6):
+            if os.path.exists(path):
+                break
             r = subprocess.run(['gh', 'release', 'download', f'data-{month}', '-R', REPO,
                                 '--pattern', name, '--dir', dest, '--clobber'],
                                capture_output=True, text=True)
-            if r.returncode != 0:
-                return None if key != 'paths' else None
+            if r.returncode == 0:
+                break
+            if attempt == 5:
+                return None
+            time.sleep(10 * attempt)
         out[key] = path
     return out
 

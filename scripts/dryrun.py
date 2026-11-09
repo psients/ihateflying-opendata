@@ -35,6 +35,7 @@ import re
 import resource
 import subprocess
 import sys
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -54,9 +55,16 @@ def download_all(dest):
     for tag in rels:
         if not tag.startswith('data-'):
             continue
-        subprocess.run(['gh', 'release', 'download', tag, '-R', REPO,
-                        '--pattern', 'flights-*.jsonl.gz', '--dir', dest, '--clobber'],
-                       check=True)
+        # Retried: one HTTP 500 on one asset (2026-11-09, the first run)
+        # otherwise kills a run that downloads ~1,350 files.
+        for attempt in range(1, 6):
+            r = subprocess.run(['gh', 'release', 'download', tag, '-R', REPO,
+                                '--pattern', 'flights-*.jsonl.gz', '--dir', dest, '--clobber'])
+            if r.returncode == 0:
+                break
+            if attempt == 5:
+                raise RuntimeError(f'download of {tag} failed 5 times')
+            time.sleep(30 * attempt)
 
 
 def majority_reg(patterns):
