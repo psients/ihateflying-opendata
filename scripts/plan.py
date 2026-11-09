@@ -24,6 +24,7 @@ The adsb.lol archive keeps one release per receiver instance per day. prod-0
 (the main network) is preferred; the others fill days it lacks.
 """
 import datetime as dt
+import http.client
 import json
 import os
 import re
@@ -96,7 +97,10 @@ def api(path, accept='application/vnd.github+json'):
                 return None
             if attempt == 3:
                 raise
-        except urllib.error.URLError:
+        # URLError alone missed dropped connections: http.client's
+        # RemoteDisconnected / IncompleteRead and socket resets are OSError or
+        # HTTPException, not URLError (2026-11-09: an I12 lookup died on one).
+        except (urllib.error.URLError, OSError, http.client.HTTPException, ValueError):
             if attempt == 3:
                 raise
         time.sleep(10 * (attempt + 1))
