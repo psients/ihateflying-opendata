@@ -24192,6 +24192,24 @@
    "sus_legs": 1549,
    "v": 5
   },
+  "2026-10-24": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 726051751,
+   "asset_updated": "2026-11-09T03:15:15Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 80366,
+   "oversize": 0,
+   "scanned": 62322,
+   "sha256": {
+    "flights-2026-10-24.jsonl.gz": "a0b2bccca4b09aef3fe97c0b072d48c62f530ffdcfd39f3ef657417399d4bc40",
+    "paths-2026-10-24.jsonl.gz": "17621ab2636845d71eaf850f3b8aec3b66c2618a340081a5710bc940ade7c1a7"
+   },
+   "source": "v2026.10.24-planes-readsb-prod-0",
+   "sus_legs": 1587,
+   "v": 5
+  },
   "2026-11-07": {
    "airports_rev": "d864bb45",
    "allowlist": true,
