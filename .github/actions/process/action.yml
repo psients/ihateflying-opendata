@@ -30,7 +30,11 @@ runs:
           # stream reset) and odd statuses; a 30 s GitHub download incident
           # (2026-11-09 01:01 UTC: eight exit-92 and one HTTP 618) failed
           # nine days at once. Each retry restarts the file from byte 0.
-          curl -sSfL --retry 5 --retry-all-errors --retry-delay 15 --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
+          # Ten retries with curl's doubling wait (1 s .. 512 s, ~17 min in
+          # all): GitHub's asset servers returned 504 for over two hours on
+          # 2026-11-09 (05:50-08:00 UTC, intermittent), outlasting the old
+          # 5 x 15 s and failing nine days of one daily run.
+          curl -sSfL --retry 10 --retry-all-errors --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
         done
         # Which archive release produced this day (staging runs ~15% smaller
         # than prod; a consumer deserves to know which it is reading).

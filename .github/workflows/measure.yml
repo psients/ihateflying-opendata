@@ -65,7 +65,7 @@ jobs:
             [[ "$url" =~ ^https://github\.com/adsblol/globe_history_[0-9]{4}/releases/download/[A-Za-z0-9._+-]+/[A-Za-z0-9._%+-]+$ ]] \
               || { echo "unexpected source url: $url"; exit 1; }
             i=$((i+1))
-            curl -sSfL --retry 5 --retry-all-errors --retry-delay 15 --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
+            curl -sSfL --retry 10 --retry-all-errors --max-filesize 2147483647 -o "$parts/$(printf %02d $i)" "$url"
           done
           SOURCE_TAG="$(printf '%s' "$URLS" | awk '{print $1}' | sed -E 's#.*/download/([^/]+)/.*#\1#')"
           export SOURCE_TAG
