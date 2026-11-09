@@ -14,7 +14,7 @@ recordless day breaks it once 4+ days old. Changing any counting constant
 in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
 streak. Exit needs 30, with every RED explained.
 
-**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 24.
+**Current streak: 1 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 23.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
@@ -192,7 +192,7 @@ streak. Exit needs 30, with every RED explained.
 | 2026-05-07 | range | clean | 23632 | 0.55 | 0.005 | 12840 | - | W18 partial day: 23632 legs, 30% of the surrounding median (78030); its counts understate real traffic; W8 midnight guard disarmed (previous day unpublished) | - |
 | 2026-05-06 | range | SKIPPED |  |  |  |  | - | - | upstream hole (scripts/upstream_holes.txt): no archive on any usable instance (only mlatonly-0 exists; adsb.lol outage) |
 | 2026-05-05 | range | SKIPPED |  |  |  |  | - | - | upstream hole (scripts/upstream_holes.txt): prod-0 holds heatmap files only and staging-0 holds 1 aircraft trace (checked 2026-11-08; adsb.lol outage window) |
-| 2026-05-04 | range | RED | 102964 | 0.64 | 0.004 | 50712 | I6 23001 duplicate (hex, t0); I11 chain continuity 0.779 | W16 upstream archive irregular: 1 region(s) unreadable as tar records, 62 KB skipped (padding between joined archive pieces loses nothing; damage would lose any aircraft stored there); W13 new large excluded prefixes: ['ERU'] | - |
+| 2026-05-04 | range | clean | 79953 | 0.64 | 0.004 | 50702 | - | W16 upstream archive parts do not join: 17057 airframe(s) repeated after a 62 KB unreadable region (skipped, one trace each); the parts were cut from different packings, so aircraft that sat at the joint are missing from this day | - |
 | 2026-05-03 | range | clean | 78283 | 0.66 | 0.006 | 51228 | - | - | - |
 | 2026-05-02 | range | clean | 75345 | 0.65 | 0.007 | 48302 | - | - | - |
 | 2026-05-01 | range | clean | 81494 | 0.66 | 0.006 | 53576 | - | - | - |
