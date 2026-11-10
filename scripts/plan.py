@@ -35,8 +35,23 @@ import urllib.request
 
 from extract_day import EXTRACTOR_VERSION
 
-SOURCES = ['adsblol/globe_history_2023', 'adsblol/globe_history_2024',
-           'adsblol/globe_history_2025', 'adsblol/globe_history_2026']
+FIRST_SOURCE_YEAR = 2023
+
+
+def source_repos(today=None):
+    """adsb.lol opens one archive repository per calendar year
+    (globe_history_YYYY). The list was hardcoded through 2026, so on
+    2027-01-01 the planner would have stopped finding new days for good.
+    Built from the clock instead: 2023 through the current UTC year. The
+    new year's repository appears late (2025: Jan 3; 2026: Jan 2, with its
+    first releases on Jan 12); until it exists its listing is a 404, which
+    api() reads as "nothing there", so an early January run just finds no
+    new day."""
+    year = (today or dt.datetime.now(dt.timezone.utc).date()).year
+    return [f'adsblol/globe_history_{y}' for y in range(FIRST_SOURCE_YEAR, year + 1)]
+
+
+SOURCES = source_repos()
 PREFERENCE = ['prod-0', 'prod-0tmp', 'staging-0', 'prod-1', 'staging-0tmp', 'test-0', 'test-1']
 TAG = re.compile(r'^v(\d{4})\.(\d{2})\.(\d{2})-planes-readsb-(.+)$')
 ASSET_URL = re.compile(r'^https://github\.com/adsblol/globe_history_\d{4}/releases/download/[A-Za-z0-9._+-]+/[A-Za-z0-9._%+-]+$')
