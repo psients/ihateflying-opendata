@@ -1,0 +1,16 @@
+# Red days excused under the owner's rule of 2026-11-10 (decided in chat,
+# before any such day existed). A line here makes a RED day neither count
+# toward nor break the streak, like a SKIPPED day, PROVIDED the day's record
+# carries a written explanation.
+#
+# Requirements before adding a line, all of them:
+#   - the fault is in the adsb.lol archive itself (a partial day, a
+#     timestamp fault, a corrupt upload), not in this pipeline;
+#   - where a second archive instance exists for the day, it shows the
+#     same fault (checked with the Measure instances workflow);
+#   - the day's record carries the explanation (verify.py explain).
+# A fault in our own pipeline is NEVER excusable. A third excused day
+# inside one streak window breaks the streak anyway. Every line here is an
+# owner-visible commit.
+#
+# Format: YYYY-MM-DD  reason

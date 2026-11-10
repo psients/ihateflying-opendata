@@ -1,5 +1,11 @@
 {
- "note": "Quarantine clock: the data-day of the first daily verification run. The streak counts from here; set once, never moved.",
+ "note": "Quarantine clock: the data-day of the first daily verification run. The streak counts from here; set once, never moved. A rule change restarts the streak at its own date (restarts below) without moving the start.",
  "set_at": "2026-11-08T14:16:48+00:00",
- "start": "2026-11-07"
+ "start": "2026-11-07",
+ "restarts": [
+  {
+   "date": "2026-11-10",
+   "reason": "Owner-approved in chat 2026-11-10: upstream-caused red days, logged in scripts/excused_reds.txt with written explanations, are excused like SKIPPED days (a third in one window still breaks). Changing the streak rule restarts the streak per the frozen contract. The restart also puts every counted day after the verifier checks added on 11-08/11-09, so the whole window is verified under one rule set."
+  }
+ ]
 }

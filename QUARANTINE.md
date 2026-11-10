@@ -5,16 +5,22 @@ quarantine/days/, never this table. The site reads nothing from this
 pipeline until the exit criteria hold (owner's rule, 2026-11-09).
 
 THE STREAK, frozen definition: scanning back from yesterday (UTC) to the
-quarantine clock start, the count of days with a CLEAN record under the
-current extractor version. The clock starts at the data-day of the first
-daily verification run, so the streak grows by at most one per day of
-operation; catch-up and backfilled days are verified but never count.
-SKIPPED-no-upstream days neither count nor break; a RED breaks it; a
-recordless day breaks it once 4+ days old. Changing any counting constant
-in verify.py or aggregate.py is an owner-visible commit and RESTARTS the
-streak. Exit needs 30, with every RED explained.
+streak floor (the quarantine clock start, or the latest owner-approved
+rule-change restart in quarantine/clock.json if later), the count of days
+with a CLEAN record under the current extractor version. The clock starts
+at the data-day of the first daily verification run, so the streak grows
+by at most one per day of operation; catch-up and backfilled days are
+verified but never count. SKIPPED-no-upstream days neither count nor
+break; a RED breaks it, except a red caused by the upstream archive
+itself (confirmed on a second adsb.lol instance where one exists), listed
+in scripts/excused_reds.txt and explained in its record: that day counts
+like SKIPPED. A fault in our own pipeline is never excusable, and a third
+excused day inside one window breaks the streak anyway. A recordless day
+breaks it once 4+ days old. Changing any counting constant in verify.py
+or aggregate.py is an owner-visible commit and RESTARTS the streak.
+Exit needs 30, with every RED explained.
 
-**Current streak: 2 of 30 clean day(s).** Clock started: 2026-11-07. Extractor v5. Unexplained reds: 0.
+**Current streak: 0 of 30 clean day(s).** Clock started: 2026-11-07. Streak floor: 2026-11-10. Extractor v5. Unexplained reds: 0. Excused reds: 0.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|

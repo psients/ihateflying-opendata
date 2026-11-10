@@ -23,14 +23,22 @@ different paths, and the table is regenerated, never merged.
 
 THE STREAK (frozen definition; changing it, or any counting constant in this
 file or aggregate.py, is an owner-visible commit that RESTARTS the streak):
-scanning back from yesterday (UTC) to the QUARANTINE CLOCK START, count the
-days whose record is CLEAN under the current extractor version. The clock
-start (quarantine/clock.json) is the data-day of the first daily
-verification run, so the streak can grow by at most one per day of
-operation: the catch-up days published on the first run, and every
-backfilled day, are verified but sit before the clock and never shorten the
-month. A SKIPPED record (adsb.lol has no archive for that day) neither
-counts nor breaks. A RED breaks it. A day with no record breaks it once it
+scanning back from yesterday (UTC) to the STREAK FLOOR, count the days whose
+record is CLEAN under the current extractor version. The floor is the
+quarantine clock start or, if later, the date of the latest owner-approved
+rule-change restart (both in quarantine/clock.json). The clock start is the
+data-day of the first daily verification run, so the streak can grow by at
+most one per day of operation: the catch-up days published on the first run,
+and every backfilled day, are verified but sit before the clock and never
+shorten the month. A SKIPPED record (adsb.lol has no archive for that day)
+neither counts nor breaks. A RED breaks it, with ONE exception, ruled by the
+owner in chat 2026-11-10 before any such day existed: a red whose cause is
+the upstream archive itself (confirmed on a second adsb.lol instance where
+one exists), listed in scripts/excused_reds.txt AND carrying a written
+explanation in its record, neither counts nor breaks, exactly like SKIPPED.
+A fault in our own pipeline is never excusable. A THIRD excused day inside
+one streak window breaks the streak anyway: that many says the source
+itself is unreliable this month. A day with no record breaks it once it
 is 4+ days old (younger gaps are healing in progress). Drills are recorded
 apart (quarantine/drills/) and never touch a data-day. Every red, inside
 the clock window or before it, must carry an explanation before exit; a
@@ -601,20 +609,61 @@ def mode_range(start, end):
         sys.exit(1)
 
 
+def clock_restarts():
+    """Owner-approved rule-change restarts (quarantine/clock.json)."""
+    try:
+        return json.load(open(CLOCK)).get('restarts', [])
+    except Exception:
+        return []
+
+
+def load_excused():
+    """scripts/excused_reds.txt: red days whose cause is the upstream archive
+    itself, excused under the owner's 2026-11-10 rule. Owner-visible."""
+    out = {}
+    try:
+        for line in open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                      'excused_reds.txt')):
+            line = line.strip()
+            if line and not line.startswith('#'):
+                day, _, reason = line.partition(' ')
+                out[day] = reason.strip()
+    except FileNotFoundError:
+        pass
+    return out
+
+
+EXCUSED = load_excused()
+
+
+def streak_floor(start):
+    """Clock start, or the latest owner-approved restart if later."""
+    dates = [start] + [r['date'] for r in clock_restarts() if r.get('date')]
+    return max(d for d in dates if d)
+
+
 def streak_of(history, start, today):
     """The frozen streak rule (module docstring), as code."""
     if not start:
         return 0
-    first = dt.date.fromisoformat(start)
+    first = dt.date.fromisoformat(streak_floor(start))
     cursor = today - dt.timedelta(days=1)
     streak = 0
+    excused_seen = 0
     while cursor >= first:
-        r = history.get(cursor.isoformat())
+        d = cursor.isoformat()
+        r = history.get(d)
         if r is None:
             if (today - cursor).days > 3:
                 break          # an old hole: the pipeline failed that day
         elif r['verdict'] == 'SKIPPED':
             pass               # no upstream archive: neither counts nor breaks
+        elif r['verdict'] == 'RED' and d in EXCUSED and r.get('explanation'):
+            excused_seen += 1
+            if excused_seen > 2:
+                break          # a third excused day in one window: the source
+                               # itself is unreliable; the streak restarts
+            # upstream-caused, owner-logged: neither counts nor breaks
         elif r['verdict'] == 'clean' and r.get('extractor_v') == EXTRACTOR_VERSION:
             streak += 1
         else:
@@ -648,17 +697,25 @@ def render():
         "pipeline until the exit criteria hold (owner's rule, 2026-11-09).",
         '',
         'THE STREAK, frozen definition: scanning back from yesterday (UTC) to the',
-        'quarantine clock start, the count of days with a CLEAN record under the',
-        'current extractor version. The clock starts at the data-day of the first',
-        'daily verification run, so the streak grows by at most one per day of',
-        'operation; catch-up and backfilled days are verified but never count.',
-        'SKIPPED-no-upstream days neither count nor break; a RED breaks it; a',
-        'recordless day breaks it once 4+ days old. Changing any counting constant',
-        'in verify.py or aggregate.py is an owner-visible commit and RESTARTS the',
-        'streak. Exit needs 30, with every RED explained.',
+        'streak floor (the quarantine clock start, or the latest owner-approved',
+        'rule-change restart in quarantine/clock.json if later), the count of days',
+        'with a CLEAN record under the current extractor version. The clock starts',
+        'at the data-day of the first daily verification run, so the streak grows',
+        'by at most one per day of operation; catch-up and backfilled days are',
+        'verified but never count. SKIPPED-no-upstream days neither count nor',
+        'break; a RED breaks it, except a red caused by the upstream archive',
+        'itself (confirmed on a second adsb.lol instance where one exists), listed',
+        'in scripts/excused_reds.txt and explained in its record: that day counts',
+        'like SKIPPED. A fault in our own pipeline is never excusable, and a third',
+        'excused day inside one window breaks the streak anyway. A recordless day',
+        'breaks it once 4+ days old. Changing any counting constant in verify.py',
+        'or aggregate.py is an owner-visible commit and RESTARTS the streak.',
+        'Exit needs 30, with every RED explained.',
         '',
         f'**Current streak: {streak} of 30 clean day(s).** Clock started: {start or "not yet"}. '
-        f'Extractor v{EXTRACTOR_VERSION}. Unexplained reds: {len(unexplained)}.',
+        f'Streak floor: {streak_floor(start) if start else "not yet"}. '
+        f'Extractor v{EXTRACTOR_VERSION}. Unexplained reds: {len(unexplained)}. '
+        f'Excused reds: {len(EXCUSED)}.',
         '',
         '| day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |',
         '|---|---|---|---|---|---|---|---|---|---|',
@@ -666,8 +723,11 @@ def render():
     for d in reversed(days):
         r = history[d]
         s = r.get('stats') or {}
+        verdict = r['verdict']
+        if verdict == 'RED' and d in EXCUSED and r.get('explanation'):
+            verdict = 'RED (excused)'
         lines.append('| {} | {} | {} | {} | {} | {} | {} | {} | {} | {} |'.format(
-            d, r.get('mode', '?'), r['verdict'], s.get('legs', ''), s.get('tk', ''),
+            d, r.get('mode', '?'), verdict, s.get('legs', ''), s.get('tk', ''),
             s.get('sus', ''), s.get('deps', ''),
             '; '.join(r.get('problems', [])) or '-',
             '; '.join(r.get('warnings', [])) or '-',
