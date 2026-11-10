@@ -24,6 +24,7 @@ Exit needs 30, with every RED explained.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-09 | daily | clean | 81288 | 0.68 | 0.009 | 54491 | - | - | - |
 | 2026-11-08 | daily | clean | 79330 | 0.67 | 0.009 | 52268 | - | - | - |
 | 2026-11-07 | range | clean | 76737 | 0.66 | 0.01 | 50227 | - | - | - |
 | 2026-11-06 | daily | clean | 81096 | 0.67 | 0.011 | 53772 | - | - | - |
