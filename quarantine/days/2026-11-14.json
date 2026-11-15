@@ -1,0 +1,22 @@
+{
+ "day": "2026-11-14",
+ "explanation": null,
+ "extractor_v": 5,
+ "mode": "daily",
+ "problems": [],
+ "stats": {
+  "chain": 0.992,
+  "deps": 39948,
+  "deps_legs": 0.63,
+  "ld": 0.59,
+  "legs": 63891,
+  "ratio": 1.09,
+  "sus": 0.015,
+  "tk": 0.63
+ },
+ "verdict": "clean",
+ "verified_at": "2026-11-15T12:53:05+00:00",
+ "warnings": [
+  "W14 ratio 1.09 vs 1.28 a week earlier"
+ ]
+}
