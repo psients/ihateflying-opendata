@@ -1,0 +1,36 @@
+{
+ "airframes": [
+  "a93d7c",
+  "a6dfbf",
+  "782332",
+  "ab0b1f",
+  "e4898a"
+ ],
+ "date": "2026-11-22",
+ "flightnums": [
+  [
+   "VN161",
+   "HAN"
+  ],
+  [
+   "LY387",
+   "TLV"
+  ],
+  [
+   "WN2188",
+   "DAL"
+  ]
+ ],
+ "results": null,
+ "routes": [
+  [
+   "CMH-ACY",
+   "2024S"
+  ],
+  [
+   "BNA-MDW",
+   "2024W"
+  ]
+ ],
+ "seed": "eaa29a28170f9c4e"
+}
