@@ -28328,6 +28328,27 @@
    "tar_gap_bytes": 0,
    "tar_gaps": 0,
    "v": 5
+  },
+  "2026-11-23": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 787848854,
+   "asset_updated": "2026-11-24T16:00:41Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 80999,
+   "oversize": 0,
+   "scanned": 60547,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-11-23.jsonl.gz": "2e75e4c4355a121f0424623e41f7b8bee7186ae3047832998889a2e58d56d9d0",
+    "paths-2026-11-23.jsonl.gz": "62e5598795fabe265daaecf8ab0ada530d0866c5cf8c9d2f342424098bed2ec7"
+   },
+   "source": "v2026.11.23-planes-readsb-prod-0",
+   "sus_legs": 1538,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
   }
  }
 }
