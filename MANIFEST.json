@@ -28353,8 +28353,8 @@
   "2026-11-24": {
    "airports_rev": "d864bb45",
    "allowlist": true,
-   "asset_id": 792144363,
-   "asset_updated": "2026-11-25T15:48:32Z",
+   "asset_id": 796512752,
+   "asset_updated": "2026-11-26T15:28:21Z",
    "bad_meta": 0,
    "errors": 0,
    "legs": 75860,
@@ -28367,6 +28367,27 @@
    },
    "source": "v2026.11.24-planes-readsb-prod-0",
    "sus_legs": 2047,
+   "tar_gap_bytes": 0,
+   "tar_gaps": 0,
+   "v": 5
+  },
+  "2026-11-25": {
+   "airports_rev": "d864bb45",
+   "allowlist": true,
+   "asset_id": 796526792,
+   "asset_updated": "2026-11-26T15:31:39Z",
+   "bad_meta": 0,
+   "errors": 0,
+   "legs": 76868,
+   "oversize": 0,
+   "scanned": 59918,
+   "schema": 2,
+   "sha256": {
+    "flights-2026-11-25.jsonl.gz": "4d0b20df7540ce14cdab9a56d7ad430f2f9f9fc34d78718e2851fc9832635011",
+    "paths-2026-11-25.jsonl.gz": "80dc44c0daca8e291075ca3fd6531987bbd1de9c49f2c693974d5fb7d3969f24"
+   },
+   "source": "v2026.11.25-planes-readsb-prod-0",
+   "sus_legs": 887,
    "tar_gap_bytes": 0,
    "tar_gaps": 0,
    "v": 5
