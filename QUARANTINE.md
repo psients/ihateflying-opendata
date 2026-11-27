@@ -20,10 +20,11 @@ breaks it once 4+ days old. Changing any counting constant in verify.py
 or aggregate.py is an owner-visible commit and RESTARTS the streak.
 Exit needs 30, with every RED explained.
 
-**Current streak: 16 of 30 clean day(s).** Clock started: 2026-11-07. Streak floor: 2026-11-10. Extractor v5. Unexplained reds: 0. Excused reds: 0.
+**Current streak: 17 of 30 clean day(s).** Clock started: 2026-11-07. Streak floor: 2026-11-10. Extractor v5. Unexplained reds: 0. Excused reds: 0.
 
 | day | mode | verdict | legs | tk | sus | deps | problems | warnings | explanation |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-26 | daily | clean | 72280 | 0.65 | 0.008 | 46571 | - | W14 ratio 1.58 vs 1.23 a week earlier | - |
 | 2026-11-25 | daily | clean | 76868 | 0.68 | 0.012 | 51590 | - | - | - |
 | 2026-11-24 | daily | clean | 75860 | 0.67 | 0.027 | 50398 | - | W13 new large excluded prefixes: ['UPS'] | - |
 | 2026-11-23 | daily | clean | 80999 | 0.67 | 0.019 | 53953 | - | W13 new large excluded prefixes: ['NDU'] | - |
